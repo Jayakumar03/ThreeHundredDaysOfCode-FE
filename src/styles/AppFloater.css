@@ -1,0 +1,13 @@
+.appfloater-logo {
+  width: 18px;
+  height: 18px;
+  content: url(https://dl.airtable.com/.blockPublisherProfilePictures/f5974416d7d0fd2bbb74b5188e3663b1/7109a3ae)
+}
+
+.appfloater-parent {
+  min-width: 18px;
+}
+
+.parent-hover-visible:hover {
+  display: block;
+}

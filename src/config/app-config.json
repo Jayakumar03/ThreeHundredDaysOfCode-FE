@@ -1,0 +1,15 @@
+{
+    "region": "us-east-1",
+    "userPool": "us-east-1_EnHJ08HZN",
+    "userPoolBaseUri": "https://decover.auth.us-east-1.amazoncognito.com",
+    "clientId": "6k9iq2mbm3nek03ikokhoergmk",
+    "callbackUri": "http://localhost:3000/callback",
+    "signoutUri": "http://localhost:3000/",
+    "tokenScopes": [
+        "openid",
+        "email",
+        "profile",
+        "http://localhost:8000/hello-world.all"
+    ],
+    "apiUri": "http://localhost:8000"
+}

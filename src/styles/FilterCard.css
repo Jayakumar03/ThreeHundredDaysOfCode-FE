@@ -1,0 +1,26 @@
+.filter-card-panel {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.filter-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    cursor: pointer;
+}
+
+.filter-card-image {}
+
+.filter-card-text-box {
+    margin-left: 5px;
+}
+
+.filter-card-underline {
+    background: #1a73e8;
+    height: 3px;
+    margin-top: 8px;
+    display: none;
+}

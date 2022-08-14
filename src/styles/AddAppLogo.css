@@ -1,0 +1,24 @@
+.add-app-logo {
+  width: 56px;
+  height: 56px;
+}
+
+.background-center {
+  background-position: center;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.background-cover {
+  background-size: cover;
+}
+
+.rounded {
+  border-radius: 3px;
+}
+
+.rounded-huge {
+  border-radius: 14px;
+}

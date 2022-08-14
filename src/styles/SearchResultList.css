@@ -1,0 +1,98 @@
+/** Top Level Container **/
+.search-result-container {
+  width: 600px;
+  background-color: #fff;
+  /* border: 1px solid green; */
+}
+
+/** Flex-Container **/
+.result-card-container {
+  display: flex;
+  /* border: 1px dotted gray; */
+}
+
+/** Flex-Item **/
+.result-card-info {
+  margin-top: 1rem;
+  padding-left: 20px;
+  padding-top: 10px;
+  flex: 1;
+  /* For debugging purposes.
+  border: 1px solid green;
+  border-radius: 25px; */
+}
+
+/** Flex-Item **/
+.result-source-logo-wrapper {
+  margin-top: 1rem;
+  width: 100px;
+  /* border: 1px solid black; */
+}
+
+.result-source-logo {
+  width: 52px;
+  height: 45px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+  align-self: center;
+  /* border: 1px solid blue; */
+}
+
+.result-info-panel {
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.result-source-key {
+  font-weight: 600;
+}
+
+.result-author-key {
+  font-weight: 600;
+}
+
+.result-source {
+  display: inline-block;
+}
+
+.result-author {
+  display: inline-block;
+  padding-left: 75px;
+}
+
+.result-url {
+  font-size: 10px;
+  margin-bottom: -1px;
+  font-weight: 700;
+}
+
+.result-title {
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.result-date {
+  font-size: 12px;
+}
+
+.result-description {
+  font-size: 12px;
+}
+
+.emptySearchResultContainer {
+  font-size: 16px;
+  margin-top: 1rem;
+  padding-left: 2rem;
+}
+
+.email-button {  
+  margin-top: 15px;
+  margin-left: 15px;
+  align-items: center;
+  flex: 1 1;
+}

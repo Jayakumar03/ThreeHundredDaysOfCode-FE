@@ -1,0 +1,28 @@
+.time-filter-dropdown-panel {
+    margin-top: 1em;
+    margin-left: 1em;
+    display: flex;
+}
+
+.time-filter-default-text {
+    color: gray;
+}
+
+.time-filter-down-symbol {
+    width: 0.5em;
+    height: 0.5em;
+}
+
+.time-filter-clear-button {
+    margin-left: 20px;
+    color: gray;
+}
+
+.time-filter-clear-button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.time-filter-dropdown-parent {
+    display: flex;
+}

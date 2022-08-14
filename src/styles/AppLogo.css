@@ -1,0 +1,14 @@
+.logo-wrapper {
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.logo-wrapper h1 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
+
+.image-class {
+  width: 500px;
+  height: 70px; 
+}

@@ -1,0 +1,59 @@
+.modalCustom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  width: 50%;
+  background-color: #fff;
+}
+
+.modal-header, .modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.addAppClearBtnContainer {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addAppClearBtnContainer:hover {
+  background-color: lightgrey;
+}
+
+.addAppClearBtn {
+  width: 18px!important;
+  height: 18px!important;
+}

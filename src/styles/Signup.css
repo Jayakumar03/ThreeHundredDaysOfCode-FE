@@ -1,0 +1,25 @@
+@media all and (min-width: 480px) {
+  .Signup {
+    padding: 60px 0;
+  }
+
+  .Signup form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.passwordContainer {
+  font-size: 14px;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  display: none;
+}
+
+.passwordContainer ul {
+  font-size: 12px;
+}
+
+.passwordContainer li {
+  font-size: 12px;
+}

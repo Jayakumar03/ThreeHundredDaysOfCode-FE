@@ -1,0 +1,33 @@
+.width-full {
+  width: 100%;
+}
+
+.no-user-select {
+  -webkit-user-select: none;
+}
+
+.pill {
+  border-radius: 9999px;
+}
+
+.px1 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.text-blue {
+  color: #2d7ff9;
+  fill: #2d7ff9;
+}
+
+.darken1 {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.no-border {
+  border-color: rgba(0,0,0,0);
+}

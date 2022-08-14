@@ -1,0 +1,77 @@
+/** Flex-Container **/
+.searchInputs {
+  background-color: white;
+  margin-top: 20px;
+  display: flex;
+  border: 1px solid rgba(217, 215, 215, 1);
+  border-radius: 30px;
+  /* box-shadow: 0 10px 10px 10px rgb(64 60 67 / 16%); */
+  z-index: 3;
+  align-items: center;
+}
+
+.searchInputs:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+/** Flex-Item **/
+.search input {
+background-color: white;
+font-size: 14px;
+padding: 15px;
+padding-left: 10px;
+margin-right: 20px;
+height: 30px;
+width: 400px;
+box-sizing: border-box;
+margin-top: 6px;
+margin-bottom: 6px;
+border: 0px;
+margin-left: 5px;
+outline: none;
+flex: 1;
+}
+
+/** Flex-Item **/
+.searchIcon {
+  width: 20px;
+  height: 20px;    
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  box-sizing: border-box;
+  background: transparent;
+  color: grey;  
+}
+
+.searchButton {
+  height: 40px;
+  width: 40px;
+  background-color: white; 
+  padding-top: 10px;
+  box-sizing: border-box;
+  background: transparent;
+  color: gray;
+  line-height: 18px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.searchIcon svg {
+  font-size: 20px;
+  display: block!important;
+}
+
+.searchButton svg {
+  font-size: 24px;
+}
+
+#clearBtn {
+  cursor: pointer;
+}
+
+.searchButtonContainer {
+  display: flex;
+}

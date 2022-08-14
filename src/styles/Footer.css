@@ -1,0 +1,7 @@
+.footer {
+  width: 100%;  
+  box-shadow: rgba(0,0,0,0.03) 0px 2px 0px 0px;
+  background: whitesmoke;
+  line-height: 40px;
+  margin-top: 5rem;
+}
