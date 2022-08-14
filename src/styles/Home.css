@@ -1,0 +1,49 @@
+.splash-container {
+    margin-top: 300px;
+    margin-left: 400px;
+    display: flex;
+}
+
+.splash-text-box {
+    width: 400px;
+}
+
+.splash-image {
+    margin-left: 100px;    
+    height: 50%;
+}
+
+.header-bar {
+    height: 50px;
+    background-color: black;
+}
+
+.header-text {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    padding-top: 10px;;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+}
+
+.header-span {
+    display: flex;
+}
+
+.empty-span {
+    flex-grow: 1;
+}
+
+.home-logo {
+    margin-left: 30px;
+    margin-top: 20px;
+    width: 140px;
+    height: 30px;  
+}
+
+.login-home {
+    margin-right: 30px;
+    font-weight: 800;
+    font-size: 18px;
+}

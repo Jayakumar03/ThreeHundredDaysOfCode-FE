@@ -10,6 +10,7 @@ import LeaderBoard from './containers/LeaderBoard';
 import CodeSubmitForm from './containers/CodeSubmitForm';
 import Profile from './containers/Profile';
 import ProblemOfDay from './containers/ProblemOfDay';
+import Home from './containers/Home';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -28,7 +29,9 @@ function AppRoutes(props) {
             <LoginRoute>
               <Login />
             </LoginRoute>
-              } />          
+              } />
+
+          <Route exact path="/home" element={<Home />} />
           <Route exact path="/problem" element={<ProblemOfDay />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/leaderboard" element={<LeaderBoard />} />
