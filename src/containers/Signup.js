@@ -68,7 +68,7 @@ export default function Signup() {
   }
 
   async function createUserAccount() {
-  const query = process.env.REACT_APP_API_URL + '/createAccount';
+  const query = process.env.REACT_APP_API_URL + '/createProfile';
   const res = await Auth.currentSession();
   const accessToken = res.getAccessToken();
   const jwtToken = accessToken.getJwtToken();

@@ -21,9 +21,7 @@ Amplify.configure({
           "profile",
           "openid"
         ],
-      redirectSignIn: process.env.REACT_APP_OAUTH2_REDIRECT_URL,
-      redirectSignOut: process.env.REACT_APP_OAUTH2_REDIRECT_URL,
-      responseType: "code",
+    responseType: "code",
     }
   }
 });
