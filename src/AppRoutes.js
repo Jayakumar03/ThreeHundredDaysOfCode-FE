@@ -11,6 +11,7 @@ import CodeSubmitForm from './containers/CodeSubmitForm';
 import Profile from './containers/Profile';
 import ProblemOfDay from './containers/ProblemOfDay';
 import Home from './containers/Home';
+import PrivateRoute from './components/PrivateRoute';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
