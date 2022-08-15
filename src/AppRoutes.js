@@ -30,12 +30,23 @@ function AppRoutes(props) {
               <Login />
             </LoginRoute>
               } />
-
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/problem" element={<ProblemOfDay />} />
-          <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/leaderboard" element={<LeaderBoard />} />
-          <Route exact path="/submission" element={<CodeSubmitForm />} />
+          <Route exact path="/profile" element={
+            <PrivateRoute>
+              <Profile />
+          </PrivateRoute>
+          } />
+          <Route exact path="/leaderboard" element={
+            <PrivateRoute>
+             <LeaderBoard /> 
+            </PrivateRoute>
+          } />
+          <Route exact path="/submission" element={
+            <PrivateRoute>
+              <CodeSubmitForm /> 
+            </PrivateRoute>
+        } />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="*" element={<NotFound />} />
         </Routes>
