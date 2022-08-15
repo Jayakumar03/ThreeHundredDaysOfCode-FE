@@ -22,7 +22,7 @@ function AppRoutes(props) {
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route exact path="/" element={
             <LoginRoute>
-              <Login />
+              <Home />
             </LoginRoute>
               } />
           <Route exact path="/login" element={
