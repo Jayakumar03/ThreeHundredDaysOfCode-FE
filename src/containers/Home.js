@@ -20,8 +20,8 @@ function Home() {
     <div className='splash-container '>
         <div className='splash-text-box'>
             <h2> Learn, With A Community </h2>
-            <p> Can you challange yourself to 300 days of coding? </p>
-            <Button type='primary' onClick={handleClick}> Join The Community It's free </Button>
+            <p className='home-subtext'> Can you challange yourself to 300 days of coding? </p>
+            <Button className='join-community-btn' type='primary' onClick={handleClick}> Join The Community It's free </Button>
         </div>
         <div><img className='splash-image' src ='https://ik.imagekit.io/wfx6bvuzj/300Code/giphy_JXWyCqrh4.gif' /></div>        
     </div>
