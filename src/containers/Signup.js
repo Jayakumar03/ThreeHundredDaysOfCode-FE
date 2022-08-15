@@ -17,7 +17,7 @@ export default function Signup() {
   });
   let navigate = useNavigate();
   const [newUser, setNewUser] = useState(null);
-  const { userHasAuthenticated } = useAppContext();
+  const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -51,13 +51,49 @@ export default function Signup() {
       }
   }
 
+ function triggerCreateUserAccount(query, requestOptions) {
+    fetch(query, requestOptions)
+     .then(res => res.json())
+     .then(data => {
+       console.log('Response', data);
+       if (data.message === 'Success') {
+       const successMessage = "Index build triggered successfully.";
+       console.log(successMessage);
+       } else {
+         const errorMessage = "Something went wrong. Please try again, later.";
+         console.log(errorMessage);
+       }
+     })
+     .catch(console.log)
+  }
+
+  async function createUserAccount() {
+  const query = process.env.REACT_APP_API_URL + '/createAccount';
+  const res = await Auth.currentSession();
+  const accessToken = res.getAccessToken();
+  const jwtToken = accessToken.getJwtToken();
+  const requestOptions = {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwtToken 
+    },
+    body: JSON.stringify({
+      'emailId': accessToken.payload.username
+    })
+  };
+  triggerCreateUserAccount(query, requestOptions);
+  }
+
   async function handleConfirmationSubmit(event) {
     event.preventDefault();
     try {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
+      createUserAccount();
       navigate("/");
+
     } catch (e) {
       onError(e);
       setIsLoading(false);
