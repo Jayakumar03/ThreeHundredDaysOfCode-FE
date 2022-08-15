@@ -1,20 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 
+// Authentication
+import { Auth } from "aws-amplify";
+
+// Styles
 import '../styles/ProblemOfDay.css'
 
 function ProblemOfDay() {
+    const [problem, SetProblem] = useState({});
+
+  function showMessage(success, error, warning) {
+    if (success !== null) {
+        message.success({
+        content: success,
+        className: 'display-message',
+      });
+    } else if (error !== null) {
+        message.error({
+        content: error,
+        className: 'display-message',
+      });
+    } else if (warning !== null) {
+      message.warning({
+      content: warning,
+      className: 'display-message',
+    });
+  }
+}
+
+    async function getProblemOfTheDay() {
+        const currentSessionResponse = await Auth.currentSession();
+        const accessToken = currentSessionResponse.getAccessToken();
+        const jwtToken = accessToken.getJwtToken();
+        const query = process.env.REACT_APP_API_URL + '/problem';
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken
+          }
+        };
+        fetch(query, requestOptions)
+        .then(res => res.json())
+        .then(responseJson => {
+            SetProblem(responseJson);
+        })
+        .catch((error) => {
+          showMessage(null, "Error");
+          console.log(error);
+        });
+    }
+
+    useEffect(() => { getProblemOfTheDay(); }, [])
+
     return (
         <div className="problem-parent-box">
-        <h1 className="problem-header"> Problem Of The Day</h1>
-        <div>Day 1. <a href = "https://leetcode.com/problems/add-to-array-form-of-integer/"> Add To Array-Form of Integer</a>
-        <div>Complexity: Easy</div>
+          <h1 className="problem-header"> Problem Of The Day</h1>
+          <div>Day {problem.id} <a href={problem.url}> {problem.title} </a>
+          <div>Complexity: {problem.complexity}</div>
         </div>
-        <div className="problem-desc"><p>
-            The array-form of an integer num is an array representing its digits in left to right order.
-            For example, for num = 1321, the array form is [1,3,2,1].
-            Given num, the array-form of an integer, and an integer k, return the array-form of the integer num + k.
-        </p>
-        </div>
+          <div className="problem-desc"><p> {problem.description} </p> </div>
         </div>
     );
 }

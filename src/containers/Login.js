@@ -37,7 +37,7 @@ function Login(props) {
       cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
-      navigate("/");
+      navigate("/problem");
     } catch (e) {
       onError(e);
     }
@@ -115,8 +115,7 @@ return (
       </LoaderButton>
       <div className="signupContainer">Don't have an account? <a href="/signup">Sign up</a></div>
       <div className="forgotPasswordContainer">Forgot your password? <a href="/forgotPassword">Reset password</a></div>
-        <hr className="solid divContainer" />
-      <div id="buttonDiv" className="googleSignupContainer"/>
+      <hr className="solid divContainer" />
     </Form>
   </div>
 );

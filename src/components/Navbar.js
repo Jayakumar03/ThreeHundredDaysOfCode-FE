@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
-import { PoweroffOutlined, RedoOutlined } from '@ant-design/icons';
+import { PoweroffOutlined } from '@ant-design/icons';
 
 import '../styles/Navbar.css';
 import '../styles/Common.css';
@@ -36,6 +36,7 @@ function Navbar(props) {
                   <a href="/submission" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Submit Code</a>
                   <a href="/leaderboard" className="link link-quiet focus-visible understroke active link-quiet navbar-text">LeaderBoard</a>
                   <a href="/problem" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
+                  <a href="/challenge" className="link link-quiet focus-visible understroke active link-quiet navbar-text">300 Day Challenge</a>
                   <div className="flex-auto flex" />
                   <Button
                     type="primary"

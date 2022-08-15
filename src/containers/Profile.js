@@ -31,7 +31,7 @@ function CodeSubmitForm() {
   }
 }
 
-async function getProfileData() {        
+async function getProfileData() {      
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
@@ -55,10 +55,7 @@ async function getProfileData() {
     });   
   }
   
-  useEffect(() => {
-  getProfileData();
-  
-}, [])
+  useEffect(() => { getProfileData(); }, [])
 
 function updateProfile(query, requestOptions) {
   fetch(query, requestOptions)
