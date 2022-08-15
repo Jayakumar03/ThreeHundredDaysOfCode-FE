@@ -9,8 +9,8 @@ import '../styles/CodeSubmitForm.css';
 
 function CodeSubmitForm() {
   const [form] = Form.useForm();
-  const [formLayout, setFormLayout] = useState('horizontal');
-  const [profileData, SetProfileData] = useState([]);
+  const [formLayout] = useState('horizontal');
+  const [, SetProfileData] = useState([]);
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -47,24 +47,54 @@ async function getProfileData() {
     .then(res => res.json())
     .then(responseJson => {
       SetProfileData(responseJson);
+      form.setFieldsValue(responseJson);
     })
     .catch((error) => {
       showMessage(null, "Error");
       console.log(error);
     });   
   }
-
-  function handleFormSubmit() {}
-
-
-useEffect(() => {
+  
+  useEffect(() => {
   getProfileData();
-  console.log(profileData.name);
+  
 }, [])
 
-  const onFormLayoutChange = ({ layout }) => {
-    setFormLayout(layout);
+function updateProfile(query, requestOptions) {
+  fetch(query, requestOptions)
+   .then(res => res.json())
+   .then(data => {
+     console.log('Response', data);
+     if (data.message === 'Success') {
+     const successMessage = "Profile updated successfully.";
+     showMessage(successMessage);
+     } else {
+       const errorMessage = "Something went wrong. Please try again, later.";
+       showMessage(null, errorMessage);
+     }
+   })
+   .catch(console.log)
+}
+
+async function onFinish(values) {
+  const query = process.env.REACT_APP_API_URL + '/updateProfile';
+  const res = await Auth.currentSession();
+  const accessToken = res.getAccessToken();
+  const jwtToken = accessToken.getJwtToken();
+  const requestOptions = {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwtToken 
+    },
+    body: JSON.stringify({
+      'name': values.name,
+      'email': values.email,
+      'org': values.org
+    })
   };
+  updateProfile(query, requestOptions);
+};
 
   const formItemLayout =
     formLayout === 'horizontal'
@@ -95,20 +125,34 @@ useEffect(() => {
       form={form}
       initialValues={{
         layout: formLayout,
-      }}
-      onValuesChange={onFormLayoutChange}
+      }}      
+      onFinish={onFinish}
+      autoComplete="off"
     >
-      <Form.Item label="Your Name">
-        <Input placeholder='Personal Name' value={profileData.name} />
+      <Form.Item 
+      label="Your Name" 
+      name='name'
+      rules={[
+        {
+          required: true,
+          message: "Please input your name!"
+        }
+      ]}
+      >
+        <Input placeholder='Personal Name' />
       </Form.Item>
-      <Form.Item label="Email Id">
-        <Input placeholder="input placeholder" value={profileData.email}/>
+
+      <Form.Item 
+      label="Email Id" 
+      name="email"      
+      >
+        <Input placeholder="input placeholder" disabled={true} />
       </Form.Item>
-      <Form.Item label="Organization">
-        <Input placeholder="Company Or Institute Name" value={profileData.org}/>
+      <Form.Item label="Organization" name="org">
+        <Input placeholder="Company Or Institute Name" />
       </Form.Item>
       <Form.Item {...buttonItemLayout}>
-        <Button onClick={handleFormSubmit} type="primary">Update</Button>
+        <Button type="primary" htmlType='submit'>Update</Button>
       </Form.Item>
     </Form>
     </div>

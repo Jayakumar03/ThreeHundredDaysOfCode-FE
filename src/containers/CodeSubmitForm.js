@@ -1,13 +1,66 @@
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React, { useState } from 'react';
 import '../styles/CodeSubmitForm.css';
+
+// Authentication
+import { Auth } from "aws-amplify";
 
 const CodeSubmitForm = () => {
   const [form] = Form.useForm();
   const [formLayout, setFormLayout] = useState('horizontal');
 
-  const onFormLayoutChange = ({ layout }) => {
-    setFormLayout(layout);
+  function showMessage(success, error, warning) {
+    if (success !== null) {
+        message.success({
+        content: success,
+        className: 'display-message',
+      });
+    } else if (error !== null) {
+        message.error({
+        content: error,
+        className: 'display-message',
+      });
+    } else if (warning !== null) {
+      message.warning({
+      content: warning,
+      className: 'display-message',
+    });
+  }
+}
+
+function submitCode(query, requestOptions) {
+    fetch(query, requestOptions)
+     .then(res => res.json())
+     .then(data => {       
+       if (data.message === 'Success') {
+       const successMessage = "Submission updated successfully.";
+       showMessage(successMessage);
+       } else {
+         const errorMessage = "Something went wrong. Please try again, later.";
+         showMessage(null, errorMessage);
+       }
+     })
+     .catch(console.log)
+  }
+  
+  async function onFinish(values) {
+    const query = process.env.REACT_APP_API_URL + '/submitCode';
+    const res = await Auth.currentSession();
+    const accessToken = res.getAccessToken();
+    const jwtToken = accessToken.getJwtToken();
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwtToken 
+      },
+      body: JSON.stringify({
+        'problemName': values.problemName,
+        'problemLink': values.problemLink,
+        'solutionLink': values.solutionLink
+      })
+    };
+    submitCode(query, requestOptions);
   };
 
   const formItemLayout =
@@ -39,19 +92,42 @@ const CodeSubmitForm = () => {
       initialValues={{
         layout: formLayout,
       }}
-      onValuesChange={onFormLayoutChange}
+      onFinish={onFinish}
+      autoComplete="off"
     >
-      <Form.Item label="Problem Name">
-        <Input placeholder="input placeholder" />
+      <Form.Item 
+      label="Problem Name" 
+      name="problemName"
+      rules={[
+        {
+          required: true,
+          message: "Please input the problem name!"
+        }
+      ]}
+      >
+        <Input placeholder="Problem Name" />
       </Form.Item>
-      <Form.Item label="Problem Link">
-        <Input placeholder="input placeholder" />
+      <Form.Item label="Problem Link" name='problemLink'
+      rules={[
+        {
+          required: true,
+          message: "Please input the problem link!"
+        }
+      ]}
+      >
+        <Input placeholder="Leetcode Link" />
       </Form.Item>
-      <Form.Item label="Solution Link">
-        <Input placeholder="input placeholder" />
+      <Form.Item label="Solution Link" name='solutionLink'
+      rules={[
+        {
+          required: true,
+          message: "Please input the solution link!"
+        }
+      ]}>
+        <Input placeholder="Github Link" />
       </Form.Item>
       <Form.Item {...buttonItemLayout}>
-        <Button type="primary">Submit</Button>
+        <Button type="primary" htmlType='submit'>Submit</Button>
       </Form.Item>
     </Form>
     </div>
