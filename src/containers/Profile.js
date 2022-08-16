@@ -143,7 +143,7 @@ async function onFinish(values) {
       label="Email Id" 
       name="email"      
       >
-        <Input placeholder="input placeholder" disabled={true} />
+      <Input placeholder="input placeholder" disabled={true} />
       </Form.Item>
       <Form.Item label="Organization" name="org">
         <Input placeholder="Company Or Institute Name" />

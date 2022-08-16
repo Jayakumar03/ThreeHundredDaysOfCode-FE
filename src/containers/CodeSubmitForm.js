@@ -1,5 +1,8 @@
 import { Button, Form, Input, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ProblemBar from '../components/ProblemBar';
+
+// Styles.
 import '../styles/CodeSubmitForm.css';
 
 // Authentication
@@ -7,7 +10,33 @@ import { Auth } from "aws-amplify";
 
 const CodeSubmitForm = () => {
   const [form] = Form.useForm();
-  const [formLayout, setFormLayout] = useState('horizontal');
+  const [formLayout] = useState('horizontal');
+  const [problem, SetProblem] = useState([]);
+
+  async function getProblemOfTheDay() {
+    const currentSessionResponse = await Auth.currentSession();
+    const accessToken = currentSessionResponse.getAccessToken();
+    const jwtToken = accessToken.getJwtToken();
+    const query = process.env.REACT_APP_API_URL + '/problem';
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwtToken
+      }
+    };
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+        SetProblem(responseJson);
+        form.setFieldsValue(responseJson);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+}
+
+useEffect(() => { getProblemOfTheDay(); }, [])
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -85,6 +114,7 @@ function submitCode(query, requestOptions) {
       : null;
   return (
     <div className='code-submit-form-parent'>
+      <ProblemBar problem={problem}/>
     <Form
       {...formItemLayout}
       layout={formLayout}
@@ -96,7 +126,7 @@ function submitCode(query, requestOptions) {
       autoComplete="off"
     >
       <Form.Item 
-      label="Problem Name" 
+      label="Problem Name"
       name="problemName"
       rules={[
         {
@@ -105,9 +135,11 @@ function submitCode(query, requestOptions) {
         }
       ]}
       >
-        <Input placeholder="Problem Name" />
+        <Input placeholder="Problem Name" disabled={true} />
       </Form.Item>
-      <Form.Item label="Problem Link" name='problemLink'
+      <Form.Item 
+      label="Problem Link" 
+      name='problemLink'
       rules={[
         {
           required: true,
@@ -115,7 +147,7 @@ function submitCode(query, requestOptions) {
         }
       ]}
       >
-        <Input placeholder="Leetcode Link" />
+        <Input placeholder="Leetcode Link" disabled={true} />
       </Form.Item>
       <Form.Item label="Solution Link" name='solutionLink'
       rules={[

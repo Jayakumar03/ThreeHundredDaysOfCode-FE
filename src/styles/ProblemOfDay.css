@@ -17,3 +17,19 @@
 .problem-desc {
     margin-top: 20px;
 }
+
+.problem-bar-box {
+    background-color: rgb(217, 239, 247);
+    border: solid 2px black;
+    border-radius: 10px;        
+    margin-bottom: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.problem-bar-text {
+    padding-left: 30px;
+    padding-top: 10px;
+    color: black;
+    font-weight: 700;
+}
