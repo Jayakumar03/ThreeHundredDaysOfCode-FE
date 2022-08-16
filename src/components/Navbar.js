@@ -35,8 +35,7 @@ function Navbar(props) {
                   <a href="/profile" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Profile</a>
                   <a href="/submission" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Submit Code</a>
                   <a href="/leaderboard" className="link link-quiet focus-visible understroke active link-quiet navbar-text">LeaderBoard</a>
-                  <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a>
-                  <a href="/problem" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
+                  <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a>                  
                   <a href="/challenge" className="link link-quiet focus-visible understroke active link-quiet navbar-text">300 Day Challenge</a>
                   <div className="flex-auto flex" />
                   <Button
