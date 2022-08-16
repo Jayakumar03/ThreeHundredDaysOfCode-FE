@@ -16,6 +16,7 @@ import Challenge from './containers/Challenge';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
+import MySubmissions from "./containers/MySubmissions";
 
 function AppRoutes(props) {
   return (
@@ -38,6 +39,11 @@ function AppRoutes(props) {
             <PrivateRoute>
               <Profile />
           </PrivateRoute>
+          } />
+          <Route exact path="/mySubmissions" element={
+            <PrivateRoute>
+             <MySubmissions /> 
+            </PrivateRoute>
           } />
           <Route exact path="/leaderboard" element={
             <PrivateRoute>

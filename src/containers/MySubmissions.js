@@ -9,27 +9,31 @@ import { message } from 'antd';
 
 import '../styles/LeaderBoard.css';
 
-const columns = [
+const columns = [  
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    title: 'Problem Name',
+    dataIndex: 'problemName',
+    key: 'problemName',
   },
   {
-    title: 'Number of submissions',
-    dataIndex: 'numberUniqueDays',
-    key: 'numberUniqueDays',
+    title: 'Problem Link',
+    dataIndex: 'problemLink',
+    key: 'problemLink',
   },
   {
-    title: 'Longest Streak',
-    dataIndex: 'longestStreak',
-    key: 'longestStreak',
-  },  
+    title: 'Solution Link',
+    dataIndex: 'solutionLink',
+    key: 'solutionLink',
+  },
+  {
+    title: 'Submission Date',
+    dataIndex: 'submissionDate',
+    key: 'submissionDate',
+  },
 ];
 
-function LeaderBoard() {
-  const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
+function MySubmissions() {
+  const [submissionStats, SetSubmissionStats] = useState([]);
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -50,11 +54,11 @@ function LeaderBoard() {
   }
 }
 
-async function getLeaderBoard() {        
+async function getSubmissions() {        
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
-    const query = process.env.REACT_APP_API_URL + '/leaderBoard';
+    const query = process.env.REACT_APP_API_URL + '/mySubmissions';
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -65,7 +69,7 @@ async function getLeaderBoard() {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      SetLeaderBoardStats(responseJson.data);
+      SetSubmissionStats(responseJson.data);
     })
     .catch((error) => {
       showMessage(null, "Error");
@@ -74,15 +78,15 @@ async function getLeaderBoard() {
   }
 
 useEffect(() => {
-  getLeaderBoard();
+  getSubmissions();
 }, [])
 
   return (
     <div className='leaderboard-table'>
-      <h1> Leader Board Table</h1>    
-    <Table columns={columns} dataSource={leaderBoardStats} />
+      <h1> My Submissions</h1>    
+    <Table columns={columns} dataSource={submissionStats} />
     </div>
   );
 }
 
-export default LeaderBoard;
+export default MySubmissions;
