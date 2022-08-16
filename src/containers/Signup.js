@@ -7,6 +7,7 @@ import { useFormFields } from "../lib/hooksLib";
 import { onError } from "../lib/errorLib";
 import "../styles/Signup.css";
 import { Auth } from "aws-amplify";
+import Cookies from 'universal-cookie';
 
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
@@ -76,7 +77,7 @@ export default function Signup() {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + jwtToken 
+      'Authorization': 'Bearer ' + jwtToken
     },
     body: JSON.stringify({
       'emailId': accessToken.payload.username
@@ -89,10 +90,17 @@ export default function Signup() {
     event.preventDefault();
     try {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
+      userHasAuthenticated(true);      
+      var cognitoUser = await Auth.signIn(fields.email, fields.password);
+      const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
+      const cookies = new Cookies();
+      const expiresDate = new Date();
+      expiresDate.setFullYear(new Date().getFullYear() + 1);
+      cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
+      cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
+      cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
       createUserAccount();
-      navigate("/");
+      navigate("/problem");
 
     } catch (e) {
       onError(e);

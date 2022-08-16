@@ -47,7 +47,7 @@ async function onLoad() {
    const cookies = new Cookies();
    cookies.remove('isLoggedIn', { path: '/' });
    cookies.remove('jwtToken', { path: '/' });
-   navigate("/login");
+   navigate("/");
  }
  
  function deleteAllData(query, requestHeaders) {  
