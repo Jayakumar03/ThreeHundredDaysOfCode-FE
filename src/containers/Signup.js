@@ -74,7 +74,7 @@ export default function Signup() {
   const res = await Auth.currentSession();
   const accessToken = res.getAccessToken();
   const jwtToken = accessToken.getJwtToken();
-  let referrerId = searchParams.get("__referrerId");  
+  let referrerId = searchParams.get("__referrerId");
   if (referrerId === null) {
     referrerId = accessToken.payload.sub;
   }

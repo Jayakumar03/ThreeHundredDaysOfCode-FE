@@ -347,3 +347,7 @@ a.text-dark.understroke.link.active, .text-dark a.understroke.link.active {
   width: 100px;
   height: 20px;
 }
+
+.referral-btn {
+  margin-right: 20px;
+}

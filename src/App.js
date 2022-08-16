@@ -10,7 +10,6 @@ import Cookies from 'universal-cookie';
 import NavbarCustom from './components/Navbar';
 import FooterNavbar from './components/FooterNavbar';
 
-
 // Design Components
 import { message } from 'antd';
 

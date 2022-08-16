@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
+
 
 import '../styles/Navbar.css';
 import '../styles/Common.css';
 import '../styles/Footer.css';
+
+import { Button, Modal, message } from 'antd';
+import { PoweroffOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import Cookies from 'universal-cookie';
+import { Auth } from "aws-amplify";
 
 function Navbar(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,6 +29,34 @@ function Navbar(props) {
   const cookies = new Cookies();
   const value = cookies.get('isLoggedIn', { path: '/' });
   const isAuthenticated = value === "true";
+
+  function showMessage(success, error, warning) {
+    if (success !== null) {
+        message.success({
+        content: success,
+        className: 'display-message',
+      });
+    } else if (error !== null) {
+        message.error({
+        content: error,
+        className: 'display-message',
+      });
+    } else if (warning !== null) {
+      message.warning({
+      content: warning,
+      className: 'display-message',
+    });
+  }
+  }
+
+  async function handleReferralOnClick() {
+    const currentSessionResponse = await Auth.currentSession();
+    const accessToken = currentSessionResponse.getAccessToken();
+    const url = process.env.REACT_APP_URL + "/signup?" + "__referrerId=" + accessToken.payload.sub;
+    navigator.clipboard.writeText(url);
+    showMessage('Referral link copied to your clipboard.');    
+  }
+
   return (
     !isAuthenticating && (
       <div className="header-class border-box no-underline col-12 px2 z3">
@@ -38,6 +69,12 @@ function Navbar(props) {
                   <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a>                  
                   <a href="/challenge" className="link link-quiet focus-visible understroke active link-quiet navbar-text">300 Day Challenge</a>
                   <div className="flex-auto flex" />
+                  <Button
+                  className='referral-btn'
+                  type="primary"
+                  onClick={handleReferralOnClick}>
+                    Refer A Friend
+                  </Button>
                   <Button
                     type="primary"
                     icon={<PoweroffOutlined />}
