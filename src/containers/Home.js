@@ -15,6 +15,7 @@ function Home() {
         <div className='header-span'>
             <img src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE_G1us9B5ug.png' className='home-logo'/>
             <div className='empty-span'/>
+            <a href="/signup" className="link link-quiet focus-visible understroke active link-quiet navbar-text login-home-signup">Sign up</a>
             <a href="/login" className="link link-quiet focus-visible understroke active link-quiet navbar-text login-home">Log in</a>
         </div>
     <div className='splash-container '>
