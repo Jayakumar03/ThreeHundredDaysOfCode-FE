@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../lib/contextLib";
 import { useFormFields } from "../lib/hooksLib";
@@ -10,6 +10,7 @@ import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
 export default function Signup() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -73,6 +74,10 @@ export default function Signup() {
   const res = await Auth.currentSession();
   const accessToken = res.getAccessToken();
   const jwtToken = accessToken.getJwtToken();
+  let referrerId = searchParams.get("__referrerId");  
+  if (referrerId === null) {
+    referrerId = accessToken.payload.sub;
+  }
   const requestOptions = {
     method: 'POST',
     headers: { 
@@ -80,7 +85,8 @@ export default function Signup() {
       'Authorization': 'Bearer ' + jwtToken
     },
     body: JSON.stringify({
-      'emailId': accessToken.payload.username
+      'emailId': accessToken.payload.username,
+      'referrerId': referrerId
     })
   };
   triggerCreateUserAccount(query, requestOptions);
@@ -90,7 +96,7 @@ export default function Signup() {
     event.preventDefault();
     try {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      userHasAuthenticated(true);      
+      userHasAuthenticated(true);
       var cognitoUser = await Auth.signIn(fields.email, fields.password);
       const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
       const cookies = new Cookies();
