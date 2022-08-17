@@ -7,7 +7,14 @@ import { Auth } from "aws-amplify";
 // Design Components
 import { message } from 'antd';
 
+// Cookies
+import Cookies from 'universal-cookie';
+
+// Styles
 import '../styles/LeaderBoard.css';
+
+// Utility.
+const getUuid = require('uuid-by-string');
 
 const columns = [
   {
@@ -50,7 +57,27 @@ function LeaderBoard() {
   }
 }
 
-async function getLeaderBoard() {        
+async function getLeaderBoardWithQuery(query, requestOptions) {
+  fetch(query, requestOptions)
+  .then(res => res.json())
+  .then(responseJson => {
+    SetLeaderBoardStats(responseJson.data);
+  })
+  .catch((error) => {
+    showMessage(null, "Error");
+    console.log(error);
+  });   
+}
+
+async function getLeaderBoardGoogleSSO(){
+  const userAuth = await Auth.currentAuthenticatedUser();
+  const requestOptions = { 'method': 'GET' };
+  const userId = getUuid(userAuth.email);
+  const query = process.env.REACT_APP_API_URL + '/google/leaderBoard?userId=' + userId;                
+  getLeaderBoardWithQuery(query, requestOptions);
+}
+
+async function getLeaderBoardCognito() {  
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
@@ -62,16 +89,18 @@ async function getLeaderBoard() {
         'Authorization': 'Bearer ' + jwtToken
       }
     };
-    fetch(query, requestOptions)
-    .then(res => res.json())
-    .then(responseJson => {
-      SetLeaderBoardStats(responseJson.data);
-    })
-    .catch((error) => {
-      showMessage(null, "Error");
-      console.log(error);
-    });   
-  }
+    getLeaderBoardWithQuery(query, requestOptions);
+}
+
+async function getLeaderBoard() {
+  const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      getLeaderBoardCognito();
+    } else {
+      getLeaderBoardGoogleSSO();
+    }
+}
 
 useEffect(() => {
   getLeaderBoard();

@@ -1,13 +1,19 @@
 import { Button, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-// Authentication
+// Authentication.
 import { Auth } from "aws-amplify";
 
-// Styles
+// Styles,
 import '../styles/CodeSubmitForm.css';
 
-function CodeSubmitForm() {
+// Cookies
+import Cookies from 'universal-cookie';
+
+// Utility.
+const getUuid = require('uuid-by-string');
+
+function Profile() {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [, SetProfileData] = useState([]);
@@ -31,7 +37,15 @@ function CodeSubmitForm() {
   }
 }
 
-async function getProfileData() {      
+async function getProfileDataGoogleSSO() {
+  const userAuth = await Auth.currentAuthenticatedUser();
+  const requestOptions = { 'method': 'GET' };
+  const userId = getUuid(userAuth.email);
+  const query = process.env.REACT_APP_API_URL + '/google/me?userId=' + userId;
+  getProfileDataWithQuery(query, requestOptions);
+}
+
+async function getProfileDataCognitoUser() {  
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
@@ -43,6 +57,10 @@ async function getProfileData() {
         'Authorization': 'Bearer ' + jwtToken
       }
     };
+    getProfileDataWithQuery(query, requestOptions);
+  }
+  
+  async function getProfileDataWithQuery(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
@@ -52,7 +70,17 @@ async function getProfileData() {
     .catch((error) => {
       showMessage(null, "Error");
       console.log(error);
-    });   
+    });
+  }
+
+  async function getProfileData() {
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      getProfileDataCognitoUser();
+    } else {
+      getProfileDataGoogleSSO();
+    }
   }
   
   useEffect(() => { getProfileData(); }, [])
@@ -156,4 +184,4 @@ async function onFinish(values) {
   );
 };
 
-export default CodeSubmitForm;
+export default Profile;

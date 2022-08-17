@@ -71,26 +71,26 @@ export default function Signup() {
   }
 
   async function createUserAccount() {
-  const query = process.env.REACT_APP_API_URL + '/createProfile';
-  const res = await Auth.currentSession();
-  const accessToken = res.getAccessToken();
-  const jwtToken = accessToken.getJwtToken();
-  let referrerId = searchParams.get("__referrerId");
-  if (referrerId === null) {
-    referrerId = accessToken.payload.sub;
-  }
-  const requestOptions = {
-    method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + jwtToken
-    },
-    body: JSON.stringify({
-      'emailId': accessToken.payload.username,
-      'referrerId': referrerId
-    })
-  };
-  triggerCreateUserAccount(query, requestOptions);
+    const query = process.env.REACT_APP_API_URL + '/createProfile';
+    const res = await Auth.currentSession();
+    const accessToken = res.getAccessToken();
+    const jwtToken = accessToken.getJwtToken();
+    let referrerId = searchParams.get("__referrerId");
+    if (referrerId === null) {
+      referrerId = accessToken.payload.sub;
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwtToken
+      },
+      body: JSON.stringify({
+        'emailId': accessToken.payload.username,
+        'referrerId': referrerId
+      })
+    };
+    triggerCreateUserAccount(query, requestOptions);
   }
 
   async function createNewUser() {

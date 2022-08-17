@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { Auth } from "aws-amplify";
 import { useAppContext } from "../lib/contextLib";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import LoaderButton from '../components/LoaderButton';
 import { onError } from '../lib/errorLib';
 import { useFormFields } from '../lib/hooksLib';
@@ -11,7 +11,12 @@ import Cookies from 'universal-cookie';
 // Styling.
 import "../styles/Login.css";
 
+// Utility.
+const getUuid = require('uuid-by-string');
+
 function Login(props) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   let navigate = useNavigate();
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +69,42 @@ function Login(props) {
    return JSON.parse(jsonPayload);
  };
 
+async function triggerCreateUserAccount(query, requestOptions) {
+  fetch(query, requestOptions)
+   .then(res => res.json())
+   .then(data => {
+     console.log('Response', data);
+     if (data.message === 'Success') {
+     const successMessage = "Index build triggered successfully.";
+     console.log(successMessage);
+     } else {
+       const errorMessage = "Something went wrong. Please try again, later.";
+       console.log(errorMessage);
+     }
+   })
+   .catch(console.log)
+}
+
+ async function createUserAccountWithSSO(email, name) {
+  const query = process.env.REACT_APP_API_URL + '/google/createProfile';
+  let referrerId = searchParams.get("__referrerId");
+  if (referrerId === null) {
+    referrerId = getUuid(email);
+  }
+  const requestOptions = {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json'      
+    },
+    body: JSON.stringify({
+      'name': name,
+      'emailId': email,
+      'referrerId': referrerId
+    })
+  };
+  triggerCreateUserAccount(query, requestOptions);
+}
+
 async function handleCredentialResponse(response) {
   const jwtToken = response.credential;
   const payload = parseJwt(jwtToken);
@@ -81,6 +122,7 @@ async function handleCredentialResponse(response) {
   cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
   cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
   cookies.set('loginType', 'googleSSO', { path: '/', expires: expiresDate });
+  createUserAccountWithSSO(payload.email, payload.name);
   navigate('/');
 }
 

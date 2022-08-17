@@ -7,6 +7,10 @@ import '../styles/CodeSubmitForm.css';
 
 // Authentication
 import { Auth } from "aws-amplify";
+import Cookies from 'universal-cookie';
+
+// Utility.
+const getUuid = require('uuid-by-string');
 
 const CodeSubmitForm = () => {
   const [form] = Form.useForm();
@@ -14,7 +18,32 @@ const CodeSubmitForm = () => {
   const [problem, SetProblem] = useState([]);
 
   async function getProblemOfTheDay() {
-    const currentSessionResponse = await Auth.currentSession();
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      getProblemOfTheDayCognito();
+    } else {
+      getProblemOfTheDayGoogleSSO();
+    }
+  }
+  async function getProblemOfTheDayGoogleSSO() {
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const requestOptions = { 'method': 'GET' };
+    const userId = getUuid(userAuth.email);
+    const query = process.env.REACT_APP_API_URL + '/google/problem?userId=' +userId;    
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+        SetProblem(responseJson);
+        form.setFieldsValue(responseJson);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+  }
+
+  async function getProblemOfTheDayCognito() {
+  const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
     const query = process.env.REACT_APP_API_URL + '/problem';
