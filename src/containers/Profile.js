@@ -2,7 +2,7 @@ import { Button, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 // Authentication.
-import { Auth } from "aws-amplify";
+import { a, Auth } from "aws-amplify";
 
 // Styles,
 import '../styles/CodeSubmitForm.css';
@@ -85,7 +85,7 @@ async function getProfileDataCognitoUser() {
   
   useEffect(() => { getProfileData(); }, [])
 
-function updateProfile(query, requestOptions) {
+function updateProfileWithQuery(query, requestOptions) {
   fetch(query, requestOptions)
    .then(res => res.json())
    .then(data => {
@@ -102,6 +102,35 @@ function updateProfile(query, requestOptions) {
 }
 
 async function onFinish(values) {
+  const cookies = new Cookies();
+  const loginType = cookies.get('loginType');
+  if (loginType === 'cognito') {
+    updateProfileCognito(values);
+  } else {
+    updateProfileSSO(values);
+  }
+}
+
+async function updateProfileSSO(values) {
+  const query = process.env.REACT_APP_API_URL + '/google/updateProfile';
+  const userAuth = await Auth.currentAuthenticatedUser();   
+  const userId = getUuid(userAuth.email);
+  const requestOptions = {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json'      
+    },
+    body: JSON.stringify({
+      'userId': userId,
+      'name': values.name,
+      'email': values.email,
+      'org': values.org
+    })
+  };
+  updateProfileWithQuery(query, requestOptions);
+}
+
+async function updateProfileCognito(values) {
   const query = process.env.REACT_APP_API_URL + '/updateProfile';
   const res = await Auth.currentSession();
   const accessToken = res.getAccessToken();
@@ -120,7 +149,7 @@ async function onFinish(values) {
       'org': values.org
     })
   };
-  updateProfile(query, requestOptions);
+  updateProfileWithQuery(query, requestOptions);
 };
 
   const formItemLayout =

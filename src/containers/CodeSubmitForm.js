@@ -26,6 +26,7 @@ const CodeSubmitForm = () => {
       getProblemOfTheDayGoogleSSO();
     }
   }
+
   async function getProblemOfTheDayGoogleSSO() {
     const userAuth = await Auth.currentAuthenticatedUser();
     const requestOptions = { 'method': 'GET' };
@@ -102,6 +103,35 @@ function submitCode(query, requestOptions) {
   }
   
   async function onFinish(values) {
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      submitCodeWithCognito(values);
+    } else {
+      submitCodeWithSSO(values);
+    }
+  }
+
+  async function submitCodeWithSSO(values) {
+    const query = process.env.REACT_APP_API_URL + '/google/submitCode';
+    const userAuth = await Auth.currentAuthenticatedUser();   
+    const userId = getUuid(userAuth.email);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'userId': userId,
+        'problemName': values.problemName,
+        'problemLink': values.problemLink,
+        'solutionLink': values.solutionLink
+      })
+    };
+    submitCode(query, requestOptions);
+  }
+
+  async function submitCodeWithCognito(values) {
     const query = process.env.REACT_APP_API_URL + '/submitCode';
     const res = await Auth.currentSession();
     const accessToken = res.getAccessToken();
