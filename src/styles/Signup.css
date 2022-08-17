@@ -23,3 +23,14 @@
 .passwordContainer li {
   font-size: 12px;
 }
+
+.googleSignupContainer {
+  margin-top: 1rem;
+  margin-left: 3rem;
+  border-radius: 30px !important;
+}
+
+
+.divContainer {
+  margin-top: 2rem;
+}

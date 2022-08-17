@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../lib/contextLib";
 import { useFormFields } from "../lib/hooksLib";
 import { onError } from "../lib/errorLib";
-import "../styles/Signup.css";
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
+
+// Styles.
+import "../styles/Signup.css";
+
+// Utility.
+const getUuid = require('uuid-by-string');
 
 export default function Signup() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -149,8 +154,91 @@ export default function Signup() {
     );
   }
 
+  async function triggerCreateUserAccount(query, requestOptions) {
+    fetch(query, requestOptions)
+     .then(res => res.json())
+     .then(data => {
+       console.log('Response', data);
+       if (data.message === 'Success') {
+       const successMessage = "Index build triggered successfully.";
+       console.log(successMessage);
+       } else {
+         const errorMessage = "Something went wrong. Please try again, later.";
+         console.log(errorMessage);
+       }
+     })
+     .catch(console.log)
+  }
+  
+
+  async function createUserAccountWithSSO(email, name) {
+    const query = process.env.REACT_APP_API_URL + '/google/createProfile';
+    let referrerId = searchParams.get("__referrerId");
+    const userId = getUuid(email);
+    if (referrerId === null) {
+      referrerId = userId;
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'      
+      },
+      body: JSON.stringify({
+        'userName': name,
+        'userId': userId,
+        'emailId': email,
+        'referrerId': referrerId
+      })
+    };
+    triggerCreateUserAccount(query, requestOptions);
+  }
+  
+async function handleCredentialResponse(response) {
+  const jwtToken = response.credential;
+  const payload = parseJwt(jwtToken);
+  const idToken = jwtToken;
+  const expiresAt = payload.exp;
+  const user = {
+      email: payload.email,
+      name: payload.name
+  };
+  await Auth.federatedSignIn(
+      'google', { token: idToken, expiresAt }, user);
+  const cookies = new Cookies();
+  const expiresDate = new Date();
+  expiresDate.setFullYear(new Date().getFullYear() + 1);
+  cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
+  cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
+  cookies.set('loginType', 'googleSSO', { path: '/', expires: expiresDate });
+  createUserAccountWithSSO(payload.email, payload.name);
+  navigate('/');
+}
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      callback: data => handleCredentialResponse(data),
+    });
+    window.google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"), // Ensure the element exist and it is a div to display correcctly
+      { theme: "outline", size: "large" }  // Customization attributes
+    );
+  }, []);
+
+  function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+   var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+   }).join(''));
+ 
+   return JSON.parse(jsonPayload);
+ };
+
+
   function renderForm() {
     return (
+      <div>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="email" size="lg" className="margin-top-10">
           <Form.Label>Email</Form.Label>
@@ -200,7 +288,11 @@ export default function Signup() {
             <li> Should have a numerical value. </li>
           </ul>
         </div>
+      
+      <hr className="solid divContainer" />      
+      <div id="buttonDiv" className="googleSignupContainer"/>
       </Form>
+      </div>
     );
   }
 
