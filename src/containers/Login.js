@@ -37,7 +37,7 @@ function Login(props) {
       cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
-      navigate("/problem");
+      navigate("/submission");
     } catch (e) {
       onError(e);
     }
