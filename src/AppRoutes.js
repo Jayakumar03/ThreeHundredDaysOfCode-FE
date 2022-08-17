@@ -13,6 +13,7 @@ import ProblemOfDay from './containers/ProblemOfDay';
 import Home from './containers/Home';
 import PrivateRoute from './components/PrivateRoute';
 import Challenge from './containers/Challenge';
+import FAQ from './containers/FAQ';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -55,6 +56,7 @@ function AppRoutes(props) {
               <CodeSubmitForm /> 
             </PrivateRoute>
         } />
+          <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <Challenge />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="*" element={<NotFound />} />

@@ -106,7 +106,7 @@ export default function Signup() {
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
       createUserAccount();
-      navigate("/problem");
+      navigate("/submission");
 
     } catch (e) {
       onError(e);
