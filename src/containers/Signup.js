@@ -35,10 +35,6 @@ export default function Signup() {
     );
   }
 
-  function validateConfirmationForm() {
-    return fields.confirmationCode.length > 0;
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
@@ -115,45 +111,6 @@ export default function Signup() {
       navigate("/submission");
   }
 
-  async function handleConfirmationSubmit(event) {
-    event.preventDefault();
-    try {
-      await Auth.confirmSignUp(fields.email, fields.confirmationCode);     
-
-    } catch (e) {
-      onError(e);
-      setIsLoading(false);
-    }
-  }
-
-  function renderConfirmationForm() {
-    return (
-      <Form onSubmit={handleConfirmationSubmit}>
-        <Form.Group controlId="confirmationCode" size="lg">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            className="margin-left-none"
-            autoFocus
-            type="tel"
-            onChange={handleFieldChange}
-            value={fields.confirmationCode}
-          />
-          <Form.Text muted>Please check your email for the code.</Form.Text>
-        </Form.Group>
-        <LoaderButton
-          block
-          size="lg"
-          type="submit"
-          variant="success"
-          isLoading={isLoading}
-          disabled={!validateConfirmationForm()}
-        >
-          Verify
-        </LoaderButton>
-      </Form>
-    );
-  }
-
   async function triggerCreateUserAccount(query, requestOptions) {
     fetch(query, requestOptions)
      .then(res => res.json())
@@ -170,7 +127,6 @@ export default function Signup() {
      .catch(console.log)
   }
   
-
   async function createUserAccountWithSSO(email, name) {
     const query = process.env.REACT_APP_API_URL + '/google/createProfile';
     let referrerId = searchParams.get("__referrerId");
@@ -234,7 +190,6 @@ async function handleCredentialResponse(response) {
  
    return JSON.parse(jsonPayload);
  };
-
 
   function renderForm() {
     return (
