@@ -1,7 +1,37 @@
 # Getting Started with frontend
 
-This project hosts the code for the frontend for [ThreeHundredDaysOfCode Challenge](https://www.threehundreddaysofcode.com/). <br />
-The backend code for the server is hosted [here](https://github.com/ravitandon90/ThreeHundredDaysOfCode-BE) <br />.
+This project hosts the code for the frontend for [ThreeHundredDaysOfCode Challenge](https://www.threehundreddaysofcode.com/).
+The backend code for the server is hosted [here](https://github.com/ravitandon90/ThreeHundredDaysOfCode-BE). <br />
+
+## Downloading The Code
+
+### `git clone git@github.com:ravitandon90/ThreeHundredDaysOfCode-FE.git`
+
+The abovementioned command will download the code from github repository.
+
+## Prequisites
+Before you begin install the following applications:
+
+### Git v2.35+
+### Node v14+
+### NPM v6.4+
+
+## Install all the dependencies
+
+### `cd ThreeHundredDaysOfCode-FE`
+### `npm install`
+
+## Available Environments
+
+There are primarily two environments for the frontend code development:
+
+### Dev
+    This is the local environment on which most of the development is done.
+    The configuration for the development environment is present in the file `.env`.
+
+### Production
+    This is the production environment that powers the website. 
+    The configuration for the production environment is present in the file `.env.production`.
 
 ## Available Scripts
 
@@ -9,68 +39,9 @@ In the project directory, you can run the following command to run the server lo
 
 ### `npm run start:dev`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes.\
+Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
 
 ## Deploying Code
 
 Once the code gets merged into the `main` branch the code is automatically deployed to the website. 
-
-
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build:dev`
-
-Builds the app for production to the `build` folder for the development environment.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
