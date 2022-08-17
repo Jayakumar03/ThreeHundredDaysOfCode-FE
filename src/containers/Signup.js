@@ -76,8 +76,9 @@ export default function Signup() {
     const accessToken = res.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
     let referrerId = searchParams.get("__referrerId");
+    const userId = accessToken.payload.sub;
     if (referrerId === null) {
-      referrerId = accessToken.payload.sub;
+      referrerId = userId;
     }
     const requestOptions = {
       method: 'POST',
@@ -86,6 +87,8 @@ export default function Signup() {
         'Authorization': 'Bearer ' + jwtToken
       },
       body: JSON.stringify({
+        'userName': "",
+        'userId': userId,
         'emailId': accessToken.payload.username,
         'referrerId': referrerId
       })

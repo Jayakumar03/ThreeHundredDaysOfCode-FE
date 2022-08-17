@@ -106,6 +106,7 @@ function submitCode(query, requestOptions) {
     const res = await Auth.currentSession();
     const accessToken = res.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
+    const userId = accessToken.payload.sub;
     const requestOptions = {
       method: 'POST',
       headers: { 
@@ -113,6 +114,7 @@ function submitCode(query, requestOptions) {
         'Authorization': 'Bearer ' + jwtToken 
       },
       body: JSON.stringify({
+        'userId': userId,
         'problemName': values.problemName,
         'problemLink': values.problemLink,
         'solutionLink': values.solutionLink

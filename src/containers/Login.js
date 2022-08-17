@@ -88,8 +88,9 @@ async function triggerCreateUserAccount(query, requestOptions) {
  async function createUserAccountWithSSO(email, name) {
   const query = process.env.REACT_APP_API_URL + '/google/createProfile';
   let referrerId = searchParams.get("__referrerId");
+  const userId = getUuid(email);
   if (referrerId === null) {
-    referrerId = getUuid(email);
+    referrerId = userId;
   }
   const requestOptions = {
     method: 'POST',
@@ -97,7 +98,8 @@ async function triggerCreateUserAccount(query, requestOptions) {
       'Content-Type': 'application/json'      
     },
     body: JSON.stringify({
-      'name': name,
+      'userName': name,
+      'userId': userId,
       'emailId': email,
       'referrerId': referrerId
     })
