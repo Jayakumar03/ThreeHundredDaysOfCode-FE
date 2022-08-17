@@ -1,27 +1,33 @@
-# Getting Started with Create React App
+# Getting Started with frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project hosts the code for the frontend for [ThreeHundredDaysOfCode Challenge](https://www.threehundreddaysofcode.com/). <br />
+The backend code for the server is hosted [here](https://github.com/ravitandon90/ThreeHundredDaysOfCode-BE) <br />.
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can run the following command to run the server locally:
 
-### `npm start`
+### `npm run start:dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser. The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+
+## Deploying Code
+
+Once the code gets merged into the `main` branch the code is automatically deployed to the website. 
+
+
 
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `npm run build:dev`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder for the development environment.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\

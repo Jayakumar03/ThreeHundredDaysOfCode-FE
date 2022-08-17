@@ -115,7 +115,8 @@ return (
       </LoaderButton>
       <div className="signupContainer">Don't have an account? <a href="/signup">Sign up</a></div>
       <div className="forgotPasswordContainer">Forgot your password? <a href="/forgotPassword">Reset password</a></div>
-      <hr className="solid divContainer" />
+      <hr className="solid divContainer" />      
+      <div id="buttonDiv" className="googleSignupContainer"/>
     </Form>
   </div>
 );

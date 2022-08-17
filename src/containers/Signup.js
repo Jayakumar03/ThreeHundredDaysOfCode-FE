@@ -47,6 +47,7 @@ export default function Signup() {
         });
         setIsLoading(false);
         setNewUser(newUser);
+        createNewUser();
       } catch (e) {
         onError(e);
         setIsLoading(false);
@@ -92,11 +93,8 @@ export default function Signup() {
   triggerCreateUserAccount(query, requestOptions);
   }
 
-  async function handleConfirmationSubmit(event) {
-    event.preventDefault();
-    try {
-      await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      userHasAuthenticated(true);
+  async function createNewUser() {
+    userHasAuthenticated(true);
       var cognitoUser = await Auth.signIn(fields.email, fields.password);
       const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
       const cookies = new Cookies();
@@ -107,6 +105,12 @@ export default function Signup() {
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
       createUserAccount();
       navigate("/submission");
+  }
+
+  async function handleConfirmationSubmit(event) {
+    event.preventDefault();
+    try {
+      await Auth.confirmSignUp(fields.email, fields.confirmationCode);     
 
     } catch (e) {
       onError(e);
@@ -198,8 +202,6 @@ export default function Signup() {
   }
 
   return (
-    <div className="Signup">
-      {newUser === null ? renderForm() : renderConfirmationForm()}
-    </div>
+    <div className="Signup"> {renderForm()} </div>
   );
 }
