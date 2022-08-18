@@ -6,7 +6,7 @@ function LoginRoute({ children }) {
   const cookies = new Cookies();
   const value = cookies.get('isLoggedIn', { path: '/' });
   const isAuthenticated = value === "true";
-  return isAuthenticated ? <Navigate to="/profile" />: children;
+  return isAuthenticated ? <Navigate to="/submission" />: children;
 }
 
 export default LoginRoute;
