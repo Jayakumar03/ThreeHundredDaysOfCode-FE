@@ -12,7 +12,7 @@ function Challenge() {
             <p className='challenge-question'> 1/ How To Submit Your Code? </p>
             <p><b>Step-I:</b> Solve the problem on <a href="https://leetcode.com">Leetcode</a></p>
             <p><b>Step-II:</b> Add few lines of comments in your code to explain your solution. Don't forget to add Time and Space Complexity of your solution.</p> 
-            <p><b>Step-III:</b> Use <a href="https://github.com/dheerajmalik1/Code-Submissions">this repository</a> to submit your code.
+            <p><b>Step-III:</b> Use <a href="https://github.com/ravitandon90/Code-Submissions">this repository</a> to submit your code.
             To start submissions, please create a top level folder in the repository with your name and create a PR. 
             Each subsequent submission must go in this folder.
             <a href="https://github.com/ravitandon90/Code-Submissions/blob/main/Ravi-Tandon/AddToArrayForm.cpp">  Here</a> is an example of a PR.</p>
