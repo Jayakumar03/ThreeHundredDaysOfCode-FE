@@ -10,12 +10,13 @@ function Challenge() {
             <p className='challenge-question'>The CHALLENGE</p>
             <p>Your goal is to solve 1 coding problem every single day. At the end of the week, everyone who has solved a problem everyday of the week, will be eligible for a prize.</p> 
             <p className='challenge-question'> 1/ How To Submit Your Code? </p>
-            <p><b>Step-I:</b> Solve the problem on Leetcode.</p>
-            <p><b>Step-II:</b> Use <a href="https://github.com/dheerajmalik1/Code-Submissions">this repository</a> to submit your code.
+            <p><b>Step-I:</b> Solve the problem on <a href="https://leetcode.com">Leetcode</a></p>
+            <p><b>Step-II:</b> Add few lines of comments in your code to explain your solution. Don't forget to add Time and Space Complexity of your solution.</p> 
+            <p><b>Step-III:</b> Use <a href="https://github.com/dheerajmalik1/Code-Submissions">this repository</a> to submit your code.
             To start submissions, please create a top level folder in the repository with your name and create a PR. 
             Each subsequent submission must go in this folder.
             <a href="https://github.com/ravitandon90/Code-Submissions/blob/main/Ravi-Tandon/AddToArrayForm.cpp">  Here</a> is an example of a PR.</p>
-            <p><b>Step-III:</b> Submit a link to your solution <a href='/submitCode'> here </a>.</p>
+            <p><b>Step-IV:</b> Submit a link to your solution <a href='/submitCode'> here </a>.</p>
             <p className='challenge-question'> 2/ How will we decide the winner? </p>
             <p> Every Sunday, we will pick one person from the list of those who have the longest streak for the week. If there are tie-breakers, one person will be chosen randomly from the set of winners. </p>
             <p className='challenge-question'> 3/ What is the prize? </p>
