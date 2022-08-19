@@ -25,8 +25,8 @@ const columns = [
   },
   {
     title: 'Number of submissions',
-    dataIndex: 'numberUniqueDays',
-    key: 'numberUniqueDays',
+    dataIndex: 'numberOfSubmissions',
+    key: 'numberOfSubmissions',
   },
   {
     title: 'Longest Streak',
