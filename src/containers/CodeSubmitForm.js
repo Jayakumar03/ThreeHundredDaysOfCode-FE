@@ -71,7 +71,7 @@ useEffect(() => { getProblemOfTheDay(); }, [])
   function showMessage(success, error, warning) {
     if (success !== null) {
         message.success({
-        content: success,
+        content: success,        
         className: 'display-message',
       });
     } else if (error !== null) {
@@ -90,9 +90,10 @@ useEffect(() => { getProblemOfTheDay(); }, [])
 function submitCode(query, requestOptions) {
     fetch(query, requestOptions)
      .then(res => res.json())
-     .then(data => {       
+     .then(data => {
        if (data.message === 'Success') {
-       const successMessage = "Submission updated successfully.";
+        const tweet_url = 'https://twitter.com/intent/tweet?text=I%20just%20solved%20the%20problem:%20'+ problem.problemName +' on%20www.threehundreddaysofcode.com%0A%20Join%20here%20to%20start%20the%20challenge%20with%20me.%20https%3A//discord.gg/6duGefKtyv%20@300DaysOfCode';
+        const successMessage = <p>Submission updated successfully. Well done. Click <a href={tweet_url} target="_blank"> here </a> to share on Twitter.</p>;
        showMessage(successMessage);
        } else {
          const errorMessage = "Something went wrong. Please try again, later.";
