@@ -7,7 +7,6 @@ import { useFormFields } from "../lib/hooksLib";
 import { onError } from "../lib/errorLib";
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
-
 // Styles.
 import "../styles/Signup.css";
 
@@ -43,11 +42,11 @@ export default function Signup() {
           username: fields.email,
           password: fields.password,
           attributes: {
-                email: fields.email
+            email: fields.email
           }
         });
         setIsLoading(false);
-        setNewUser(newUser);
+        setNewUser(newUser);        
         createNewUser();
       } catch (e) {
         onError(e);
