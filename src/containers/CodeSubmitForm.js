@@ -16,6 +16,55 @@ const CodeSubmitForm = () => {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
+  const [userStats, SetUserStats] = useState(null);
+
+  async function getUserStats() {
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      getUserStatsCognito();
+    } else {
+      getUserStatsGoogleSSO();
+    }
+  }
+  
+  async function getUserStatsCognito() {
+    const currentSessionResponse = await Auth.currentSession();
+      const accessToken = currentSessionResponse.getAccessToken();
+      const jwtToken = accessToken.getJwtToken();
+      const query = process.env.REACT_APP_API_URL + '/me';
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + jwtToken
+        }
+      };
+      fetch(query, requestOptions)
+      .then(res => res.json())
+      .then(responseJson => {
+        SetUserStats(responseJson);
+          
+      })
+      .catch((error) => {      
+        console.log(error);
+      });
+  }
+
+  async function getUserStatsGoogleSSO() {
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const requestOptions = { 'method': 'GET' };
+    const userId = getUuid(userAuth.email);
+    const query = process.env.REACT_APP_API_URL + '/google/me?userId=' +userId;    
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+      SetUserStats(responseJson);        
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+  }
 
   async function getProblemOfTheDay() {
     const cookies = new Cookies();
@@ -66,7 +115,10 @@ const CodeSubmitForm = () => {
     });
 }
 
-useEffect(() => { getProblemOfTheDay(); }, [])
+useEffect(() => { 
+  getProblemOfTheDay(); 
+  getUserStats();
+}, [])
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -92,7 +144,13 @@ function submitCode(query, requestOptions) {
      .then(res => res.json())
      .then(data => {
        if (data.message === 'Success') {
-        const tweet_url = 'https://twitter.com/intent/tweet?text=I%20just%20solved%20the%20problem:%20'+ problem.problemName +' on%20www.threehundreddaysofcode.com%0A%20Join%20here%20to%20start%20the%20challenge%20with%20me.%20https%3A//discord.gg/6duGefKtyv%20@300DaysOfCode';
+        const tweet_text = encodeURI(
+          'Problem ' + userStats.numberOfSubmissions + '/300 done 💪 🔥.\n' +
+          'I just solved the problem '+ problem.problemName +
+          ' on www.threehundreddaysofcode.com\nJoin here to start the 300 day challenge with me.' +
+          ' https://discord.gg/6duGefKtyv\ncc @300daysofcode'
+          );
+        const tweet_url = 'https://twitter.com/intent/tweet?text=' + tweet_text;
         const successMessage = <p>Submission updated successfully. Well done. Click <a href={tweet_url} target="_blank"> here </a> to share on Twitter.</p>;
        showMessage(successMessage);
        } else {
