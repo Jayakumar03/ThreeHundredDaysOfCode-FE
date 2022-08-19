@@ -27,13 +27,21 @@ const columns = [
     title: 'Number of submissions',
     dataIndex: 'numberOfSubmissions',
     key: 'numberOfSubmissions',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.numberOfSubmissions - b.numberOfSubmissions,    
   },
   {
     title: 'Longest Streak',
     dataIndex: 'longestStreak',
     key: 'longestStreak',
-  },  
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.longestStreak - b.longestStreak,    
+  },    
 ];
+
+const onChange = (pagination, filters, sorter, extra) => {
+  console.log('params', pagination, filters, sorter, extra);
+};
 
 function LeaderBoard() {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
@@ -109,7 +117,7 @@ useEffect(() => {
   return (
     <div className='leaderboard-table'>
       <h1> Leader Board Table</h1>    
-    <Table columns={columns} dataSource={leaderBoardStats} />
+    <Table columns={columns} dataSource={leaderBoardStats} onChange={onChange} />
     </div>
   );
 }
