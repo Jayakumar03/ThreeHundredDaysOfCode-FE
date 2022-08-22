@@ -146,7 +146,7 @@ function submitCode(query, requestOptions) {
      .then(data => {
        if (data.message === 'Success') {
         const tweet_text = encodeURI(
-          'Problem ' + userStats.numberOfSubmissions + '/300 done 💪 🔥.\n' +
+          'Problem ' + data.userStats.numberOfSubmissions + '/300 done 💪 🔥.\n' +
           'I just solved the problem '+ problem.problemName +
           ' on www.threehundreddaysofcode.com\nJoin here to start the 300 day challenge with me.' +
           ' https://discord.gg/6duGefKtyv\ncc @300daysofcode'
