@@ -159,12 +159,14 @@ async function handleCredentialResponse(response) {
   };
   await Auth.federatedSignIn(
       'google', { token: idToken, expiresAt }, user);
+  const userId = getUuid(payload.email);
   const cookies = new Cookies();
   const expiresDate = new Date();
   expiresDate.setFullYear(new Date().getFullYear() + 1);
   cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
   cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
   cookies.set('loginType', 'googleSSO', { path: '/', expires: expiresDate });
+  cookies.set('userId', userId, { path: '/', expires: expiresDate });
   createUserAccountWithSSO(payload.email, payload.name);
   navigate('/');
 }

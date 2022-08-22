@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from "aws-amplify";
 
 // Design Components
-import { message } from 'antd';
+import { Button, Modal, message } from 'antd';
 
 // Cookies
 import Cookies from 'universal-cookie';
@@ -45,6 +45,8 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 function LeaderBoard() {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
+  const [timeFilter, SetTimeFilter] = useState("ANY_TIME");
+  const [tableHeading, SetTableHeading] = useState("Leader Border - All Time");
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -81,7 +83,7 @@ async function getLeaderBoardGoogleSSO(){
   const userAuth = await Auth.currentAuthenticatedUser();
   const requestOptions = { 'method': 'GET' };
   const userId = getUuid(userAuth.email);
-  const query = process.env.REACT_APP_API_URL + '/google/leaderBoard?userId=' + userId;                
+  const query = process.env.REACT_APP_API_URL + '/google/leaderBoard?userId=' + userId + "&timeFilter=" + timeFilter;                
   getLeaderBoardWithQuery(query, requestOptions);
 }
 
@@ -89,7 +91,7 @@ async function getLeaderBoardCognito() {
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
-    const query = process.env.REACT_APP_API_URL + '/leaderBoard';
+    const query = process.env.REACT_APP_API_URL + '/leaderBoard?timeFilter=' + timeFilter;
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -112,12 +114,40 @@ async function getLeaderBoard() {
 
 useEffect(() => {
   getLeaderBoard();
-}, [])
+  document.getElementById('all-time-btn').type = 'primary';
+}, [timeFilter])
+
+function handleWeeklyButtonClick() {
+  SetTimeFilter("WEEK");
+  document.getElementById('weekly-btn').type = 'primary';  
+  document.getElementById('all-time-btn').type = '';
+  SetTableHeading("Leader Board - This Week");
+}
+function handleAllTimeButtonClick() {
+  SetTimeFilter("ANY_TIME");
+  document.getElementById('all-time-btn').type = 'primary';
+  document.getElementById('weekly-btn').type = '';
+  SetTableHeading("Leader Board - All Time");
+}
 
   return (
     <div className='leaderboard-table'>
-      <h1> Leader Board Table</h1>    
-    <Table columns={columns} dataSource={leaderBoardStats} onChange={onChange} />
+      <h1>{tableHeading}</h1>
+      <Table columns={columns} dataSource={leaderBoardStats} onChange={onChange} />
+      <Button
+                  className='weekly-btn'
+                  id='weekly-btn'
+                  
+                  onClick={handleWeeklyButtonClick}>
+                    Weekly
+                  </Button>
+                  <Button
+                  className='all-time-btn'
+                  id='all-time-btn'
+                  
+                  onClick={handleAllTimeButtonClick}>
+                    All Time
+                  </Button> 
     </div>
   );
 }

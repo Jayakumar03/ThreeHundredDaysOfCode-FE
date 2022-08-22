@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 import '../styles/Navbar.css';
 import '../styles/Common.css';
 import '../styles/Footer.css';

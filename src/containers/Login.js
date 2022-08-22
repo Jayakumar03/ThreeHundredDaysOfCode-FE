@@ -36,12 +36,14 @@ function Login(props) {
       userHasAuthenticated(true);
       var cognitoUser = await Auth.signIn(fields.username, fields.password);
       const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
+      const userId = cognitoUser.signInUserSession.accessToken.payload.sub;
       const cookies = new Cookies();
       const expiresDate = new Date();
       expiresDate.setFullYear(new Date().getFullYear() + 1);
       cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
+      cookies.set('userId', userId, { path: '/', expires: expiresDate });
       navigate("/submission");
     } catch (e) {
       onError(e);
@@ -118,12 +120,14 @@ async function handleCredentialResponse(response) {
   };
   await Auth.federatedSignIn(
       'google', { token: idToken, expiresAt }, user);
+  const userId = getUuid(payload.email);
   const cookies = new Cookies();
   const expiresDate = new Date();
   expiresDate.setFullYear(new Date().getFullYear() + 1);
   cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
   cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
   cookies.set('loginType', 'googleSSO', { path: '/', expires: expiresDate });
+  cookies.set('userId', userId, { path: '/', expires: expiresDate });
   createUserAccountWithSSO(payload.email, payload.name);
   navigate('/');
 }
