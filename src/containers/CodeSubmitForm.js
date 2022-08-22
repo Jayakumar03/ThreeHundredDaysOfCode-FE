@@ -17,6 +17,7 @@ const CodeSubmitForm = () => {
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
   const [userStats, SetUserStats] = useState(null);
+  const [logic, SetLogic] = useState("daily");
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -80,7 +81,7 @@ const CodeSubmitForm = () => {
     const userAuth = await Auth.currentAuthenticatedUser();
     const requestOptions = { 'method': 'GET' };
     const userId = getUuid(userAuth.email);
-    const query = process.env.REACT_APP_API_URL + '/google/problem?userId=' +userId;    
+    const query = process.env.REACT_APP_API_URL + '/google/problem?userId=' + userId + "&logic=" + logic;
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
@@ -118,7 +119,7 @@ const CodeSubmitForm = () => {
 useEffect(() => { 
   getProblemOfTheDay(); 
   getUserStats();
-}, [])
+}, [logic])
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -150,15 +151,21 @@ function submitCode(query, requestOptions) {
           ' on www.threehundreddaysofcode.com\nJoin here to start the 300 day challenge with me.' +
           ' https://discord.gg/6duGefKtyv\ncc @300daysofcode'
           );
-        const tweet_url = 'https://twitter.com/intent/tweet?text=' + tweet_text;
-        const successMessage = <p>Submission updated successfully. Well done. Click <a href={tweet_url} target="_blank"> here </a> to share on Twitter.</p>;
-       showMessage(successMessage);
+         const tweet_url = 'https://twitter.com/intent/tweet?text=' + tweet_text;
+         const successMessage = <p>Submission updated successfully. Well done. Click <a href={tweet_url} target="_blank"> here </a> to share on Twitter.</p>;
+         showMessage(successMessage);
        } else {
          const errorMessage = "Something went wrong. Please try again, later.";
          showMessage(null, errorMessage);
        }
      })
      .catch(console.log)
+  }
+  
+  async function handleNewProblemClick() {    
+    SetLogic("random");
+    getProblemOfTheDay(); 
+    getUserStats();
   }
   
   async function onFinish(values) {
@@ -278,9 +285,14 @@ function submitCode(query, requestOptions) {
       ]}>
         <Input placeholder="Github Link" />
       </Form.Item>
-      <Form.Item {...buttonItemLayout}>
-        <Button type="primary" htmlType='submit'>Submit</Button>
-      </Form.Item>
+      <div className='submit-btn-container'>
+        <Form.Item {...buttonItemLayout}>
+          <Button type="primary" htmlType='submit'>Submit</Button>
+        </Form.Item>
+        <Form.Item {...buttonItemLayout}>
+          <Button type="primary" onClick={handleNewProblemClick}>New Problem</Button>
+        </Form.Item>
+      </div>
     </Form>
     </div>
   );
