@@ -97,7 +97,7 @@ const CodeSubmitForm = () => {
   const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
-    const query = process.env.REACT_APP_API_URL + '/problem';
+    const query = process.env.REACT_APP_API_URL + '/problem?logic=' + logic;
     const requestOptions = {
       method: 'GET',
       headers: {
