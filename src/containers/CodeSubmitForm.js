@@ -262,7 +262,7 @@ function submitCode(query, requestOptions) {
         }
       ]}
       >
-        <Input placeholder="Problem Name" disabled={true} />
+        <Input placeholder="Problem Name" disabled={false} />
       </Form.Item>
       <Form.Item 
       label="Problem Link" 
@@ -274,7 +274,7 @@ function submitCode(query, requestOptions) {
         }
       ]}
       >
-        <Input placeholder="Leetcode Link" disabled={true} />
+        <Input placeholder="Leetcode Link" disabled={false} />
       </Form.Item>
       <Form.Item label="Solution Link" name='solutionLink'
       rules={[
