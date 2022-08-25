@@ -1,11 +1,13 @@
-import React, {  } from 'react';
+import React, { useEffect } from 'react';
 
 // Cookies.
 import Cookies from 'universal-cookie';
 
-import '../styles/editor.css';
+import '../styles/Editor.css';
 
 function Editor() {
+    const index = 1;
+    const title = "Add To Array Form Integer";
     const problem = "<p>Given an integer <code>n</code>, return <em><code>true</code> if it is a power of three. Otherwise, return <code>false</code></em>.</p>" +
     "<p>An integer <code>n</code> is a power of three, if there exists an integer <code>x</code> such that <code>n == 3<sup>x</sup></code>.</p>" + 
     
@@ -39,8 +41,16 @@ function Editor() {
 
     return (
         <div className='problem-editor-container'>
-            <div dangerouslySetInnerHTML={{ __html: problem}}></div>
-            <div dangerouslySetInnerHTML={iframe()}></div>
+            <div className='problem-description'>
+                <div className='problem-description-header'>
+                    <p className='problem-description-index'>{index}.</p>
+                    <p className='problem-description-header-title'>{title}</p>
+                </div>
+                <hr></hr>
+                <div dangerouslySetInnerHTML={{ __html: problem}}></div>
+                <hr></hr>
+            </div>
+            <div className='editor-container' dangerouslySetInnerHTML={iframe()}></div>
         </div>
     );
 }
