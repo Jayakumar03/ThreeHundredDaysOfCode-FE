@@ -15,6 +15,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Challenge from './containers/Challenge';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
+import Feed from './containers/Feed';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -35,8 +36,7 @@ function AppRoutes(props) {
               <Login />
             </LoginRoute>
               } />
-          <Route exact path="/home" element={<Home />} />
-          <Route exact path="/problem" element={<ProblemOfDay />} />
+          <Route exact path="/home" element={<Home />} />          
           <Route exact path="/profile" element={
             <PrivateRoute>
               <Profile />
@@ -52,6 +52,11 @@ function AppRoutes(props) {
              <LeaderBoard /> 
             </PrivateRoute>
           } />
+          <Route exact path="/problem" element={
+            <PrivateRoute>
+              <CodeSubmitForm /> 
+            </PrivateRoute>
+        } />
           <Route exact path="/submission" element={
             <PrivateRoute>
               <CodeSubmitForm /> 
@@ -62,6 +67,7 @@ function AppRoutes(props) {
               <Editor /> 
             </PrivateRoute>
         } />
+          <Route exact path="/feed" element={ <Feed />} />
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <Challenge />} />
           <Route exact path="/signup" element={<Signup />} />          

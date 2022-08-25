@@ -16,7 +16,7 @@ const CodeSubmitForm = () => {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
-  const [userStats, SetUserStats] = useState(null);
+  const [, SetUserStats] = useState(null);
   const [logic, SetLogic] = useState("daily");
 
   async function getUserStats() {
