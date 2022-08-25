@@ -16,6 +16,7 @@ import Challenge from './containers/Challenge';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
 import Problems from './containers/Problems';
+import Problem from './containers/Problem';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -64,6 +65,7 @@ function AppRoutes(props) {
             </PrivateRoute>
         } />
           <Route exact path="/problemset/all" element={ <Problems />} />
+          <Route exact path="/problem/:problemId" element={ <Problem />} />
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <Challenge />} />
           <Route exact path="/signup" element={<Signup />} />          

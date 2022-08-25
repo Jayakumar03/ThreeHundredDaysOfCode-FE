@@ -6,91 +6,48 @@ import { Auth } from "aws-amplify";
 
 import Cookies from 'universal-cookie';
 
-const getUuid = require('uuid-by-string');
+import '../styles/ProblemSet.css';
+
+import ProblemBar from '../components/ProblemBar';
+
+function getLink(text, record, index) {  
+  const problemId = record.problemId;
+  return "/problem/" + problemId + "/";
+}
 
 const columns = [
+  {
+    title: '#',
+    dataIndex: 'problemIndex',
+    key: 'problemIndex',
+  },
   {
     title: 'Title',
     dataIndex: 'problemTitle',
     key: 'problemTitle',
-    render: (text) => <a>{text}</a>,
+    render: (text, record, index) => <a href={getLink(text, record, index)}>{text}</a>,
   },
   {
     title: 'Difficulty',
-    dataIndex: 'complexity',
-    key: 'complexity',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
+    dataIndex: 'problemComplexity',
+    key: 'problemComplexity',
   },
 ];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
 
 function Problems() {
    const [problemSet, SetProblemSet] = useState([]);
+   const [top] = useState('none');
+   const [bottom] = useState('bottomCenter');
+   const [totalResults, SetTotalResults] = useState(10);
+   const [problemOfTheDay, SetProblemOfTheDay] = useState({});
 
     async function getProblemsWithRequestParams(query, requestOptions) {
         fetch(query, requestOptions)
           .then(res => res.json())
           .then(responseJson => {
             SetProblemSet(responseJson.data);
+            SetTotalResults(responseJson.size);
+            SetProblemOfTheDay(responseJson);
           })
           .catch((error) => {
             console.log(error);
@@ -101,7 +58,7 @@ function Problems() {
         const currentSessionResponse = await Auth.currentSession();
         const accessToken = currentSessionResponse.getAccessToken();
         const jwtToken = accessToken.getJwtToken();
-        const query = process.env.REACT_APP_API_URL + '/problems?page=1';
+        const query = process.env.REACT_APP_API_URL + '/problems';
         const requestOptions = {
           method: 'GET',
           headers: {
@@ -113,9 +70,8 @@ function Problems() {
       }
       
       async function getProblemSetGoogleSSO() {
-        const userAuth = await Auth.currentAuthenticatedUser();
         const requestOptions = { 'method': 'GET' };        
-        const query = process.env.REACT_APP_API_URL + '/google/problems?page=1';
+        const query = process.env.REACT_APP_API_URL + '/google/problems';
         getProblemsWithRequestParams(query, requestOptions);
       }
       
@@ -135,7 +91,21 @@ function Problems() {
         getProblemSet();        
       }, [])
 
-    return ( <Table columns={columns} dataSource={problemSet} />);
+
+    return (
+              
+       <div className='problemset-table'>    
+        <Table 
+        columns={columns} 
+        dataSource={problemSet} 
+        pagination={{
+          position: [top, bottom],          
+          total: totalResults,          
+        }}        
+        />    
+    </div>
+    
+    );
 }
 
 export default Problems;

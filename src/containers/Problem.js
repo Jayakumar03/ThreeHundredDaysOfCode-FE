@@ -1,7 +1,7 @@
-import { Button, Form, Input, message } from 'antd';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
-import { useNavigate } from 'react-router-dom';
 
 // Styles.
 import '../styles/CodeSubmitForm.css';
@@ -13,15 +13,12 @@ import Cookies from 'universal-cookie';
 // Utility.
 const getUuid = require('uuid-by-string');
 
-const CodeSubmitForm = () => {
+function Problem(){
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
   const [userStats, SetUserStats] = useState(null);
-  const [logic, SetLogic] = useState("daily");
-  const navigate = useNavigate();
-
-
+  const problemId = useParams().problemId;
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -71,59 +68,6 @@ const CodeSubmitForm = () => {
     });
   }
 
-  async function getProblemOfTheDay() {
-    const cookies = new Cookies();
-    const loginType = cookies.get('loginType');
-    if (loginType === 'cognito') {
-      getProblemOfTheDayCognito();
-    } else {
-      getProblemOfTheDayGoogleSSO();
-    }
-  }
-
-  async function getProblemOfTheDayGoogleSSO() {
-    const userAuth = await Auth.currentAuthenticatedUser();
-    const requestOptions = { 'method': 'GET' };
-    const userId = getUuid(userAuth.email);
-    const query = process.env.REACT_APP_API_URL + '/google/problem?userId=' + userId + "&logic=" + logic;
-    fetch(query, requestOptions)
-    .then(res => res.json())
-    .then(responseJson => {
-        SetProblem(responseJson);
-        form.setFieldsValue(responseJson);
-    })
-    .catch((error) => {      
-      console.log(error);
-    });
-  }
-
-  async function getProblemOfTheDayCognito() {
-  const currentSessionResponse = await Auth.currentSession();
-    const accessToken = currentSessionResponse.getAccessToken();
-    const jwtToken = accessToken.getJwtToken();
-    const query = process.env.REACT_APP_API_URL + '/problem?logic=' + logic;
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + jwtToken
-      }
-    };
-    fetch(query, requestOptions)
-    .then(res => res.json())
-    .then(responseJson => {
-        SetProblem(responseJson);
-        form.setFieldsValue(responseJson);
-    })
-    .catch((error) => {      
-      console.log(error);
-    });
-}
-
-useEffect(() => { 
-  getProblemOfTheDay(); 
-  getUserStats();
-}, [logic])
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -166,10 +110,8 @@ function submitCode(query, requestOptions) {
      .catch(console.log)
   }
   
-  async function handleNewProblemClick() {    
-    navigate('/problemset/all');
-  }
-  
+  async function handleNewProblemClick() {}    
+    
   async function onFinish(values) {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
@@ -221,6 +163,63 @@ function submitCode(query, requestOptions) {
     submitCode(query, requestOptions);
   };
 
+  async function GetProblemFromURL() {
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      GetProblemFromURLCognito();
+    } else {
+      GetProblemFromURLGoogleSSO();
+    }
+  }
+
+  async function GetProblemFromURLGoogleSSO() {
+    
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const requestOptions = { 'method': 'GET' };
+    const userId = getUuid(userAuth.email);
+    const query = process.env.REACT_APP_API_URL + '/google/problemById?userId=' + userId + "&problemId=" + problemId;
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+        SetProblem(responseJson);
+        form.setFieldsValue(responseJson);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+  }
+
+  async function GetProblemFromURLCognito() {
+    
+    const currentSessionResponse = await Auth.currentSession();
+    const accessToken = currentSessionResponse.getAccessToken();
+    const jwtToken = accessToken.getJwtToken();
+    const query = process.env.REACT_APP_API_URL + '/problemById?problemId=' + problemId;
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwtToken
+      }
+    };
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+        SetProblem(responseJson);
+        form.setFieldsValue(responseJson);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+}
+
+  
+useEffect(() => { 
+    GetProblemFromURL();
+    getUserStats();
+}, []);
+
   const formItemLayout =
     formLayout === 'horizontal'
       ? {
@@ -244,7 +243,7 @@ function submitCode(query, requestOptions) {
   return (
     <div className='code-submit-form-parent'>
       <ProblemBar 
-      headerText="The problem of the day is "
+      headerText="The name of the problem is "
       problem={problem}
       />
     <Form
@@ -303,4 +302,4 @@ function submitCode(query, requestOptions) {
   );
 };
 
-export default CodeSubmitForm;
+export default Problem;
