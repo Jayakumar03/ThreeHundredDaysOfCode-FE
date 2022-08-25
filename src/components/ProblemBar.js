@@ -7,7 +7,7 @@ function ProblemBar(props) {
   return (
     <div className="problem-bar-box">
       <p className="problem-bar-text"> Problem of the day is - "{props.problem.problemName}".
-      <a href={props.problem.problemLink}> Click here </a> to get started.</p>
+      <a target="_blank" href={props.problem.problemLink}> Click here </a> to get started.</p>
     </div>        
     );
 }
