@@ -37,3 +37,17 @@
 .line-class {
     margin: 5px 5px!important;
 }
+
+.reaction-stats-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-card-author-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.content-card-author-name {
+    font-weight: 700;
+}
