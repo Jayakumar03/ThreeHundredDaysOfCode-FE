@@ -1,0 +1,39 @@
+.feed-parent {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.reaction-block {
+    display: flex;
+    justify-content: space-evenly;
+    height: 30px;
+}
+
+.reaction-element {
+    width: 33%;
+    display: flex;
+}
+
+.reaction-element:hover {
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.reaction-comment-box {
+    border-radius: 30px!important;
+}
+
+.reaction-icon {
+    margin-left: 20px!important;
+    margin-top: 5px!important;
+}
+
+.reaction-text {
+    text-align: center;
+    margin-left: 10px;
+}
+
+.line-class {
+    margin: 5px 5px!important;
+}
