@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
 import Editor from '../containers/Editor';
-
+import { useNavigate } from 'react-router-dom';
 
 // Styles.
 import '../styles/CodeSubmitForm.css';
@@ -19,8 +19,9 @@ function Problem(){
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState({});
-  const [userStats, SetUserStats] = useState(null);
+  const [, SetUserStats] = useState(null);
   const problemId = useParams().problemId;
+  const navigate = useNavigate();
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -112,7 +113,9 @@ function submitCode(query, requestOptions) {
      .catch(console.log)
   }
   
-  async function handleNewProblemClick() {}    
+  async function handleNewProblemClick() {
+    navigate('/problemset/all');
+  }    
     
   async function onFinish(values) {
     const cookies = new Cookies();
