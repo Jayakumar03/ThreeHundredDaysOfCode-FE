@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
+import Editor from '../containers/Editor';
+
 
 // Styles.
 import '../styles/CodeSubmitForm.css';
@@ -16,7 +18,7 @@ const getUuid = require('uuid-by-string');
 function Problem(){
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
-  const [problem, SetProblem] = useState([]);
+  const [problem, SetProblem] = useState({});
   const [userStats, SetUserStats] = useState(null);
   const problemId = useParams().problemId;
 
@@ -184,6 +186,8 @@ function submitCode(query, requestOptions) {
     .then(responseJson => {
         SetProblem(responseJson);
         form.setFieldsValue(responseJson);
+        console.log(problem);
+        console.log(problem.length);
     })
     .catch((error) => {      
       console.log(error);
@@ -258,7 +262,7 @@ useEffect(() => {
     >
       <Form.Item 
       label="Problem Name"
-      name="problemName"
+      name="problemTitle"
       rules={[
         {
           required: true,
@@ -298,6 +302,7 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
+    <Editor problem={problem} />
     </div>
   );
 };

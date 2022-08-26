@@ -8,6 +8,7 @@
     padding-left: 20px;
     padding-right: 50px;
     padding-top: 20px;
+    max-width: 40%;
 }
 
 .problem-description-header {
@@ -24,4 +25,8 @@
 
 .problem-description-index {
     margin-bottom: 5px;
+}
+
+.editor-container {
+    min-width: 50%;
 }
