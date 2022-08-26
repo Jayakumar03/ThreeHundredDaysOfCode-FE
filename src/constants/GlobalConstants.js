@@ -6,3 +6,4 @@ export const JIRA_OAUTH_STATE = 'jira-decover-login';
 export const GITHUB_OAUTH_STATE = 'github-decover-login';
 export const SLACK_OAUTH_STATE = 'slack-decover-login';
 export const INDEX_DONE_SUCCESS_MESSAGE = 'Your credentials have been successfully updated. You will receive an email when the index is ready to search. The data will be available for search in 10 minutes.';
+export const SHOW_EDITOR = false;
