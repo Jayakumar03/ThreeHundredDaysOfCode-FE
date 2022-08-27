@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import CodeCard from '../components/CodeCard';
 
-import '../styles/feed.css';
-
-// Authentication
+// Authentication.
 import { Auth } from "aws-amplify";
 
-// Cookies
+// Cookies.
 import Cookies from 'universal-cookie';
 
-// Styles
+// Styles.
 import '../styles/LeaderBoard.css';
+import '../styles/Feed.css';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -22,6 +21,8 @@ async function GetFeedWithQuery(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
+      
+
       SetFeed(responseJson);
     })
     .catch((error) => {      

@@ -3,7 +3,8 @@ import React, {  } from 'react';
 // Cookies.
 import Cookies from 'universal-cookie';
 
-import '../styles/editor.css';
+// Styles.
+import '../styles/Editor.css';
 
 function Editor() {
     const problem = "<p>Given an integer <code>n</code>, return <em><code>true</code> if it is a power of three. Otherwise, return <code>false</code></em>.</p>" +

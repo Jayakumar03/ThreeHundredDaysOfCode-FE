@@ -1,14 +1,10 @@
-import { Card, Input } from 'antd';
-import { Avatar, Image } from 'antd';
-import React from 'react';
+import { Avatar, Button, Card, Input } from 'antd';
+import React, { useState } from 'react';
 import { LikeOutlined, CommentOutlined } from '@ant-design/icons';
 import CommentBox from '../components/CommentBox';
 
 function CodeCard(props) {
-  console.log(props.data);
-
-function submitComment() {}
-function submitLike() {}
+  const [showMore, setShowMore] = useState(false);
 
 return (
   <div>
@@ -23,7 +19,12 @@ return (
         <p className='content-card-author-name'> {props.data.data.name} </p>
       </div>
       <div className='code-block'>
-        <p>{props.data.data.codeBlock}</p>
+        <p>
+          {showMore ? atob(props.data.data.codeBlock) : atob(props.data.data.codeBlock).substring(0, 250)}
+          <Button type="link" className="show-more-button" onClick={() => setShowMore(!showMore)}>
+            {showMore ? "Show less" : "Show more"}
+          </Button>
+        </p>
       </div>
       <div className='reaction-stats-box'>
       <div>

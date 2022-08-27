@@ -51,3 +51,11 @@
 .content-card-author-name {
     font-weight: 700;
 }
+
+.code-block {
+    white-space: pre-wrap;
+}
+
+.show-more-button {
+    float: right;
+}
