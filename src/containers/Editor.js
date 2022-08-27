@@ -29,7 +29,7 @@ function Editor() {
     
     
     function iframe() {
-        const cookies = new Cookies();        
+        const cookies = new Cookies();
         let userId = cookies.get('userId', { path: '/' });
         const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId;
         console.log(editor_url);
