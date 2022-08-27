@@ -65,3 +65,7 @@
 .show-more-button {
     float: right;
 }
+
+.line-class {
+    margin: 5px 5px!important;
+}

@@ -1,3 +1,4 @@
+// React.
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -9,13 +10,12 @@ import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
 import CodeSubmitForm from './containers/CodeSubmitForm';
 import Profile from './containers/Profile';
-import ProblemOfDay from './containers/ProblemOfDay';
 import Home from './containers/Home';
 import PrivateRoute from './components/PrivateRoute';
-import Challenge from './containers/Challenge';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
 import Feed from './containers/Feed';
+import Problems from './containers/Problems';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -67,10 +67,24 @@ function AppRoutes(props) {
               <Editor /> 
             </PrivateRoute>
         } />
-          <Route exact path="/feed" element={ <Feed />} />
+          <Route exact path="/feed" element={ 
+            <PrivateRoute>
+              <Feed />
+            </PrivateRoute>          
+          } />
+          <Route exact path="/problemset/all" element={
+            <PrivateRoute>
+              <Problems /> 
+            </PrivateRoute>
+        } />
+          <Route exact path="/problem/:problemId" element={
+            <PrivateRoute>
+              <Problems /> 
+            </PrivateRoute>
+        } />
           <Route exact path="/faq" element={ <FAQ />} />
-          <Route exact path="/challenge" element={ <Challenge />} />
-          <Route exact path="/signup" element={<Signup />} />          
+          <Route exact path="/challenge" element={ <FAQ />} />
+          <Route exact path="/signup" element={<Signup />} />
           <Route exact path="*" element={<NotFound />} />
         </Routes>
       </div>

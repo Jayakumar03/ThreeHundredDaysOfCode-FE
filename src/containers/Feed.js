@@ -1,4 +1,7 @@
+// React.
 import React, { useEffect, useState } from 'react';
+
+// Components.
 import CodeCard from '../components/CodeCard';
 
 // Authentication.
