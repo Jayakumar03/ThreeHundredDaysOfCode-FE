@@ -34,6 +34,12 @@
     margin-left: 10px;
 }
 
+.reaction-text-selected {
+    text-align: center;
+    margin-left: 10px;
+    color: blue;
+}
+
 .line-class {
     margin: 5px 5px!important;
 }

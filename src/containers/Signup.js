@@ -14,7 +14,7 @@ import "../styles/Signup.css";
 const getUuid = require('uuid-by-string');
 
 export default function Signup() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -22,7 +22,7 @@ export default function Signup() {
     confirmationCode: "",
   });
   let navigate = useNavigate();
-  const [newUser, setNewUser] = useState(null);
+  const [setNewUser] = useState(null);
   const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,23 +52,7 @@ export default function Signup() {
         onError(e);
         setIsLoading(false);
       }
-  }
-
- function triggerCreateUserAccount(query, requestOptions) {
-    fetch(query, requestOptions)
-     .then(res => res.json())
-     .then(data => {
-       console.log('Response', data);
-       if (data.message === 'Success') {
-       const successMessage = "Index build triggered successfully.";
-       console.log(successMessage);
-       } else {
-         const errorMessage = "Something went wrong. Please try again, later.";
-         console.log(errorMessage);
-       }
-     })
-     .catch(console.log)
-  }
+  } 
 
   async function createUserAccount() {
     const query = process.env.REACT_APP_API_URL + '/createProfile';
@@ -114,18 +98,11 @@ export default function Signup() {
     fetch(query, requestOptions)
      .then(res => res.json())
      .then(data => {
-       console.log('Response', data);
-       if (data.message === 'Success') {
-       const successMessage = "Index build triggered successfully.";
-       console.log(successMessage);
-       } else {
-         const errorMessage = "Something went wrong. Please try again, later.";
-         console.log(errorMessage);
-       }
+       console.log('Response', data);       
      })
      .catch(console.log)
   }
-  
+    
   async function createUserAccountWithSSO(email, name) {
     const query = process.env.REACT_APP_API_URL + '/google/createProfile';
     let referrerId = searchParams.get("__referrerId");

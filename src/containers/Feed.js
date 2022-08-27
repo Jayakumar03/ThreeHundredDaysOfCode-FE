@@ -21,8 +21,6 @@ async function GetFeedWithQuery(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      
-
       SetFeed(responseJson);
     })
     .catch((error) => {      
