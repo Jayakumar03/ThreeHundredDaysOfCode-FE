@@ -6,7 +6,7 @@ import '../styles/ProblemOfDay.css'
 function ProblemBar(props) {
   return (
     <div className="problem-bar-box">
-      <p className="problem-bar-text"> {props.headerText} - "{props.problem.problemName}".
+      <p className="problem-bar-text"> {props.headerText} - "{props.problem.problemTitle}".
       <a target="_blank" href={props.problem.problemLink}> Click here </a> to get started.</p>
     </div>        
     );

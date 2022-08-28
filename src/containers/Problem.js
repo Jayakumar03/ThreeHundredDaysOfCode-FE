@@ -95,7 +95,7 @@ function submitCode(query, requestOptions) {
        if (data.message === 'Success') {
         const tweet_text = encodeURI(
           'Problem ' + data.userStats.numberOfSubmissions + '/300 done 💪 🔥.\n' +
-          'I just solved the problem '+ problem.problemName +
+          'I just solved the problem '+ problem.problemTitle +
           ' on www.threehundreddaysofcode.com\nJoin here to start the 300 day challenge with me.' +
           ' https://discord.gg/6duGefKtyv\ncc @300daysofcode'
           );
@@ -133,7 +133,7 @@ function submitCode(query, requestOptions) {
       },
       body: JSON.stringify({
         'userId': userId,
-        'problemName': values.problemName,
+        'problemName': values.problemTitle,
         'problemLink': values.problemLink,
         'solutionLink': values.solutionLink
       })
@@ -155,7 +155,7 @@ function submitCode(query, requestOptions) {
       },
       body: JSON.stringify({
         'userId': userId,
-        'problemName': values.problemName,
+        'problemName': values.problemTitle,
         'problemLink': values.problemLink,
         'solutionLink': values.solutionLink
       })
@@ -258,7 +258,7 @@ useEffect(() => {
     >
       <Form.Item 
       label="Problem Name"
-      name="problemName"
+      name="problemTitle"
       rules={[
         {
           required: true,

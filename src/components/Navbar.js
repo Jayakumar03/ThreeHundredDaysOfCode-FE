@@ -66,7 +66,7 @@ function Navbar(props) {
                   <a href="/submission" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
                   <a href="/leaderboard" className="link link-quiet focus-visible understroke active link-quiet navbar-text">LeaderBoard</a>
                   <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a>
-                  <a href="/feed" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Community</a>
+                  {/* <a href="/feed" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Community</a> */}
                   <a target="_window" href="/faq" className="link link-quiet focus-visible understroke active link-quiet navbar-text">FAQ</a>
                   <a href='/problemset/all' className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Set</a>
                   <div className="flex-auto flex" />
@@ -75,11 +75,11 @@ function Navbar(props) {
                       <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />                       
                     </a>
                   </div>
-                  <div className='notification-container'> 
+                  {/* <div className='notification-container'> 
                     <Badge count={notificationCount}>
                       <NotificationTwoTone className='notification-container'/> 
                     </Badge>
-                  </div>
+                  </div> */}
                   {/* <Button
                   className='referral-btn'
                   type="primary"
