@@ -16,6 +16,7 @@ import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
 import Feed from './containers/Feed';
 import Problems from './containers/Problems';
+import Problem from './containers/Problem';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -79,7 +80,7 @@ function AppRoutes(props) {
         } />
           <Route exact path="/problem/:problemId" element={
             <PrivateRoute>
-              <Problems /> 
+              <Problem /> 
             </PrivateRoute>
         } />
           <Route exact path="/faq" element={ <FAQ />} />

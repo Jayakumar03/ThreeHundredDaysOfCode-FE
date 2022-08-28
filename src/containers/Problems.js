@@ -31,6 +31,18 @@ const columns = [
     title: 'Difficulty',
     dataIndex: 'problemComplexity',
     key: 'problemComplexity',
+    render: (_, {problemComplexity}) => {
+      let color = 'red';
+
+      if (problemComplexity === 'Easy') {
+        color = 'green';
+      } else if (problemComplexity === 'Medium') {
+        color = 'blue';
+      } else {
+        color = 'red';
+      }
+      return <Tag color={color} key={problemComplexity}>{problemComplexity.toUpperCase()}</Tag>
+    },
   },
 ];
 
