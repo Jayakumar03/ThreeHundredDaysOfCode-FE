@@ -15,7 +15,7 @@ import Cookies from 'universal-cookie';
 
 // Styles.
 import '../styles/LeaderBoard.css';
-import '../styles/Feed.css';
+import '../styles/FeedStyle.css';
 
 // Utility.
 const getUuid = require('uuid-by-string');

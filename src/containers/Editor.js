@@ -4,7 +4,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 
 // Styles.
-import '../styles/Editor.css';
+import '../styles/EditorStyle.css';
 
 // Utility.
 import { Base64 } from "js-base64";
