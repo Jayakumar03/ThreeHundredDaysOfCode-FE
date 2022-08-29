@@ -1,3 +1,32 @@
 .problem-editor-container {
     display: flex;
+    margin-left: 20px;
+    justify-content: space-between;
+}
+
+.problem-description {
+    padding-left: 20px;
+    padding-right: 50px;
+    padding-top: 20px;
+    max-width: 40%;
+}
+
+.problem-description-header {
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.problem-description-header-title {
+    margin-left: 10px;
+    margin-bottom: 5px;   
+}
+
+.problem-description-index {
+    margin-bottom: 5px;
+}
+
+.editor-container {
+    min-width: 50%;
 }

@@ -21,8 +21,6 @@ const CodeSubmitForm = () => {
   const [logic, SetLogic] = useState("daily");
   const navigate = useNavigate();
 
-
-
   async function getUserStats() {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');

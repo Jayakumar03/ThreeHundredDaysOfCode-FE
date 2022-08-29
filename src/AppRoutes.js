@@ -64,16 +64,16 @@ function AppRoutes(props) {
               <Editor /> 
             </PrivateRoute>
         } />
-          <Route exact path="/problemset/all" element={
-            <PrivateRoute>
-              <Problems /> 
-            </PrivateRoute>
-        } />
-          <Route exact path="/problem/:problemId" element={
-            <PrivateRoute>
-              <Problems /> 
-            </PrivateRoute>
-        } />
+          <Route exact path="/problemset/all" element={ 
+              <PrivateRoute>
+                <Problems />
+              </PrivateRoute>
+          } />
+          <Route exact path="/problem/:problemId" element={ 
+          <PrivateRoute>
+            <Problem />
+          </PrivateRoute>          
+          } />
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />
           <Route exact path="/signup" element={<Signup />} />

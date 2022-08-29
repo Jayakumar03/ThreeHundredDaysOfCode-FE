@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
+import Editor from '../containers/Editor';
+import { useNavigate } from 'react-router-dom';
 
 // Styles.
 import '../styles/CodeSubmitForm.css';
@@ -16,9 +18,10 @@ const getUuid = require('uuid-by-string');
 function Problem(){
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
-  const [problem, SetProblem] = useState([]);
-  const [userStats, SetUserStats] = useState(null);
+  const [problem, SetProblem] = useState({});
+  const [, SetUserStats] = useState(null);
   const problemId = useParams().problemId;
+  const navigate = useNavigate();
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -110,7 +113,9 @@ function submitCode(query, requestOptions) {
      .catch(console.log)
   }
   
-  async function handleNewProblemClick() {}    
+  async function handleNewProblemClick() {
+    navigate('/problemset/all');
+  }    
     
   async function onFinish(values) {
     const cookies = new Cookies();
@@ -184,6 +189,8 @@ function submitCode(query, requestOptions) {
     .then(responseJson => {
         SetProblem(responseJson);
         form.setFieldsValue(responseJson);
+        console.log(problem);
+        console.log(problem.length);
     })
     .catch((error) => {      
       console.log(error);
@@ -258,7 +265,7 @@ useEffect(() => {
     >
       <Form.Item 
       label="Problem Name"
-      name="problemName"
+      name="problemTitle"
       rules={[
         {
           required: true,
@@ -298,6 +305,7 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
+    <Editor problem={problem} />
     </div>
   );
 };

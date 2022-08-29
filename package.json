@@ -39,7 +39,8 @@
     "universal-cookie": "^4.0.4",
     "url": "^0.11.0",
     "uuid-by-string": "^3.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "js-base64": "2.4.9"
   },
   "scripts": {
     "start": "react-scripts start",
