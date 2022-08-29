@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from 'antd';
 import React, { useState, useEffect } from 'react';
 import ProblemBar from '../components/ProblemBar';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // Styles.
 import '../styles/CodeSubmitForm.css';
@@ -18,8 +18,11 @@ const CodeSubmitForm = () => {
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
   const [, SetUserStats] = useState(null);
-  const [logic] = useState("daily");
-  const navigate = useNavigate();
+  const [logic] = useState("daily");  
+  const [problemSet, SetProblemSet] = useState([]);    
+  const [problemOfTheDay, SetProblemOfTheDay] = useState({});
+  const [totalResults, SetTotalResults] = useState(0);
+  let navigate = useNavigate();
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -163,9 +166,53 @@ function submitCode(query, requestOptions) {
      })
      .catch(console.log)
   }
+  async function getProblemsWithRequestParams(query, requestOptions) {
+    fetch(query, requestOptions)
+      .then(res => res.json())
+      .then(responseJson => {
+        const problemsSet = responseJson.data;
+        const max = responseJson.size;
+        const rand = 1 + Math.random() * (max - 1);        
+        navigate("/problem/" + problemsSet.at(rand).problemId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async function getProblemSetCognito() {
+    const currentSessionResponse = await Auth.currentSession();
+    const accessToken = currentSessionResponse.getAccessToken();
+    const jwtToken = accessToken.getJwtToken();
+    const query = process.env.REACT_APP_API_URL + '/problems';
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + jwtToken
+      }
+    };
+    getProblemsWithRequestParams(query, requestOptions);
+  }
   
+  async function getProblemSetGoogleSSO() {
+    const requestOptions = { 'method': 'GET' };        
+    const query = process.env.REACT_APP_API_URL + '/google/problems';
+    getProblemsWithRequestParams(query, requestOptions);
+  }
+  
+  async function getProblemSet() {            
+      const cookies = new Cookies();
+      const loginType = cookies.get('loginType');
+      if (loginType === 'cognito') {
+        getProblemSetCognito();
+      } else {
+        getProblemSetGoogleSSO();
+      }      
+    }
+
   async function handleNewProblemClick() {    
-    navigate('/problemset/all');
+    await getProblemSet();    
   }
   
   async function onFinish(values) {
