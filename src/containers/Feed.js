@@ -4,9 +4,6 @@ import React, { useEffect, useState } from 'react';
 // Components.
 import CodeCard from '../components/CodeCard';
 
-// Styles.
-import '../styles/Feed.css';
-
 // Authentication.
 import { Auth } from "aws-amplify";
 
