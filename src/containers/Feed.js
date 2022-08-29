@@ -1,14 +1,80 @@
-import React from 'react';
+// React.
+import React, { useEffect, useState } from 'react';
+
+// Components.
 import CodeCard from '../components/CodeCard';
+
+// Styles.
 import '../styles/Feed.css';
 
+// Authentication.
+import { Auth } from "aws-amplify";
+
+// Cookies.
+import Cookies from 'universal-cookie';
+
+// Styles.
+import '../styles/LeaderBoard.css';
+import '../styles/Feed.css';
+
+// Utility.
+const getUuid = require('uuid-by-string');
+
 function Feed() {
+const [feed, SetFeed] = useState({});
+
+async function GetFeedWithQuery(query, requestOptions) {
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+      SetFeed(responseJson);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });   
+  }
+  
+  async function GetFeedGoogleSSO(){
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const requestOptions = { 'method': 'GET' };
+    const userId = getUuid(userAuth.email);
+    const query = process.env.REACT_APP_API_URL + '/google/feed?userId=' + userId;
+    GetFeedWithQuery(query, requestOptions);
+  }
+  
+  async function GetFeedCognito() {  
+      const currentSessionResponse = await Auth.currentSession();
+      const accessToken = currentSessionResponse.getAccessToken();
+      const jwtToken = accessToken.getJwtToken();
+      const query = process.env.REACT_APP_API_URL + '/feed';
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + jwtToken
+        }
+      };
+      GetFeedWithQuery(query, requestOptions);
+  }
+  
+  async function GetFeed() {
+    const cookies = new Cookies();
+      const loginType = cookies.get('loginType');
+      if (loginType === 'cognito') {
+        GetFeedCognito();
+      } else {
+        GetFeedGoogleSSO();
+      }
+  }
+
+useEffect(() => { 
+    GetFeed();
+}, [])
 
     return (
         <div className='feed-parent'>
-            <CodeCard />
+            { feed.data !== undefined && <CodeCard data={feed}/> }
         </div>
-
     );
 }
 

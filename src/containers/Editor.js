@@ -3,7 +3,6 @@ import React from 'react';
 // Cookies.
 import Cookies from 'universal-cookie';
 
-
 // Styles.
 import '../styles/Editor.css';
 
@@ -21,7 +20,7 @@ function Editor(props) {
 
 
     function iframe() {
-        const cookies = new Cookies();        
+        const cookies = new Cookies();
         let userId = cookies.get('userId', { path: '/' });
         const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problem_id=" + props.problem.problemId;
         console.log(editor_url);

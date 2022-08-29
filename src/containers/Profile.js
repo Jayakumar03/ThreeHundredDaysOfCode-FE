@@ -2,7 +2,7 @@ import { Button, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 // Authentication.
-import { a, Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 
 // Styles,
 import '../styles/CodeSubmitForm.css';

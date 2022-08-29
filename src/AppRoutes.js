@@ -1,3 +1,4 @@
+// React.
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -9,12 +10,11 @@ import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
 import CodeSubmitForm from './containers/CodeSubmitForm';
 import Profile from './containers/Profile';
-import ProblemOfDay from './containers/ProblemOfDay';
 import Home from './containers/Home';
 import PrivateRoute from './components/PrivateRoute';
-import Challenge from './containers/Challenge';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
+import Feed from './containers/Feed';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
 
@@ -37,8 +37,7 @@ function AppRoutes(props) {
               <Login />
             </LoginRoute>
               } />
-          <Route exact path="/home" element={<Home />} />
-          <Route exact path="/problem" element={<ProblemOfDay />} />
+          <Route exact path="/home" element={<Home />} />          
           <Route exact path="/profile" element={
             <PrivateRoute>
               <Profile />
@@ -54,6 +53,11 @@ function AppRoutes(props) {
              <LeaderBoard /> 
             </PrivateRoute>
           } />
+          <Route exact path="/problem" element={
+            <PrivateRoute>
+              <CodeSubmitForm /> 
+            </PrivateRoute>
+        } />
           <Route exact path="/submission" element={
             <PrivateRoute>
               <CodeSubmitForm /> 
@@ -73,6 +77,11 @@ function AppRoutes(props) {
           <PrivateRoute>
             <Problem />
           </PrivateRoute>          
+          } />
+          <Route exact path="/feed" element={ 
+            <PrivateRoute>
+              <Feed />
+            </PrivateRoute>          
           } />
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />

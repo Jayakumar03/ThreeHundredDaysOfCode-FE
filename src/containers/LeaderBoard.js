@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from "aws-amplify";
 
 // Design Components
-import { Button, Modal, message } from 'antd';
+import { Button, message } from 'antd';
 
 // Cookies
 import Cookies from 'universal-cookie';

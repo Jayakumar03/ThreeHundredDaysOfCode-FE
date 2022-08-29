@@ -351,3 +351,13 @@ a.text-dark.understroke.link.active, .text-dark a.understroke.link.active {
 .referral-btn {
   margin-right: 20px;
 }
+
+.profile-container {
+  display: flex;
+  margin-right: 10px;
+}
+
+.notification-container {
+  margin-right: 10px;
+  font-size: 20px;
+}

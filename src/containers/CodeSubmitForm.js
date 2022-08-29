@@ -17,8 +17,8 @@ const CodeSubmitForm = () => {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);
-  const [userStats, SetUserStats] = useState(null);
-  const [logic, SetLogic] = useState("daily");
+  const [, SetUserStats] = useState(null);
+  const [logic] = useState("daily");
   const navigate = useNavigate();
 
   async function getUserStats() {
@@ -149,7 +149,7 @@ function submitCode(query, requestOptions) {
        if (data.message === 'Success') {
         const tweet_text = encodeURI(
           'Problem ' + data.userStats.numberOfSubmissions + '/300 done 💪 🔥.\n' +
-          'I just solved the problem '+ problem.problemName +
+          'I just solved the problem '+ problem.problemTitle +
           ' on www.threehundreddaysofcode.com\nJoin here to start the 300 day challenge with me.' +
           ' https://discord.gg/6duGefKtyv\ncc @300daysofcode'
           );
@@ -189,7 +189,7 @@ function submitCode(query, requestOptions) {
       },
       body: JSON.stringify({
         'userId': userId,
-        'problemName': values.problemName,
+        'problemName': values.problemTitle,
         'problemLink': values.problemLink,
         'solutionLink': values.solutionLink
       })
@@ -211,7 +211,7 @@ function submitCode(query, requestOptions) {
       },
       body: JSON.stringify({
         'userId': userId,
-        'problemName': values.problemName,
+        'problemName': values.problemTitle,
         'problemLink': values.problemLink,
         'solutionLink': values.solutionLink
       })
@@ -257,7 +257,7 @@ function submitCode(query, requestOptions) {
     >
       <Form.Item 
       label="Problem Name"
-      name="problemName"
+      name="problemTitle"
       rules={[
         {
           required: true,

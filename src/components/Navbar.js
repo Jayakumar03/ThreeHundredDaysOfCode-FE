@@ -4,8 +4,8 @@ import '../styles/Navbar.css';
 import '../styles/Common.css';
 import '../styles/Footer.css';
 
-import { Button, Modal, message } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
+import { Avatar, Badge, Button, Modal, message } from 'antd';
+import { ClockCircleOutlined, PoweroffOutlined, NotificationTwoTone } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import Cookies from 'universal-cookie';
@@ -13,7 +13,7 @@ import { Auth } from "aws-amplify";
 
 function Navbar(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const handleOk = () => {
     props.handleDeleteAllData();
@@ -62,19 +62,30 @@ function Navbar(props) {
               {isAuthenticated && (                
                   <div className='flex nav-box'>
                   <img src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE_G1us9B5ug.png' className='logo-box'/>
-                  <a href="/profile" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Profile</a>
+                  {/* <a href="/profile" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Profile</a> */}
                   <a href="/submission" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
                   <a href="/leaderboard" className="link link-quiet focus-visible understroke active link-quiet navbar-text">LeaderBoard</a>
                   <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a>
+                  {/* <a href="/feed" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Community</a> */}
                   <a target="_window" href="/faq" className="link link-quiet focus-visible understroke active link-quiet navbar-text">FAQ</a>
                   <a href='/problemset/all' className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Set</a>
                   <div className="flex-auto flex" />
-                  <Button
+                  <div >
+                    <a className='profile-container' href="/profile">
+                      <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />                       
+                    </a>
+                  </div>
+                  {/* <div className='notification-container'> 
+                    <Badge count={notificationCount}>
+                      <NotificationTwoTone className='notification-container'/> 
+                    </Badge>
+                  </div> */}
+                  {/* <Button
                   className='referral-btn'
                   type="primary"
                   onClick={handleReferralOnClick}>
                     Refer A Friend
-                  </Button>
+                  </Button> */}
                   <Button
                     type="primary"
                     icon={<PoweroffOutlined />}
