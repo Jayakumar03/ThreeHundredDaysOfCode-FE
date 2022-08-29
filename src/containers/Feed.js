@@ -1,6 +1,6 @@
 import React from 'react';
 import CodeCard from '../components/CodeCard';
-import '../styles/feed.css';
+import '../styles/Feed.css';
 
 function Feed() {
 
