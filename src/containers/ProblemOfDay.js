@@ -7,8 +7,12 @@ import { Auth } from "aws-amplify";
 // Styles
 import '../styles/ProblemOfDay.css'
 
+// Components
+import Editor from '../containers/Editor';
+
 function ProblemOfDay() {
     const [problem, SetProblem] = useState({});
+    const [problemId, SetProblemId] = useState("");
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -45,6 +49,8 @@ function ProblemOfDay() {
         .then(res => res.json())
         .then(responseJson => {
             SetProblem(responseJson);
+            SetProblemId(responseJson.problemId);
+            console.log(responseJson);
         })
         .catch((error) => {
           showMessage(null, "Error");
@@ -55,6 +61,7 @@ function ProblemOfDay() {
     useEffect(() => { getProblemOfTheDay(); }, [])
 
     return (
+      <>
         <div className="problem-parent-box">
           <h1 className="problem-header"> Problem Of The Day</h1>
           <div>Day {problem.id} <a href={problem.url}> {problem.title} </a>
@@ -62,6 +69,8 @@ function ProblemOfDay() {
         </div>
           <div className="problem-desc"><p> {problem.description} </p> </div>
         </div>
+        <Editor problem={problem} problemId={problemId}/>
+       </>
     );
 }
 

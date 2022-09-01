@@ -18,12 +18,10 @@ function Editor(props) {
         problem = Base64.decode(props.problem.description);
     }
 
-
     function iframe() {
         const cookies = new Cookies();
         let userId = cookies.get('userId', { path: '/' });
-        const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problem_id=" + props.problem.problemId;
-        console.log(editor_url);
+        const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problemId=" + props.problemId;
         return {
             __html: '<iframe src='+ editor_url + ' width="1000" height="1000"></iframe>'
         }

@@ -20,6 +20,7 @@ function CodeCard(props) {
   const [numberLikes, setNumberLikes] = useState(props.data.data.numLikes);
   const [numberComments, setNumberComments] = useState(props.data.data.numComments);
   const [isLiked, setIsLiked] = useState(false);
+  
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -188,7 +189,7 @@ return (
       </div>
       <div className='code-block'>
         <SyntaxHighlighter language={props.data.language} style={docco}>
-          {showMore ? atob(props.data.data.codeBlock) : atob(props.data.data.codeBlock).substring(0, 250)}
+          {showMore ? atob(props.data.data[0].codeBlock) : atob(props.data.data[0].codeBlock).substring(0, 250)}
         </SyntaxHighlighter>
           <Button type="link" className="show-more-button" onClick={() => setShowMore(!showMore)}>
             {showMore ? "Show less" : "Show more"}

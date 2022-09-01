@@ -10,13 +10,17 @@ import '../styles/CodeSubmitForm.css';
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
+// Components
+import Editor from '../containers/Editor';
+
 // Utility.
 const getUuid = require('uuid-by-string');
 
 const CodeSubmitForm = () => {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
-  const [problem, SetProblem] = useState([]);
+  const [problem, SetProblem] = useState([]);  
+  const [problemId, SetProblemId] = useState("");
   const [, SetUserStats] = useState(null);
   const [logic] = useState("daily");  
   const [problemSet, SetProblemSet] = useState([]);    
@@ -91,6 +95,7 @@ const CodeSubmitForm = () => {
     .then(res => res.json())
     .then(responseJson => {
         SetProblem(responseJson);
+        SetProblemId(responseJson.problemId);
         form.setFieldsValue(responseJson);
     })
     .catch((error) => {      
@@ -344,6 +349,7 @@ function submitCode(query, requestOptions) {
         </Form.Item>
       </div>
     </Form>
+    <Editor problem={problem} problemId={problemId}/>
     </div>
   );
 };

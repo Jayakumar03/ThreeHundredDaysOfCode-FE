@@ -22,7 +22,7 @@ export default function Signup() {
     confirmationCode: "",
   });
   let navigate = useNavigate();
-  const [setNewUser] = useState(null);
+  const [newUser, setNewUser] = useState(null);
   const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 

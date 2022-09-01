@@ -346,7 +346,7 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
-    <Editor problem={problem} />
+    <Editor problem={problem} problemId={problemId}/>
     </div>
   );
 };
