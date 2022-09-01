@@ -59,7 +59,8 @@
 }
 
 .code-block {
-    white-space: pre-wrap;
+    white-space: pre-wrap;    
+    width: 100%;
 }
 
 .show-more-button {

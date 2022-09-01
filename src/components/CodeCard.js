@@ -16,9 +16,9 @@ const getUuid = require('uuid-by-string');
 function CodeCard(props) {
   const [showMore, setShowMore] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [commentList, setCommentList] = useState(props.data.data.comments);
-  const [numberLikes, setNumberLikes] = useState(props.data.data.numLikes);
-  const [numberComments, setNumberComments] = useState(props.data.data.numComments);
+  const [commentList, setCommentList] = useState(props.card.comments);
+  const [numberLikes, setNumberLikes] = useState(props.card.numLikes);
+  const [numberComments, setNumberComments] = useState(props.card.numComments);
   const [isLiked, setIsLiked] = useState(false);
   
 
@@ -68,19 +68,34 @@ function CodeCard(props) {
     });
   }
 
+  function sendAddLikeWithQuery(query, requestOptions) {
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+      console.log(responseJson);
+    })
+    .catch((error) => {
+      showMessage(null, "Error");
+      console.log(error);
+    });
+  }
+
   async function sendAddLikeGoogleSSO() {
     const userAuth = await Auth.currentAuthenticatedUser();
     const userId = getUuid(userAuth.email);
     const requestOptions = { 
       'method': 'POST', 
+      headers: {
+        'Content-Type': 'application/json'        
+      },
       body: JSON.stringify({
         'userId': userId,
-        'isLike': isLiked,
-        'postId': ''
+        'isLike': true,
+        'postId': props.card.postId
       }) 
     };  
-    const query = process.env.REACT_APP_API_URL + '/google/comment';
-    sendAddCommentWithQuery(query, requestOptions);
+    const query = process.env.REACT_APP_API_URL + '/google/like';
+    sendAddLikeWithQuery(query, requestOptions);
   }
 
   async function sendAddLikeCognitoUser() {
@@ -88,7 +103,7 @@ function CodeCard(props) {
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
     const userId = accessToken.payload.sub;
-    const query = process.env.REACT_APP_API_URL + '/comment';
+    const query = process.env.REACT_APP_API_URL + '/like';
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -98,11 +113,11 @@ function CodeCard(props) {
       body: JSON.stringify({
         'userId': userId,
         'isLike': isLiked,
-        'postId': props.data.data.postId
+        'postId': props.card.postId
 
       })
     };
-    sendAddCommentWithQuery(query, requestOptions);
+    sendAddLikeWithQuery(query, requestOptions);
   }
 
   function handleAddComment(e) {
@@ -118,10 +133,13 @@ async function sendAddCommentGoogleSSO(commentText) {
   const userId = getUuid(userAuth.email);
   const requestOptions = { 
     'method': 'POST', 
+    headers: {
+      'Content-Type': 'application/json'      
+    },
     body: JSON.stringify({
       'userId': userId,
-      'commentText': commentText,
-      'postId': props.data.data.postId
+      'text': commentText,
+      'postId': props.card.postId
     }) 
   };  
   const query = process.env.REACT_APP_API_URL + '/google/comment';
@@ -142,7 +160,8 @@ async function sendAddCommentCognitoUser(commentText) {
       },
       body: JSON.stringify({
         'userId': userId,
-        'commentText': commentText
+        'text': commentText,
+        'postId': props.card.postId
       })
     };
     sendAddCommentWithQuery(query, requestOptions);
@@ -151,8 +170,8 @@ async function sendAddCommentCognitoUser(commentText) {
   async function sendAddCommentWithQuery(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
-    .then(responseJson => {      
-      setCommentList(responseJson.data.comments);
+    .then(responseJson => {
+      setCommentList(responseJson.data);
     })
     .catch((error) => {
       showMessage(null, "Error");
@@ -182,14 +201,18 @@ async function sendAddCommentCognitoUser(commentText) {
 
 return (
   <div>
-    <Card style={{ width: 500,}} >          
+    <Card style={{ width: 700,}} >          
       <div className='content-card-author-container'>
-        <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />
-        <p className='content-card-author-name'> {props.data.data.name} </p>
+        <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />      
+        <p className='content-card-author-name'> {props.card.authorName} </p>
       </div>
+      <hr className='line-class'></hr>
+        <p className='content-card-author-name'> Problem Name: {props.card.problemName} </p>
+        <p className='content-card-author-name'> <a target="_blank" href={props.card.problemLink}> Click here </a> to checkout the problem.</p>
+      <hr className='line-class'></hr>
       <div className='code-block'>
-        <SyntaxHighlighter language={props.data.language} style={docco}>
-          {showMore ? atob(props.data.data[0].codeBlock) : atob(props.data.data[0].codeBlock).substring(0, 250)}
+        <SyntaxHighlighter language={props.card.language} style={docco}>
+          {showMore ? atob(props.card.codeBlock) : atob(props.card.codeBlock).substring(0, 250)}
         </SyntaxHighlighter>
           <Button type="link" className="show-more-button" onClick={() => setShowMore(!showMore)}>
             {showMore ? "Show less" : "Show more"}
@@ -222,7 +245,7 @@ return (
         </div>
       <hr className='line-class'></hr>
       {showComments === true && commentList.map((result) => (
-       <CommentBox key={result.text} text={result.text} author={result.author}/>
+       <CommentBox key={result.commentId} text={result.text} author={result.author}/>
       ))}
       {showComments === true &&  <Input
           placeholder='Write a comment...'      

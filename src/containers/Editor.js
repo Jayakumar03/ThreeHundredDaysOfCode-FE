@@ -26,6 +26,8 @@ function Editor(props) {
             __html: '<iframe src='+ editor_url + ' width="1000" height="1000"></iframe>'
         }
     }
+    
+    
 
     return (
         <div className='problem-editor-container'>
@@ -38,7 +40,7 @@ function Editor(props) {
                 <div dangerouslySetInnerHTML={{ __html: problem}}></div>
                 <hr></hr>
             </div>
-            { Constants.SHOW_EDITOR === true &&
+            { process.env.REACT_APP_SHOW_EDITOR === "true" &&
               <div className='editor-container' dangerouslySetInnerHTML={iframe()}></div>    
             }            
         </div>

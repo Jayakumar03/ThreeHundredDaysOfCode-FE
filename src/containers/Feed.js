@@ -18,13 +18,14 @@ import '../styles/FeedStyle.css';
 const getUuid = require('uuid-by-string');
 
 function Feed() {
-const [feed, SetFeed] = useState({});
+const [feed, SetFeed] = useState([]);
 
 async function GetFeedWithQuery(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      SetFeed(responseJson);
+      SetFeed(responseJson.data);
+      console.log(responseJson.data);
     })
     .catch((error) => {      
       console.log(error);
@@ -35,7 +36,7 @@ async function GetFeedWithQuery(query, requestOptions) {
     const userAuth = await Auth.currentAuthenticatedUser();
     const requestOptions = { 'method': 'GET' };
     const userId = getUuid(userAuth.email);
-    const query = process.env.REACT_APP_API_URL + '/google/feed?userId=' + userId;
+    const query = process.env.REACT_APP_API_URL + '/google/feed?userId=' + userId + "&pageId=1";
     GetFeedWithQuery(query, requestOptions);
   }
   
@@ -43,7 +44,7 @@ async function GetFeedWithQuery(query, requestOptions) {
       const currentSessionResponse = await Auth.currentSession();
       const accessToken = currentSessionResponse.getAccessToken();
       const jwtToken = accessToken.getJwtToken();
-      const query = process.env.REACT_APP_API_URL + '/feed';
+      const query = process.env.REACT_APP_API_URL + '/feed?pageId=1';
       const requestOptions = {
         method: 'GET',
         headers: {
@@ -70,8 +71,11 @@ useEffect(() => {
 
     return (
         <div className='feed-parent'>
-            { feed.data !== undefined && <CodeCard data={feed}/> }
-        </div>
+          {
+              feed.length > 0 && feed.map((result) => (       
+              <CodeCard key={result.postId} card={result}/>            
+      ))}
+      </div>
     );
 }
 
