@@ -13,6 +13,9 @@ import FooterNavbar from './components/FooterNavbar';
 // Design Components
 import { message } from 'antd';
 
+// Google Analytics.
+import ReactGA from 'react-ga';
+
 // Styling
 import './App.css';
 
@@ -22,8 +25,13 @@ function App() {
  const [isAuthenticating, setIsAuthenticating] = useState(true);
  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
  const [activeSuggestion, setActiveSuggestion] = useState(0);
+ 
+ if (process.env.REACT_APP_GA_CODE) {
+    ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+ }
 
  useEffect(() => {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   onLoad();
 }, []);
 
