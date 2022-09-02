@@ -21,13 +21,11 @@ function Editor(props) {
     function iframe() {
         const cookies = new Cookies();
         let userId = cookies.get('userId', { path: '/' });
-        const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problemId=" + props.problemId;
+        const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL;
         return {
             __html: '<iframe src='+ editor_url + ' width="1000" height="1000"></iframe>'
         }
     }
-    
-    
 
     return (
         <div className='problem-editor-container'>

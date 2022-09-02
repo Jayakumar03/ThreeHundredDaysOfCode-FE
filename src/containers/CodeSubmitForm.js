@@ -297,7 +297,7 @@ function submitCode(query, requestOptions) {
       headerText="The problem of the day is "
       problem={problem}
       />
-    {process.env.REACT_APP_SHOW_EDITOR === "false" &&  
+    {
       <Form
         {...formItemLayout}
         layout={formLayout}
