@@ -24,19 +24,26 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'Number of submissions',
+    title: 'Longest Streak (Days)',
+    dataIndex: 'longestStreak',
+    key: 'longestStreak',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.longestStreak - b.longestStreak,    
+  },
+  {
+    title: '# Problems Solved',
     dataIndex: 'numberOfSubmissions',
     key: 'numberOfSubmissions',
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.numberOfSubmissions - b.numberOfSubmissions,    
   },
   {
-    title: 'Longest Streak',
-    dataIndex: 'longestStreak',
-    key: 'longestStreak',
+    title: '# Unique Days',
+    dataIndex: 'numberUniqueDays',
+    key: 'numberUniqueDays',
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.longestStreak - b.longestStreak,    
-  },    
+    sorter: (a, b) => a.numberUniqueDays - b.numberUniqueDays,    
+  },  
 ];
 
 const onChange = (pagination, filters, sorter, extra) => {
@@ -45,7 +52,7 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 function LeaderBoard() {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
-  const [timeFilter, SetTimeFilter] = useState("ANY_TIME");
+  const [timeFilter, SetTimeFilter] = useState("WEEK");
   const [tableHeading, SetTableHeading] = useState("Leader Border - All Time");
 
   function showMessage(success, error, warning) {
