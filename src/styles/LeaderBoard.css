@@ -5,12 +5,14 @@
     position: relative;
 }
 
-.weekly-btn {
-      
+.last-week-btn {
     margin-right: 20px;
 }
 
-.all-time-btn {
-    
+.weekly-btn {     
+    margin-right: 20px;
+}
+
+.all-time-btn {    
     margin-right: 20px;
 }

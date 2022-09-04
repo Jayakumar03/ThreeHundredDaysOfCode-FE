@@ -126,19 +126,24 @@ useEffect(() => {
 
 function handleWeeklyButtonClick() {
   SetTimeFilter("WEEK");
+  document.getElementById('last-week-btn').type = '';
   document.getElementById('weekly-btn').type = 'primary';
   document.getElementById('all-time-btn').type = '';
   SetTableHeading("Leader Board - This Week");
 }
+
 function handleAllTimeButtonClick() {
   SetTimeFilter("ANY_TIME");
+  document.getElementById('last-week-btn').type = '';
   document.getElementById('all-time-btn').type = 'primary';
   document.getElementById('weekly-btn').type = '';
   SetTableHeading("Leader Board - All Time");
 }
+
 function handleLastWeekButtonClick() {
   SetTimeFilter("LAST_WEEK");
-  document.getElementById('all-time-btn').type = 'primary';
+  document.getElementById('last-week-btn').type = 'primary';
+  document.getElementById('all-time-btn').type = '';
   document.getElementById('weekly-btn').type = '';
   SetTableHeading("Leader Board - Last Week");
 }
