@@ -53,7 +53,7 @@ const onChange = (pagination, filters, sorter, extra) => {
 function LeaderBoard() {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
   const [timeFilter, SetTimeFilter] = useState("WEEK");
-  const [tableHeading, SetTableHeading] = useState("Leader Border - All Time");
+  const [tableHeading, SetTableHeading] = useState("Leader Border - This Week");
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -126,7 +126,7 @@ useEffect(() => {
 
 function handleWeeklyButtonClick() {
   SetTimeFilter("WEEK");
-  document.getElementById('weekly-btn').type = 'primary';  
+  document.getElementById('weekly-btn').type = 'primary';
   document.getElementById('all-time-btn').type = '';
   SetTableHeading("Leader Board - This Week");
 }
@@ -136,25 +136,35 @@ function handleAllTimeButtonClick() {
   document.getElementById('weekly-btn').type = '';
   SetTableHeading("Leader Board - All Time");
 }
+function handleLastWeekButtonClick() {
+  SetTimeFilter("LAST_WEEK");
+  document.getElementById('all-time-btn').type = 'primary';
+  document.getElementById('weekly-btn').type = '';
+  SetTableHeading("Leader Board - Last Week");
+}
 
   return (
     <div className='leaderboard-table'>
       <h1>{tableHeading}</h1>
       <Table columns={columns} dataSource={leaderBoardStats} onChange={onChange} />
       <Button
-                  className='weekly-btn'
-                  id='weekly-btn'
-                  
-                  onClick={handleWeeklyButtonClick}>
-                    Weekly
-                  </Button>
-                  <Button
-                  className='all-time-btn'
-                  id='all-time-btn'
-                  
-                  onClick={handleAllTimeButtonClick}>
-                    All Time
-                  </Button> 
+       className='last-week-btn'
+       id='last-week-btn'
+       onClick={handleLastWeekButtonClick}>
+       Last Week
+       </Button>
+      <Button
+       className='weekly-btn'
+       id='weekly-btn'                  
+       onClick={handleWeeklyButtonClick}>
+        Weekly
+        </Button>
+       <Button
+       className='all-time-btn'
+       id='all-time-btn'
+       onClick={handleAllTimeButtonClick}>
+        All Time
+        </Button>                  
     </div>
   );
 }
