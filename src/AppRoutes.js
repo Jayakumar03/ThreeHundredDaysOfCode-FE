@@ -17,6 +17,7 @@ import Editor from './containers/Editor';
 import Feed from './containers/Feed';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
+import LandingPage from './containers/LandingPage';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -83,6 +84,7 @@ function AppRoutes(props) {
               <Feed />
             </PrivateRoute>          
           } />
+          <Route exact path="/landingPage" element={ <LandingPage />} />
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />
           <Route exact path="/signup" element={<Signup />} />
