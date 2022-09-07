@@ -170,66 +170,70 @@ async function handleCredentialResponse(response) {
  };
 
   function renderForm() {
-    return (
-      <div>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="email" size="lg" className="margin-top-10">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            className="margin-left-none"
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="password" size="lg" className="margin-top-10">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            className="margin-left-none"
-            type="password"
-            value={fields.password}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="confirmPassword" size="lg" className="margin-top-10">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            className="margin-left-none"
-            type="password"
-            onChange={handleFieldChange}
-            value={fields.confirmPassword}
-          />
-        </Form.Group>
-        <LoaderButton
-          className="margin-top-20 button-large"
-          block
-          size="lg"
-          type="submit"
-          variant="success"
-          isLoading={isLoading}
-          disabled={!validateForm()}
-        >
-          Signup
-        </LoaderButton>
-        <div className="passwordContainer"> Your Password should have the following:
-          <ul>
-            <li> Minimum length of 8 characters. </li>
-            <li> Should have a special character. </li>
-            <li> Should have an uppercase character. </li>
-            <li> Should have an lowercase character. </li>
-            <li> Should have a numerical value. </li>
-          </ul>
-        </div>
-      
-      <hr className="solid divContainer" />      
-      <div id="buttonDiv" className="googleSignupContainer"/>
-      </Form>
-      </div>
+    return (        
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="email" size="lg" className="margin-top-10">            
+            <Form.Control
+              className="margin-left-none"
+              autoFocus
+              placeholder="Email"
+              type="email"
+              value={fields.email}
+              onChange={handleFieldChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="password" size="lg" className="margin-top-10">            
+            <Form.Control
+              className="margin-left-none"
+              type="password"
+              placeholder="Password"
+              value={fields.password}
+              onChange={handleFieldChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="confirmPassword" size="lg" className="margin-top-10">            
+            <Form.Control
+              className="margin-left-none"
+              type="password"
+              placeholder="Confirm Password"
+              onChange={handleFieldChange}
+              value={fields.confirmPassword}
+            />
+          </Form.Group>
+          <LoaderButton
+            className="margin-top-20 button-large"
+            block
+            size="lg"
+            type="submit"
+            variant="success"
+            isLoading={isLoading}
+            disabled={!validateForm()}
+          >
+            Signup
+          </LoaderButton>
+          <div className="passwordContainer"> Your Password should have the following:
+            <ul>
+              <li> Minimum length of 8 characters. </li>
+              <li> Should have a special character. </li>
+              <li> Should have an uppercase character. </li>
+              <li> Should have an lowercase character. </li>
+              <li> Should have a numerical value. </li>
+            </ul>
+          </div>
+        
+        
+        
+        </Form>      
     );
   }
 
   return (
-    <div className="Signup"> {renderForm()} </div>
+    <div className='sign-up-container'>
+      <div className='sign-up-title-text'> Create an account to get started</div>      
+      <div className="Signup"> {renderForm()} </div>
+      <div className='sign-up-already-account-sign-in-text'> Alread have an account <a href=''>sign in</a></div>
+      <hr className="solid divContainer" />
+      <div id="buttonDiv" className="googleSignupContainer"/>
+    </div>
   );
 }
