@@ -5,10 +5,7 @@ import NavbarLandingPage from '../components/NavbarLandingPage';
 
 function LandingPage() {
     return(
-        <div className='landing-page-body' >
-            <NavbarLandingPage />
-
-        </div>
+        <div className='landing-page-body'> <NavbarLandingPage /> </div>
     );
 }
 

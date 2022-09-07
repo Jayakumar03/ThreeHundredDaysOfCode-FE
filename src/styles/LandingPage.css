@@ -37,7 +37,7 @@
     color: white;
     padding-top: 10px;
     margin-left: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
 }
 
 .landing-navbar-sign-up-button {    
@@ -45,8 +45,10 @@
     margin-right: 10px!important;
     color: white!important;
     border-radius: 10px!important;
-    background-color: rgb(0, 0, 0)!important;
-    font-weight: 700!important;
+    background-color: rgb(9, 128, 247)!important;
+    font-weight: 550!important;
+    border: none!important;
+    
 }
 
 .landing-navbar-log-in-button {
@@ -55,8 +57,10 @@
     margin-left: 10px!important;
     color: white!important;
     border-radius: 10px!important;
-    background-color: rgb(0, 0, 0)!important;
-    font-weight: 700!important;
+    background-color: rgb(9, 128, 247)!important;
+    font-weight: 550!important;
+    border: none!important;
+
 }
 
 .landing-navbar-divider {    
@@ -72,7 +76,7 @@
     display: flex;    
     align-items: center;
     flex-direction: column; 
-    z-index: 1;    
+    z-index: 1;
 }
 
 .landing-main-button-container {
@@ -81,36 +85,38 @@
 
 .landing-main-text {    
     color: white;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 3em;    
     margin-top: 50px;
     max-width: 50%;
     text-align: center;
     margin-bottom: 20px;
-    padding-top: 50px;
+    padding-top: 50px;    
 }
 
 .landing-get-started-button {
     color: white!important;
-    font-weight: 800!important;
+    font-weight: 550!important;
     font-size: 1.2em!important;
-    background-color: rgb(72, 72, 247)!important;
+    background-color: rgb(9, 128, 247)!important;
     height: 2.5em!important;
-    border-radius: 10px!important;
+    border-radius: 5px!important;
     max-width: 200px;
     margin-bottom: 50px;
-    margin-right: 10px;
+    margin-right: 10px;    
+    border: none!important;
 }
 
 .landing-join-the-community-button {
     color: white!important;
-    font-weight: 800!important;
+    font-weight: 550!important;
     font-size: 1.2em!important;
-    background-color: rgb(72, 72, 247)!important;
+    background-color: rgb(9, 128, 247)!important;
     height: 2.5em!important;
     border-radius: 10px!important;
-    max-width: 200px;
-    margin-bottom: 50px;    
+    max-width: 300px;
+    margin-bottom: 50px;
+    border: none!important;
 }
 
 .landing-features-div-container {
@@ -200,9 +206,7 @@
     font-weight: 800;
 }
 
-.landing-supported-language-name {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+.landing-supported-language-name {}
 
 .landing-social-media-container {
     display: flex;
@@ -218,8 +222,7 @@
 }
 
 .landing-social-media-link {
-    color: gray;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: gray;    
 }
 
 .landing-legal-container {
