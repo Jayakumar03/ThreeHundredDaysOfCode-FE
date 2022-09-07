@@ -1,0 +1,142 @@
+.feed-container {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.feed-left-panel {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    padding-right: 20px;
+}
+
+.feed-left-panel-title {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    text-decoration: none;
+}
+
+.feed-left-panel-icon {
+    color: white!important;
+    font-size: 26px!important;
+    margin-right: 20px!important;
+}
+
+.feed-left-panel-icon-title-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.feed-parent {    
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;    
+}
+
+.reaction-block {
+    display: flex;
+    justify-content: space-evenly;
+    height: 30px;
+}
+
+.reaction-element {
+    width: 33%;
+    display: flex;
+}
+
+.reaction-element:hover {
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.reaction-comment-box {
+    border-radius: 30px!important;
+}
+
+.reaction-icon {
+    margin-left: 20px!important;
+    margin-top: 5px!important;
+    color: white!important;
+}
+
+.reaction-text {
+    text-align: center;
+    margin-left: 10px;
+    color: white;
+}
+
+.reaction-text-selected {
+    text-align: center;
+    margin-left: 10px;
+    color: blue;
+}
+
+.line-class {
+    margin: 5px 5px!important;
+    color: white;
+}
+
+.reaction-stats-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-card-author-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.content-card-author-name {
+    font-weight: 700;
+    color: white;
+}
+
+.code-block {
+    white-space: pre-wrap;    
+    width: 100%;
+    background-color: gray;
+    border-radius: 10px!important;
+}
+
+.syntax-highlighter  {
+    
+    border-radius: 5px!important;
+ }
+
+.show-more-button {
+    float: right;
+}
+
+.line-class {
+    margin: 5px 5px!important;
+}
+
+.circle-block {
+    display: flex;
+    padding: 15px;
+}
+
+.circle {
+    width: 12.5px;
+    height: 12.5px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    margin-right: 10px;
+}
+
+.red {
+    background: red;
+}
+
+.green {
+    background: green;
+}
+
+.yellow {
+    background: yellow;
+}

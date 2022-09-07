@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { LikeOutlined, CommentOutlined, LikeTwoTone } from '@ant-design/icons';
 import CommentBox from '../components/CommentBox';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { dark, darcula, docco, sunburst, foundation } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 // Authentication.
 import { Auth } from "aws-amplify";
@@ -201,23 +201,29 @@ async function sendAddCommentCognitoUser(commentText) {
 
 return (
   <div>
-    <Card style={{ width: 700,}} >          
+    <Card style={{ width: 700, backgroundColor: 'black' }} >
       <div className='content-card-author-container'>
         <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />      
         <p className='content-card-author-name'> {props.card.authorName} </p>
       </div>
       <hr className='line-class'></hr>
         <p className='content-card-author-name'> Problem Name: {props.card.problemName} </p>
-        <p className='content-card-author-name'> <a target="_blank" href={props.card.problemLink}> Click here </a> to checkout the problem.</p>
-      <hr className='line-class'></hr>
+        <p className='content-card-author-name'> <a target="_blank" href={props.card.problemLink}> Click here </a> to checkout the problem.</p>      
+      
       <div className='code-block'>
-        <SyntaxHighlighter language={props.card.language} style={docco}>
+      <div className='circle-block'>
+        <div className="red circle"></div> 
+        <div className="yellow circle"></div> 
+        <div className="green circle"></div> 
+      </div>
+        <SyntaxHighlighter className='syntax-highlighter' language={props.card.language} style={darcula}>
+        
           {showMore ? atob(props.card.codeBlock) : atob(props.card.codeBlock).substring(0, 250)}
         </SyntaxHighlighter>
-          <Button type="link" className="show-more-button" onClick={() => setShowMore(!showMore)}>
-            {showMore ? "Show less" : "Show more"}
-          </Button>        
       </div>
+      <Button type="link" className="show-more-button" onClick={() => setShowMore(!showMore)}>
+         {showMore ? "Show less" : "Show more"}
+      </Button>
       <div className='reaction-stats-box'>
       {
         isLiked === true ? <div> <p>{numberLikes} Likes</p> </div> : <div> <p>{numberLikes} Likes</p> </div> 
@@ -248,7 +254,7 @@ return (
        <CommentBox key={result.commentId} text={result.text} author={result.author}/>
       ))}
       {showComments === true &&  <Input
-          placeholder='Write a comment...'      
+          placeholder='Add a comment...'      
           className='reaction-comment-box'
           onKeyDown={handleAddComment}
           >            

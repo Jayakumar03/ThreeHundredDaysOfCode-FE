@@ -12,7 +12,7 @@ import Cookies from 'universal-cookie';
 
 // Styles.
 import '../styles/LeaderBoard.css';
-import '../styles/FeedStyle.css';
+import '../styles/FeedNew.css';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -70,12 +70,12 @@ useEffect(() => {
 }, [])
 
     return (
-        <div className='feed-parent'>
+        <>
           {
               feed.length > 0 && feed.map((result) => (       
               <CodeCard key={result.postId} card={result}/>            
       ))}
-      </div>
+      </>
     );
 }
 
