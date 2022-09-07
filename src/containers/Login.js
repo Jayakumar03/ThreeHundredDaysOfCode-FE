@@ -133,39 +133,42 @@ async function handleCredentialResponse(response) {
 }
 
 return (
-  <div className="Login">
-    <Form onSubmit={handlePasswordLogin}>
-      <Form.Group size="lg" controlId="username">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          autoFocus
-          type="text"
-          value={fields.username}
-          onChange={handleFieldChange}
-        />
-      </Form.Group>
-      <Form.Group className="margin-top-10" size="lg" controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          value={fields.password}
-          onChange={handleFieldChange}
-        />
-      </Form.Group>      
-      <LoaderButton
-        size="lg"
-        type="submit"
-        className="margin-top-20 button-large"
-        isLoading={isLoading}
-        disabled={!validateForm()}
-      >
-        Login
-      </LoaderButton>
-      <div className="signupContainer">Don't have an account? <a href="/signup">Sign up</a></div>
-      <div className="forgotPasswordContainer">Forgot your password? <a href="/forgotPassword">Reset password</a></div>
-      <hr className="solid divContainer" />      
-      <div id="buttonDiv" className="googleSignupContainer"/>
-    </Form>
+  <div className="login-div-container">
+    <span className='login-title-text'> Log in to your account</span>
+    <div className="Login">      
+      <Form onSubmit={handlePasswordLogin}>
+        <Form.Group size="lg" controlId="username">
+          <Form.Control
+            autoFocus
+            type="text"
+            placeholder="Email"
+            value={fields.username}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        <Form.Group className="margin-top-10" size="lg" controlId="password">          
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={fields.password}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>      
+        <LoaderButton
+          size="lg"
+          type="submit"
+          className="margin-top-20 button-large"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
+          Login
+        </LoaderButton>
+        <div className="signupContainer">Don't have an account? <a href="/signup">Sign up</a></div>
+        <div className="forgotPasswordContainer">Forgot your password? <a href="/forgotPassword">Reset password</a></div>
+        <hr className="solid divContainer" />      
+        <div id="buttonDiv" className="googleSignupContainer"/>
+      </Form>
+    </div>
   </div>
 );
 }
