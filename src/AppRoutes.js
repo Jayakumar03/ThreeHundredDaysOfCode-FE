@@ -18,6 +18,7 @@ import Feed from './containers/Feed';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
 import LandingPage from './containers/LandingPage';
+import Blog from './containers/Blog';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -30,15 +31,14 @@ function AppRoutes(props) {
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route exact path="/" element={
             <LoginRoute>
-              <Home />
+              <LandingPage />
             </LoginRoute>
               } />
           <Route exact path="/login" element={
             <LoginRoute>
               <Login />
             </LoginRoute>
-              } />
-          <Route exact path="/home" element={<Home />} />          
+              } />          
           <Route exact path="/profile" element={
             <PrivateRoute>
               <Profile />
@@ -84,7 +84,7 @@ function AppRoutes(props) {
               <Feed />
             </PrivateRoute>          
           } />
-          <Route exact path="/landingPage" element={ <LandingPage />} />
+          <Route exact path="/blog" element={ <Blog />} />          
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />
           <Route exact path="/signup" element={<Signup />} />

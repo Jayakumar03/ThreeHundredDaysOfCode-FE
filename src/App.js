@@ -187,7 +187,6 @@ return (
           <AppRoutes />
         </AppContext.Provider>
       </div>
-      <FooterNavbar />
     </div>
 );
 }

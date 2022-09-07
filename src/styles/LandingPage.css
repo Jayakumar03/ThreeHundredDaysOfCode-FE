@@ -1,13 +1,31 @@
-.landing-page-body {
-    background-color: rgb(33, 52, 85);
+.landing-page-body {    
+    background-color: rgb(16, 23, 34);
     width: 100%;
     height: 100%;
 }
 
-.landing-navbar-text-container {
-    margin-left: 10px;    
-    display: flex;    
+.landing-navbar-outer-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    opacity: 1.0;
+    display: flex;
     justify-content: space-between;
+}
+
+.landing-navbar-left-panel {
+    display: flex;
+}
+
+.landing-navbar-logo {
+    padding-top: 5px;
+    margin-left: 20px;
+}
+
+.landing-navbar-text-container {
+    margin-left: 10px;
+    display: flex;    
 }
 
 .landing-page-button-container {
@@ -18,6 +36,8 @@
     font-weight: 700;
     color: white;
     padding-top: 10px;
+    margin-left: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .landing-navbar-sign-up-button {    
@@ -39,10 +59,20 @@
     font-weight: 700!important;
 }
 
+.landing-navbar-divider {    
+    border: 1px solid gray;
+}
+
+.landing-filler {
+    z-index: 100;
+    background-color: rgb(0, 0, 0)!important;
+}
+
 .landing-main-text-container {
     display: flex;    
     align-items: center;
     flex-direction: column; 
+    z-index: 1;    
 }
 
 .landing-main-button-container {
@@ -57,6 +87,7 @@
     max-width: 50%;
     text-align: center;
     margin-bottom: 20px;
+    padding-top: 50px;
 }
 
 .landing-get-started-button {
@@ -132,12 +163,9 @@
     flex-direction: column;
     align-items: center;
     background-color: rgb(16, 23, 34);
-}
-
-.landing-reference-section-container {
     font-size: 3em;
     color: white;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 .landing-reference-section-logos {
@@ -150,4 +178,64 @@
     margin-left: 20px;
     font-size: 26px;
     font-weight: 600;
+}
+
+.landing-footer-container {
+    background-color: black;
+    display: flex;    
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.landing-supported-language-container {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.landing-supported-language-title {
+    font-weight: 800;
+}
+
+.landing-supported-language-name {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.landing-social-media-container {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.landing-social-media-title {
+    font-weight: 800;
+}
+
+.landing-social-media-link {
+    color: gray;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.landing-legal-container {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.landing-copyright-container {
+    background-color: black;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
