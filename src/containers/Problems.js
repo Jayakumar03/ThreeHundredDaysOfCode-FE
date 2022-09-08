@@ -1,19 +1,32 @@
 import { Space, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-// Authentication
-import { Auth } from "aws-amplify";
+import FeedLeftPanel from '../components/FeedLeftPanel';
+import styled from "styled-components";
 
+// Authentication.
+import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
+// Styles.
 import '../styles/ProblemSet.css';
-
-import ProblemBar from '../components/ProblemBar';
 
 function getLink(text, record, index) {  
   const problemId = record.problemId;
   return "/problem/" + problemId + "/";
 }
+
+const StyledTable = styled((props) => <Table {...props} />)`
+  && thead > tr > th {
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  && tbody > tr:hover > td {
+    background-color: black;
+  }
+`;
 
 const columns = [
   {
@@ -25,7 +38,7 @@ const columns = [
     title: 'Title',
     dataIndex: 'problemTitle',
     key: 'problemTitle',
-    render: (text, record, index) => <a href={getLink(text, record, index)}>{text}</a>,
+    render: (text, record, index) => <a className='problem-set-title-text' href={getLink(text, record, index)}>{text}</a>,
   },
   {
     title: 'Difficulty',
@@ -41,7 +54,10 @@ const columns = [
       } else {
         color = 'red';
       }
-      return <Tag color={color} key={problemComplexity}>{problemComplexity.toUpperCase()}</Tag>
+      return <Tag 
+      style={{backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0, fontWeight: 550, fontSize: 16 }}
+      color={color} key={problemComplexity}>{problemComplexity.toUpperCase()}
+      </Tag>
     },
   },
 ];
@@ -50,7 +66,7 @@ function Problems() {
    const [problemSet, SetProblemSet] = useState([]);
    const [top] = useState('none');
    const [bottom] = useState('bottomCenter');
-   const [totalResults, SetTotalResults] = useState(10);
+   const [totalResults, SetTotalResults] = useState(25);
    const [problemOfTheDay, SetProblemOfTheDay] = useState({});
 
     async function getProblemsWithRequestParams(query, requestOptions) {
@@ -105,18 +121,23 @@ function Problems() {
 
 
     return (
-              
+      <div className='problem-set-container'>
+      <FeedLeftPanel showTitle="true" />
        <div className='problemset-table'>    
-        <Table 
-        columns={columns} 
-        dataSource={problemSet} 
-        pagination={{
-          position: [top, bottom],          
-          total: totalResults,          
-        }}        
+        <StyledTable 
+          rowClassName={(record, index) => index % 2 === 0 ? 'problem-set-table-row-light' :  'problem-set-table-row-dark'}
+          columns={columns} 
+          dataSource={problemSet}
+          size={25} 
+          pagination={{
+            position: [top, bottom],          
+            total: totalResults,
+            defaultPageSize: 25,
+            className: "pagination"
+          }}        
         />    
     </div>
-    
+    </div>
     );
 }
 

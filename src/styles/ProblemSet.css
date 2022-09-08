@@ -1,8 +1,30 @@
-.problemset-table {
-    
-        max-width: 50%!important;    
-        left: 15%;
-        margin-top: 50px;
-        position: relative;
-        
+.problem-set-container {
+   background-color: black;
+   min-height: 100vh;
+   height: 100%;
+   width: 100%;
+   display: flex;
 }
+
+.problemset-table {
+   margin-left: 50px;
+   margin-top: 50px;
+}
+
+.problem-set-table-row-dark {
+   background-color: rgb(0, 0, 0)!important;
+   color: white!important;
+   text-decoration: none!important;
+}
+
+.problem-set-table-row-light {
+   background-color: rgb(40, 40, 40)!important;
+   color: white!important;
+   text-decoration: none!important;
+}
+
+.problem-set-title-text {
+   color: white!important;
+}
+
+.pagination {}

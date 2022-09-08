@@ -9,9 +9,6 @@ import '../styles/EditorStyle.css';
 // Utility.
 import { Base64 } from "js-base64";
 
-// Constants
-import * as Constants from '../constants/GlobalConstants';
-
 function Editor(props) {    
     let problem = '';
     if (props.problem.description !== undefined && props.problem.description.length > 0) {

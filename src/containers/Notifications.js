@@ -70,7 +70,7 @@ async function GetNotificationsWithQuery(query, requestOptions) {
 
     return (
         <div className='notification-container'>
-          <FeedLeftPanel />          
+          <FeedLeftPanel showTitle="true" />          
           <div className='notification-list-container'>
           <div className='notification-header-text'>Notifications</div>
           {

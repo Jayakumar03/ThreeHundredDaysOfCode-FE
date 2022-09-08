@@ -14,7 +14,7 @@ import Cookies from 'universal-cookie';
 const getUuid = require('uuid-by-string');
 
 function CodeCard(props) {
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const [showComments, setShowComments] = useState(false);
   const [commentList, setCommentList] = useState(props.card.comments);
   const [numberLikes, setNumberLikes] = useState(props.card.numLikes);

@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie';
 
 // Components
 import Editor from '../containers/Editor';
+import FeedLeftPanel from '../components/FeedLeftPanel';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -53,8 +54,7 @@ const CodeSubmitForm = () => {
       fetch(query, requestOptions)
       .then(res => res.json())
       .then(responseJson => {
-        SetUserStats(responseJson);
-          
+        SetUserStats(responseJson);          
       })
       .catch((error) => {      
         console.log(error);
@@ -292,6 +292,8 @@ function submitCode(query, requestOptions) {
         }
       : null;
   return (
+    <div className='problem-solve-page-container'>
+    <FeedLeftPanel showTitle="false" />   
     <div className='code-submit-form-parent'>
       <ProblemBar 
       headerText="The problem of the day is "
@@ -311,6 +313,7 @@ function submitCode(query, requestOptions) {
         <Form.Item 
         label="Problem Name"
         name="problemTitle"
+        className="problem-form-text"
         rules={[
           {
             required: true,
@@ -352,6 +355,7 @@ function submitCode(query, requestOptions) {
       </Form>
     }
     <Editor problem={problem} problemId={problemId}/>
+    </div>
     </div>
   );
 };
