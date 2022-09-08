@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 // AntD Elements.
-import { HomeOutlined, BookOutlined, NotificationOutlined, QuestionCircleOutlined, DashboardOutlined, ProfileOutlined } from '@ant-design/icons';
+import { HomeOutlined, BookOutlined, NotificationOutlined, QuestionCircleOutlined, DashboardOutlined, ProfileOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 
 // Authentication.
@@ -28,7 +28,7 @@ function FeedLeftPanel(props) {
     function handleLeaderBoardClick() { navigate("/leaderBoard"); }
     function handleMySubmissionsClick() { navigate("/mySubmissions"); } 
     function handleFAQClick() { navigate("/faq"); }
-
+    function handleMyFeedClick() { navigate("/feed"); }
 
     async function GetNumberOfNotificationsWithQuery(query, requestOptions) {
         fetch(query, requestOptions)
@@ -115,6 +115,13 @@ function FeedLeftPanel(props) {
                 {
                     props.showTitle === "true" && 
                     <a href="/mySubmissions" className='feed-left-panel-title'>My Submissions</a>
+                }
+            </div>
+            <div className='feed-left-panel-icon-title-container' onClick={handleMyFeedClick}>
+                <UnorderedListOutlined className='feed-left-panel-icon' />                    
+                {
+                    props.showTitle === "true" && 
+                    <a href="/feed" className='feed-left-panel-title'>Feed</a>
                 }
             </div>
             <div className='feed-left-panel-icon-title-container' onClick={handleFAQClick}>

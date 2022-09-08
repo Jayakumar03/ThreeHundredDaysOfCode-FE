@@ -65,7 +65,7 @@ async function GetNotificationsWithQuery(query, requestOptions) {
   }
     
     useEffect(() => { 
-        GetNotifications();
+        GetNotifications();        
     }, [])
 
     return (

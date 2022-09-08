@@ -182,7 +182,7 @@ function handleClick() {
 return (
     <div className="App" onClick={handleClick}>
       <div className="app-content">
-        {/* <NavbarCustom isAuthenticating={isAuthenticating} isAuthenticated={isAuthenticated} handleLogout={handleLogout} handleDeleteAllData={handleDeleteAllData} handleTriggerIndexBuild={handleTriggerIndexBuild}/>       */}
+        <NavbarCustom isAuthenticating={isAuthenticating} isAuthenticated={isAuthenticated} handleLogout={handleLogout} handleDeleteAllData={handleDeleteAllData} handleTriggerIndexBuild={handleTriggerIndexBuild}/>      
         <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated, filteredSuggestions, setFilteredSuggestions, activeSuggestion, setActiveSuggestion }}>
           <AppRoutes />
         </AppContext.Provider>

@@ -13,17 +13,18 @@ import Profile from './containers/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
-import Feed from './containers/Feed';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
 import LandingPage from './containers/LandingPage';
 import Blog from './containers/Blog';
 import FeedNew from "./containers/FeedNew";
+import UserPost from './containers/UserPost';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
 import MySubmissions from "./containers/MySubmissions";
 import Notifications from "./containers/Notifications";
+
 
 function AppRoutes(props) {
   return (
@@ -78,6 +79,11 @@ function AppRoutes(props) {
           <Route exact path="/problem/:problemId" element={ 
           <PrivateRoute>
             <Problem />
+          </PrivateRoute>          
+          } />
+          <Route exact path="/post/:postId" element={ 
+          <PrivateRoute>
+            <UserPost />
           </PrivateRoute>          
           } />
           <Route exact path="/feed" element={ 
