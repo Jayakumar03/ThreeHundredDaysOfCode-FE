@@ -203,7 +203,7 @@ return (
   <div>
     <Card style={{ width: 700, backgroundColor: 'black' }} >
       <div className='content-card-author-container'>
-        <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />      
+        <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />
         <p className='content-card-author-name'> {props.card.authorName} </p>
       </div>
       <hr className='line-class'></hr>
@@ -237,7 +237,7 @@ return (
         {
           isLiked === true ? 
             <div onClick={handleLikeClick} className='reaction-element'>
-              <LikeTwoTone className='reaction-icon'/> <p className='reaction-text-selected'>Like</p> 
+              <LikeTwoTone className='reaction-icon'/> <p className='reaction-text-selected'>Like</p>
             </div>
             :
             <div onClick={handleLikeClick} className='reaction-element'>
@@ -249,17 +249,20 @@ return (
             <p className='reaction-text'>Comment</p>
         </div>        
         </div>
-      <hr className='line-class'></hr>
-      {showComments === true && commentList.map((result) => (
-       <CommentBox key={result.commentId} text={result.text} author={result.author}/>
-      ))}
-      {showComments === true &&  <Input
+      <hr className='line-class'></hr>      
+      {showComments === true &&
+      <div className='comment-input-avatar-container'>
+      <Avatar className='comment-avatar' src="https://joeschmoe.io/api/v1/random" />
+      <Input
           placeholder='Add a comment...'      
           className='reaction-comment-box'
           onKeyDown={handleAddComment}
-          >            
-          </Input>
-      }      
+          />
+        </div> 
+      }
+      {showComments === true && commentList.map((result) => (
+       <CommentBox key={result.commentId} text={result.text} author={result.author}/>
+      ))}
     </Card>
   </div>
   );

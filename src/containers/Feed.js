@@ -72,7 +72,7 @@ useEffect(() => {
     return (
         <>
           {
-              feed.length > 0 && feed.map((result) => (       
+              feed.length > 0 && feed.map((result) => (
               <CodeCard key={result.postId} card={result}/>            
       ))}
       </>

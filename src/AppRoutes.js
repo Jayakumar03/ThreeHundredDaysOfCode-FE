@@ -10,7 +10,6 @@ import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
 import CodeSubmitForm from './containers/CodeSubmitForm';
 import Profile from './containers/Profile';
-import Home from './containers/Home';
 import PrivateRoute from './components/PrivateRoute';
 import FAQ from './containers/FAQ';
 import Editor from './containers/Editor';
@@ -24,6 +23,7 @@ import FeedNew from "./containers/FeedNew";
 // Components.
 import LoginRoute from './components/LoginRoute';
 import MySubmissions from "./containers/MySubmissions";
+import Notifications from "./containers/Notifications";
 
 function AppRoutes(props) {
   return (
@@ -82,10 +82,10 @@ function AppRoutes(props) {
           } />
           <Route exact path="/feed" element={ 
             <PrivateRoute>
-              <Feed />
+              <FeedNew />
             </PrivateRoute>          
           } />
-          <Route exact path="/feedNew" element={ <FeedNew />} />
+          <Route exact path="/notifications" element={ <Notifications />} />
           <Route exact path="/blog" element={ <Blog />} />          
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />
