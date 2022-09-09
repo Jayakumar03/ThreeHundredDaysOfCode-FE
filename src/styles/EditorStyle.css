@@ -16,8 +16,8 @@
     background-color: rgb(30, 30, 30);
 }
 
-.problem-description ul, li, code, div {
-    color:white;
+.problem-description ul, li, code {
+    color:white!important;
     overflow-wrap: break-word;
     word-wrap: break-word; /* Firefox support */
 }
@@ -41,4 +41,8 @@
 .editor-container {
     min-width: 50%;
     margin-right: 5px;
+}
+
+.problem-description-link {
+    color: white;
 }

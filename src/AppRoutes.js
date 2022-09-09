@@ -62,6 +62,11 @@ function AppRoutes(props) {
               <ProblemOfTheDay />
             </PrivateRoute>
         } />
+        <Route exact path="/submission" element={
+            <PrivateRoute>
+              <ProblemOfTheDay /> 
+            </PrivateRoute>
+        } />
           <Route exact path="/problemOfTheDay" element={
             <PrivateRoute>
               <ProblemOfTheDay /> 

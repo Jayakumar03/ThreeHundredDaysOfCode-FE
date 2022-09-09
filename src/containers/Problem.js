@@ -11,6 +11,7 @@ import '../styles/ProblemOfTheDay.css';
 // Authentication
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
+import FeedLeftPanel from '../components/FeedLeftPanel';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -290,6 +291,10 @@ useEffect(() => {
       : null;
   return (
     <div className='code-submit-form-parent'>
+      <FeedLeftPanel showTitle="true" />
+      {
+        false && 
+      <>
       <ProblemBar 
       headerText="The name of the problem is "
       problem={problem}
@@ -346,6 +351,8 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
+    </>
+    }
     <Editor problem={problem} problemId={problemId}/>
     </div>
   );
