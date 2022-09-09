@@ -102,7 +102,11 @@ function AppRoutes(props) {
               <Home />
             </PrivateRoute>          
           } />
-          <Route exact path="/notifications" element={ <Notifications />} />
+          <Route exact path="/notifications" element={ 
+            <PrivateRoute>
+              <Notifications />
+            </PrivateRoute>          
+          } />          
           <Route exact path="/blog" element={ <Blog />} />          
           <Route exact path="/faq" element={ <FAQ />} />
           <Route exact path="/challenge" element={ <FAQ />} />
