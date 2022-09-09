@@ -13,8 +13,6 @@ import Cookies from 'universal-cookie';
 
 // Styles
 import '../styles/LeaderBoard.css';
-import FeedLeftPanel from '../components/FeedLeftPanel';
-import LeaderBoardTable from '../components/LeaderBoardTable';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -68,10 +66,10 @@ const onChange = (pagination, filters, sorter, extra) => {
   console.log('params', pagination, filters, sorter, extra);
 };
 
-function LeaderBoard() {
+function LeaderBoardTable(props) {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
-  const [timeFilter, SetTimeFilter] = useState("WEEK");
-  const [tableHeading, SetTableHeading] = useState("Leader Border - This Week");
+  const [timeFilter, SetTimeFilter] = useState(props.timeFilter);
+  const [tableHeading, SetTableHeading] = useState("LeaderBoard");
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -95,8 +93,9 @@ function LeaderBoard() {
 async function getLeaderBoardWithQuery(query, requestOptions) {
   fetch(query, requestOptions)
   .then(res => res.json())
-  .then(responseJson => {    
-    SetLeaderBoardStats(responseJson.data);
+  .then(responseJson => {
+    let arr = responseJson.data;
+    SetLeaderBoardStats(arr);
   })
   .catch((error) => {
     showMessage(null, "Error");
@@ -139,7 +138,7 @@ async function getLeaderBoard() {
 
 useEffect(() => {
   getLeaderBoard();
-  document.getElementById('all-time-btn').type = 'primary';
+  
 }, [timeFilter])
 
 function handleWeeklyButtonClick() {
@@ -166,12 +165,40 @@ function handleLastWeekButtonClick() {
   SetTableHeading("Leader Board - Last Week");
 }
 
-  return (
-    <div className='leaderboard-container'>
-      <FeedLeftPanel showTitle="true" />
-      <LeaderBoardTable timeFilter="ALL_TIME" showFilters="true" />
+return (
+    <div className='leaderboard-table'>      
+    <div className='leaderboard-title'>{tableHeading}</div>
+    <StyledTable 
+        rowClassName= 'problem-set-table-row-light'
+        columns={columns} 
+        dataSource={leaderBoardStats} 
+        onChange={onChange}
+        />
+        {
+          props.showFilters !== undefined && props.showFilters === "true" && 
+          <>        
+      <Button
+          className='last-week-btn'
+          id='last-week-btn'
+          onClick={handleLastWeekButtonClick}>
+          Last Week
+          </Button>
+      <Button
+          className='weekly-btn'
+          id='weekly-btn'                  
+          onClick={handleWeeklyButtonClick}>
+          Weekly
+          </Button>
+          <Button
+          className='all-time-btn'
+          id='all-time-btn'
+          onClick={handleAllTimeButtonClick}>
+          All Time
+          </Button>
+          </>
+      }          
     </div>
-  );
+);
 }
 
-export default LeaderBoard;
+export default LeaderBoardTable;

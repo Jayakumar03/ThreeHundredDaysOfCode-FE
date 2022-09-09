@@ -8,7 +8,7 @@ import Login from './containers/Login';
 import Signup from './containers/Signup';
 import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
-import CodeSubmitForm from './containers/CodeSubmitForm';
+import ProblemOfTheDay from './containers/ProblemOfTheDay';
 import Profile from './containers/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import FAQ from './containers/FAQ';
@@ -19,6 +19,7 @@ import LandingPage from './containers/LandingPage';
 import Blog from './containers/Blog';
 import FeedNew from "./containers/FeedNew";
 import UserPost from './containers/UserPost';
+import Home from './containers/Home';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -58,12 +59,12 @@ function AppRoutes(props) {
           } />
           <Route exact path="/problem" element={
             <PrivateRoute>
-              <CodeSubmitForm /> 
+              <ProblemOfTheDay />
             </PrivateRoute>
         } />
-          <Route exact path="/submission" element={
+          <Route exact path="/problemOfTheDay" element={
             <PrivateRoute>
-              <CodeSubmitForm /> 
+              <ProblemOfTheDay /> 
             </PrivateRoute>
         } />
           <Route exact path="/editor" element={
@@ -89,6 +90,11 @@ function AppRoutes(props) {
           <Route exact path="/feed" element={ 
             <PrivateRoute>
               <FeedNew />
+            </PrivateRoute>          
+          } />
+          <Route exact path="/home" element={ 
+            <PrivateRoute>
+              <Home />
             </PrivateRoute>          
           } />
           <Route exact path="/notifications" element={ <Notifications />} />

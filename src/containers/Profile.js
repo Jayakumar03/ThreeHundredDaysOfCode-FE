@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from "aws-amplify";
 
 // Styles,
-import '../styles/CodeSubmitForm.css';
+import '../styles/ProblemOfTheDay.css';
 
 // Cookies
 import Cookies from 'universal-cookie';

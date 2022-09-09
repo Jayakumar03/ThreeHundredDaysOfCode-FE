@@ -44,7 +44,7 @@ function Login(props) {
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
       cookies.set('userId', userId, { path: '/', expires: expiresDate });
-      navigate("/submission");
+      navigate("/home");
     } catch (e) {
       onError(e);
     }
@@ -161,11 +161,11 @@ return (
           isLoading={isLoading}
           disabled={!validateForm()}
         >
-          Login
+          Log in
         </LoaderButton>
         <div className="signupContainer">Don't have an account? <a href="/signup">Sign up</a></div>
         <div className="forgotPasswordContainer">Forgot your password? <a href="/forgotPassword">Reset password</a></div>
-        <hr className="solid divContainer" />      
+        <hr className="solid divContainer" />
         <div id="buttonDiv" className="googleSignupContainer"/>
       </Form>
     </div>

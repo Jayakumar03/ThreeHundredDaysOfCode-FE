@@ -26,9 +26,9 @@ function FeedLeftPanel(props) {
     function handleProblemSetClick() { navigate("/problemset/all"); }
     function handleNotificationsClick() { navigate("/notifications"); }
     function handleLeaderBoardClick() { navigate("/leaderBoard"); }
-    function handleMySubmissionsClick() { navigate("/mySubmissions"); } 
     function handleFAQClick() { navigate("/faq"); }
     function handleMyFeedClick() { navigate("/feed"); }
+    function handleDailyChallenge() { navigate("/problemOfTheDay"); }
 
     async function GetNumberOfNotificationsWithQuery(query, requestOptions) {
         fetch(query, requestOptions)
@@ -83,7 +83,7 @@ function FeedLeftPanel(props) {
             <div className='feed-left-panel-icon-title-container' onClick={handleHomeClick}> 
                 <HomeOutlined className='feed-left-panel-icon' />
                 {
-                    props.showTitle === "true" && 
+                    props.showTitle === "true" &&                     
                     <div className='feed-left-panel-title'>Home</div>
                 }
             </div>
@@ -91,7 +91,7 @@ function FeedLeftPanel(props) {
                 <BookOutlined className='feed-left-panel-icon' />
                 {
                     props.showTitle === "true" && 
-                    <a href="/problemset/all" className='feed-left-panel-title'>Problems</a>
+                    <div className='feed-left-panel-title'>Problems</div>
                 }
             </div>
             <div className='feed-left-panel-icon-title-container' onClick={handleNotificationsClick}>
@@ -99,36 +99,43 @@ function FeedLeftPanel(props) {
                     <NotificationOutlined className='feed-left-panel-icon' />
                 </Badge>
                 {
-                    props.showTitle === "true" && 
-                    <a href="/notifications" className='feed-left-panel-title'>Notifications</a>
+                    props.showTitle === "true" &&                     
+                    <div className='feed-left-panel-title'>Notifications</div>
                 }                
-            </div>                
+            </div>
+            <div className='feed-left-panel-icon-title-container' onClick={handleDailyChallenge}>
+                <ProfileOutlined className='feed-left-panel-icon' />                    
+                {
+                    props.showTitle === "true" &&                     
+                    <div className='feed-left-panel-title'>Daily Challenge</div>
+                }                
+            </div>
             <div className='feed-left-panel-icon-title-container' onClick={handleLeaderBoardClick}>
                 <DashboardOutlined className='feed-left-panel-icon' />                    
                 {
                     props.showTitle === "true" && 
-                    <a href="/leaderBoard" className='feed-left-panel-title'>LeaderBoard</a>
+                    <div className='feed-left-panel-title'>LeaderBoard</div>
                 }                
             </div>                
-            <div className='feed-left-panel-icon-title-container' onClick={handleMySubmissionsClick}>
+            {/* <div className='feed-left-panel-icon-title-container' onClick={handleMySubmissionsClick}>
                 <ProfileOutlined className='feed-left-panel-icon' />                    
                 {
                     props.showTitle === "true" && 
                     <a href="/mySubmissions" className='feed-left-panel-title'>My Submissions</a>
                 }
-            </div>
+            </div> */}
             <div className='feed-left-panel-icon-title-container' onClick={handleMyFeedClick}>
                 <UnorderedListOutlined className='feed-left-panel-icon' />                    
                 {
-                    props.showTitle === "true" && 
-                    <a href="/feed" className='feed-left-panel-title'>Feed</a>
+                    props.showTitle === "true" &&                     
+                    <div className='feed-left-panel-title'>Feed</div>
                 }
             </div>
             <div className='feed-left-panel-icon-title-container' onClick={handleFAQClick}>
                 <QuestionCircleOutlined className='feed-left-panel-icon' />
                 {
-                    props.showTitle === "true" && 
-                    <a href="/faq" className='feed-left-panel-title'>FAQ</a>
+                    props.showTitle === "true" &&                    
+                    <div className='feed-left-panel-title'>FAQ</div>
                 }                
             </div>
         </div>

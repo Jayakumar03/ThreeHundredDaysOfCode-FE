@@ -1,6 +1,6 @@
 @media all and (min-width: 480px) {
   .Login {
-    padding: 60px 0;    
+    padding: 20px 0;    
   }
 
   .Login form {
@@ -53,7 +53,9 @@
 .googleSignupContainer {
   margin-top: 1rem;
   margin-left: 3rem;
+  padding-left: 5em;
   border-radius: 30px !important;
+  margin: 0 auto;
 }
 
 .divParentContainer {

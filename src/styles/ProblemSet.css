@@ -1,5 +1,5 @@
 .problem-set-container {
-   background-color: black;
+   background-color: #202124;
    min-height: 100vh;
    height: 100%;
    width: 100%;
@@ -7,8 +7,8 @@
 }
 
 .problemset-table {
-   margin-left: 50px;
-   margin-top: 50px;
+   margin: 0 auto;   
+   padding-top: 50px;
 }
 
 .problem-set-table-row-dark {

@@ -27,7 +27,9 @@
 .sign-up-already-account-sign-in-text {
   color: white;
   font-size: 16px;
-  margin: 0 auto;  
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .passwordContainer {
@@ -55,6 +57,4 @@
 .divContainer {
   margin-top: 2rem;
   color: white;
-  margin: 2rem auto;  
-  max-width: 320px;
 }

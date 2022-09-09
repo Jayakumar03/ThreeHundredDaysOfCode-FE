@@ -1,33 +1,44 @@
 import React from 'react';
-import { Button } from 'antd';
+import FeedLeftPanel from '../components/FeedLeftPanel';
+import ChallengeCard from '../components/ChallengeCard';
+import LeaderBoardTable from '../components/LeaderBoardTable';
+
 import '../styles/Home.css';
 
 function Home() {
-    function handleClick() {
-        window.open("/signup");
-    }
+   return (
+    <div className='home-container'>
+      <FeedLeftPanel showTitle="true" />
+      <div className='home-my-profile'>
+      <div className='home-challenges'>
+        <span className='home-title-text'> Challenges </span>
+        <div className='home-challenges-container'>
+            <ChallengeCard 
+            title="Daily Code" 
+            description="Solve one problem a day and win exciting weekly prizes. Build a regular habit."
+            url="/problemOfTheDay" 
+            img="https://ik.imagekit.io/wfx6bvuzj/300Code/300_yEts4SeVC.png"
+            />
 
-    return (
-    <div>
-        <div className="header-bar">
-            <p className='header-text'> Code for 300 days straight, and get a chance to win $100/week in the process. <a href="/challenge"> Learn more </a></p>
+            <ChallengeCard 
+            title="Marathon Coder" 
+            description="Solve 300 problems over the course of a year and win an IPhone."
+            url="/problemset/all"
+            img="https://ik.imagekit.io/wfx6bvuzj/300Code/300_yEts4SeVC.png"
+            />
+            </div>
+      </div>
+
+        {/* <div className='home-my-submissions'>
+            <span className='home-title-text'> My Submissions </span>
+        </div> */}
+
+        <div className='home-recent-submissions'>        
+         <LeaderBoardTable timeFilter="ALL_TIME" />
         </div>
-        <div className='header-span'>
-            <img src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE_G1us9B5ug.png' className='home-logo'/>
-            <div className='empty-span'/>
-            <a href="/signup" className="link link-quiet focus-visible understroke active link-quiet navbar-text login-home-signup">Sign up</a>
-            <a href="/login" className="link link-quiet focus-visible understroke active link-quiet navbar-text login-home">Log in</a>
-        </div>
-    <div className='splash-container '>
-        <div className='splash-text-box'>
-            <h2> Learn, With A Community </h2>
-            <p className='home-subtext'> Can you challange yourself to 300 days of coding? </p>
-            <Button className='join-community-btn' type='primary' onClick={handleClick}> Join The Community It's free </Button>
-        </div>
-        <div><img className='splash-image' src ='https://ik.imagekit.io/wfx6bvuzj/300Code/giphy_JXWyCqrh4.gif' /></div>        
+      </div>
     </div>
-    </div>    
-    );
+   );
 }
 
 export default Home;

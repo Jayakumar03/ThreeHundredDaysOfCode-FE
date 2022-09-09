@@ -16,7 +16,7 @@ const columns = [
   {
     title: 'Problem Name',
     dataIndex: 'problemName',
-    key: 'problemName',
+    key: 'problemName',    
   },
   {
     title: 'Problem Link',
@@ -106,8 +106,8 @@ useEffect(() => {
 
   return (
     <div className='leaderboard-table'>
-      <h1> My Submissions</h1>    
-    <Table columns={columns} dataSource={submissionStats} />
+      <h1> My Submissions</h1>
+      <Table columns={columns} dataSource={submissionStats} />
     </div>
   );
 }

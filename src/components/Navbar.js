@@ -61,17 +61,17 @@ function Navbar(props) {
       <div className="header-class border-box no-underline col-12 px2 z3">
               {isAuthenticated && (                
                   <div className='flex nav-box'>
-                  <img src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE_G1us9B5ug.png' className='logo-box'/>
+                  <img src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE__4__-UaQvrImP.png' className='logo-box'/>
                   {/* <a href="/profile" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Profile</a> */}
-                  {/* <a href="/submission" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
+                  {/* <a href="/problemOfTheDay" className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Of The Day</a>
                   <a href="/leaderboard" className="link link-quiet focus-visible understroke active link-quiet navbar-text">LeaderBoard</a>
                   <a href="/mySubmissions" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Submissions</a> */}
-                  { 
+                  {/* { 
                     process.env.REACT_APP_ENABLE_FEED === "true" && 
                     <a href="/feed" className="link link-quiet focus-visible understroke active link-quiet navbar-text">My Feed</a>
-                  }
-                  <a target="_window" href="/faq" className="link link-quiet focus-visible understroke active link-quiet navbar-text">FAQ</a>
-                  <a href='/problemset/all' className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Set</a>
+                  } */}
+                  {/* <a target="_window" href="/faq" className="link link-quiet focus-visible understroke active link-quiet navbar-text">FAQ</a> */}
+                  {/* <a href='/problemset/all' className="link link-quiet focus-visible understroke active link-quiet navbar-text">Problem Set</a> */}
                   <div className="flex-auto flex" />
                   <div >
                     <a className='profile-container' href="/profile">

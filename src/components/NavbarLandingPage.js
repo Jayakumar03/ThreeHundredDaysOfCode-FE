@@ -14,7 +14,7 @@ return (
         <div className='landing-navbar-outer-container'>            
             <div className='landing-navbar-left-panel'>
                 <a href="">
-                    <img className='landing-navbar-logo' src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_Days_Of_Code__4__EesdYEpRg.png'/>
+                    <img className='landing-navbar-logo' src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE__4__-UaQvrImP.png'/>
                 </a>
                 <a className='landing-navbar-text' href='/blog'> Blog </a>
                 <a className='landing-navbar-text' href='/faq'> FAQ </a>

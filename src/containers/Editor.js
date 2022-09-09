@@ -28,8 +28,8 @@ function Editor(props) {
         <div className='problem-editor-container'>
             <div className='problem-description'>
                 <div className='problem-description-header'>
-                    <p className='problem-description-index'>{props.problem.problemIndex}.</p>
-                    <p className='problem-description-header-title'>{props.problem.problemTitle}</p>
+                    <span className='problem-description-index'>{props.problem.problemIndex}.</span>
+                    <p className='problem-description-header-title'>{props.problem.problemTitle} (<a target='_blank' href={props.problem.problemLink}> Leetcode Link </a>)</p>
                 </div>
                 <hr></hr>
                 <div dangerouslySetInnerHTML={{ __html: problem}}></div>

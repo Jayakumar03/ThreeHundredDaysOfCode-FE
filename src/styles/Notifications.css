@@ -19,7 +19,8 @@
 .notification-list-container {
     display: flex;
     flex-direction: column;
-    min-width: 30%;
-    margin-left: 30px;
-    border: 1px white solid;    
+    min-width: 30%;    
+    border: 1px white solid;
+    margin-left: 250px;
+    padding-top: 50px;
 }

@@ -170,15 +170,17 @@ nav {
   margin-right: auto;
 }
 
-.header-class {
-  box-shadow: rgba(0,0,0,0.03) 0px 2px 0px 0px;
-  background: whitesmoke;  
+.header-class {  
+  background: rgb(25, 25, 25);
+  border-bottom: 0.01px solid white;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .background-lgrey {
   background-color: rgba(0,0,0,0.05);
 }
-
 
 .py-half {
   padding-top: 0.25rem;

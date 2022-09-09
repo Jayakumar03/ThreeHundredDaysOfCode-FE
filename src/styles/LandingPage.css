@@ -18,9 +18,10 @@
     display: flex;
 }
 
-.landing-navbar-logo {
-    padding-top: 5px;
+.landing-navbar-logo {    
     margin-left: 20px;
+    width: 100px;
+    margin-top: 15px;
 }
 
 .landing-navbar-text-container {
@@ -37,7 +38,6 @@
     color: white;
     padding-top: 10px;
     margin-left: 20px;
-
 }
 
 .landing-navbar-sign-up-button {    
@@ -47,8 +47,7 @@
     border-radius: 10px!important;
     background-color: rgb(9, 128, 247)!important;
     font-weight: 550!important;
-    border: none!important;
-    
+    border: none!important;    
 }
 
 .landing-navbar-log-in-button {
@@ -60,7 +59,6 @@
     background-color: rgb(9, 128, 247)!important;
     font-weight: 550!important;
     border: none!important;
-
 }
 
 .landing-navbar-divider {    
@@ -83,7 +81,7 @@
     display: flex;
 }
 
-.landing-main-text {    
+.landing-main-text {
     color: white;
     font-weight: 600;
     font-size: 3em;    
@@ -91,7 +89,17 @@
     max-width: 50%;
     text-align: center;
     margin-bottom: 20px;
-    padding-top: 50px;    
+    padding-top: 50px;
+}
+
+.landing-reference-section-title {
+    color: white;
+    font-weight: 600;    
+    margin-top: 50px;
+    max-width: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 50px;
 }
 
 .landing-get-started-button {
@@ -122,8 +130,6 @@
 .landing-features-div-container {
     background-color: rgb(16, 23, 34);
     display: flex;
-    justify-content: center;    
-    height: 500px;
     flex-direction: column;
     align-items: center;
 }
@@ -141,10 +147,13 @@
     align-items: center;
 }
 
-.landing-features-div-title {    
-    font-size: 3em;
+.landing-features-div-title {            
     color: white;
-    margin-bottom: 50px;
+    font-weight: 600;
+    font-size: 3em;        
+    max-width: 50%;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .landing-feature-box-container {
@@ -156,8 +165,14 @@
     font-weight: 800;
     padding: 20px;
 }
+
 .landing-feature-box-container-title {    
     font-size: large;
+}
+
+.landing-feature-box-container:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 15px white;
 }
 
 .landing-feature-box-container-text {    

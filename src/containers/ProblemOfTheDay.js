@@ -4,20 +4,20 @@ import ProblemBar from '../components/ProblemBar';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 // Styles.
-import '../styles/CodeSubmitForm.css';
+import '../styles/ProblemOfTheDay.css';
 
 // Authentication
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
 // Components
-import Editor from '../containers/Editor';
+import Editor from './Editor';
 import FeedLeftPanel from '../components/FeedLeftPanel';
 
 // Utility.
 const getUuid = require('uuid-by-string');
 
-const CodeSubmitForm = () => {
+const ProblemOfTheDay = () => {
   const [form] = Form.useForm();
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState([]);  
@@ -293,13 +293,13 @@ function submitCode(query, requestOptions) {
       : null;
   return (
     <div className='problem-solve-page-container'>
-    <FeedLeftPanel showTitle="false" />   
+    <FeedLeftPanel showTitle="true" />   
     <div className='code-submit-form-parent'>
-      <ProblemBar 
+      {/* <ProblemBar 
       headerText="The problem of the day is "
       problem={problem}
-      />
-    {
+      /> */}
+    { false &&
       <Form
         {...formItemLayout}
         layout={formLayout}
@@ -360,4 +360,4 @@ function submitCode(query, requestOptions) {
   );
 };
 
-export default CodeSubmitForm;
+export default ProblemOfTheDay;

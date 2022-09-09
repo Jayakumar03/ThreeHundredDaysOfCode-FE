@@ -1,12 +1,14 @@
 .problem-editor-container {
     display: flex;
-    margin-left: 20px;
-    justify-content: space-between;
+    margin-left: 150px;
+    padding-top: 50px;
+    padding-left: 100px;
 }
 
 .problem-description {
     padding-left: 20px;
-    padding-right: 50px;
+    padding-right: 10px;
+    margin-right:20px;
     padding-top: 20px;
     max-width: 40%;
     color: white;
@@ -14,8 +16,10 @@
     background-color: rgb(30, 30, 30);
 }
 
-.problem-description li, code {
-    color:white
+.problem-description ul, li, code, div {
+    color:white;
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* Firefox support */
 }
 
 .problem-description-header {
@@ -36,4 +40,5 @@
 
 .editor-container {
     min-width: 50%;
+    margin-right: 5px;
 }

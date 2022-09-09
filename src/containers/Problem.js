@@ -6,7 +6,7 @@ import Editor from '../containers/Editor';
 import { useNavigate } from 'react-router-dom';
 
 // Styles.
-import '../styles/CodeSubmitForm.css';
+import '../styles/ProblemOfTheDay.css';
 
 // Authentication
 import { Auth } from "aws-amplify";

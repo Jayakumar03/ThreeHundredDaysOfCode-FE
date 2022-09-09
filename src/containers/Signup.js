@@ -91,7 +91,7 @@ export default function Signup() {
       cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
       cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
       createUserAccount();
-      navigate("/submission");
+      navigate("/home");
   }
 
   async function triggerCreateUserAccount(query, requestOptions) {
@@ -206,10 +206,11 @@ async function handleCredentialResponse(response) {
             size="lg"
             type="submit"
             variant="success"
+            color="blue"
             isLoading={isLoading}
             disabled={!validateForm()}
           >
-            Signup
+            Sign up
           </LoaderButton>
           <div className="passwordContainer"> Your Password should have the following:
             <ul>
@@ -220,20 +221,17 @@ async function handleCredentialResponse(response) {
               <li> Should have a numerical value. </li>
             </ul>
           </div>
-        
-        
-        
+          <div className='sign-up-already-account-sign-in-text'> Already have an account? <a href=''>sign in</a></div>
+          <hr className="solid divContainer" />
+          <div id="buttonDiv" className="googleSignupContainer"/>
         </Form>      
     );
   }
 
   return (
     <div className='sign-up-container'>
-      <div className='sign-up-title-text'> Create an account to get started</div>      
+      <div className='sign-up-title-text'> Create an account to get started </div>      
       <div className="Signup"> {renderForm()} </div>
-      <div className='sign-up-already-account-sign-in-text'> Alread have an account <a href=''>sign in</a></div>
-      <hr className="solid divContainer" />
-      <div id="buttonDiv" className="googleSignupContainer"/>
     </div>
   );
 }
