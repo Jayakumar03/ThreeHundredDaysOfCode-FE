@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from 'antd';
 import React, { useState, useEffect } from 'react';
 import ProblemBar from '../components/ProblemBar';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Styles.
 import '../styles/ProblemOfTheDay.css';
@@ -11,8 +11,8 @@ import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
 // Components
-import Editor from './Editor';
-import FeedLeftPanel from '../components/FeedLeftPanel';
+import CodeEditor from './CodeEditor/CodeEditor';
+import ProblemDescription from './CodeEditor/ProblemDescription';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -291,72 +291,74 @@ function submitCode(query, requestOptions) {
           },
         }
       : null;
+
   return (
-    <div className='problem-solve-page-container'>
-    <FeedLeftPanel showTitle="true" />   
-    <div className='code-submit-form-parent'>
-      {/* <ProblemBar 
-      headerText="The problem of the day is "
-      problem={problem}
-      /> */}
-    { false &&
-      <Form
-        {...formItemLayout}
-        layout={formLayout}
-        form={form}
-        initialValues={{
-          layout: formLayout,
-        }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
-        <Form.Item 
-        label="Problem Name"
-        name="problemTitle"
-        className="problem-form-text"
-        rules={[
-          {
-            required: true,
-            message: "Please input the problem name!"
-          }
-        ]}
+      <div className='code-submit-form-parent'>
+        {/* <ProblemBar 
+        headerText="The problem of the day is "
+        problem={problem}
+        /> */}
+      { false &&
+        <Form
+          {...formItemLayout}
+          layout={formLayout}
+          form={form}
+          initialValues={{
+            layout: formLayout,
+          }}
+          onFinish={onFinish}
+          autoComplete="off"
         >
-          <Input placeholder="Problem Name" disabled={false} />
-        </Form.Item>
-        <Form.Item 
-        label="Problem Link" 
-        name='problemLink'
-        rules={[
-          {
-            required: true,
-            message: "Please input the problem link!"
-          }
-        ]}
-        >
-          <Input placeholder="Leetcode Link" disabled={false} />
-        </Form.Item>
-        <Form.Item label="Solution Link" name='solutionLink'
-        rules={[
-          {
-            required: true,
-            message: "Please input the solution link!"
-          }
-        ]}>
-          <Input placeholder="Github Link" />
-        </Form.Item>
-        <div className='submit-btn-container'>
-          <Form.Item {...buttonItemLayout}>
-            <Button type="primary" htmlType='submit'>Submit</Button>
+          <Form.Item
+            label="Problem Name"
+            name="problemTitle"
+            className="problem-form-text"
+            rules={[
+              {
+                required: true,
+                message: "Please input the problem name!"
+              }
+            ]}
+          >
+            <Input placeholder="Problem Name" disabled={false} />
           </Form.Item>
-          <Form.Item {...buttonItemLayout}>
-            <Button type="primary" onClick={handleNewProblemClick}>New Problem</Button>
+          <Form.Item 
+            label="Problem Link" 
+            name='problemLink'
+            rules={[
+              {
+                required: true,
+                message: "Please input the problem link!"
+              }
+            ]}
+          >
+            <Input placeholder="Leetcode Link" disabled={false} />
           </Form.Item>
-        </div>
-      </Form>
-    }
-    <Editor problem={problem} problemId={problemId}/>
-    </div>
-    </div>
+          <Form.Item label="Solution Link" name='solutionLink'
+            rules={[
+              {
+                required: true,
+                message: "Please input the solution link!"
+              }
+            ]}
+          >
+            <Input placeholder="Github Link" />
+          </Form.Item>
+
+          <div className='submit-btn-container'>
+            <Form.Item {...buttonItemLayout}>
+              <Button type="primary" htmlType='submit'>Submit</Button>
+            </Form.Item>
+            <Form.Item {...buttonItemLayout}>
+              <Button type="primary" onClick={handleNewProblemClick}>New Problem</Button>
+            </Form.Item>
+          </div>
+        </Form>
+      }
+
+      <ProblemDescription problem={problem} />
+      <CodeEditor problem={problem} problemId={problemId} />
+      </div>
   );
 };
 

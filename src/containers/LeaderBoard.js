@@ -13,7 +13,6 @@ import Cookies from 'universal-cookie';
 
 // Styles
 import '../styles/LeaderBoard.css';
-import FeedLeftPanel from '../components/FeedLeftPanel';
 import LeaderBoardTable from '../components/LeaderBoardTable';
 
 // Utility.
@@ -168,7 +167,6 @@ function handleLastWeekButtonClick() {
 
   return (
     <div className='leaderboard-container'>
-      <FeedLeftPanel showTitle="true" />
       <LeaderBoardTable timeFilter="ALL_TIME" showFilters="true" />
     </div>
   );

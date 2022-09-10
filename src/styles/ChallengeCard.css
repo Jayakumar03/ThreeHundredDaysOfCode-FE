@@ -1,16 +1,22 @@
 .challenge-card-container {
-    min-width: 200px;    
-    max-width: 400px;
-    border: 1px solid white;
-    margin-top: 20px;
-    margin-right: 20px;
     display: flex;
-    border-radius: 10px;
+    box-sizing: border-box;
+
+    min-width: 200px;    
+    max-width: 330px;
+    height: 170px;
+
+    padding: 8px;
+    padding-right: 16px;
+
+    border: 0.1px solid white;
+    border-radius: 4px;
+    transition: 100ms;
 }
 
 .challenge-card-container:hover {
     cursor: pointer;
-    box-shadow: 0 5px 15px white;
+    box-shadow: 0 1px 5px white;
 }
 
 .challenge-card-image {
@@ -30,13 +36,13 @@
 
 .challenge-card-title-text {
     color: white;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
 }
 
 .challenge-card-description-text {
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 550;
     margin-bottom: 20px;
 }

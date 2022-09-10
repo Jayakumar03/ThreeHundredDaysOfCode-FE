@@ -4,6 +4,16 @@
     height: 100%;
 }
 
+.landing-navbar-button, .landing-navbar-login-button {
+    color: white !important;
+    font-size: 14px;
+    height: 32px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    padding: 4px 15px;
+    background-color: #0980f7 !important;
+}
+
 .landing-navbar-outer-container {
     position: fixed;
     top: 0;
@@ -34,7 +44,8 @@
 }
 
 .landing-navbar-text {
-    font-weight: 700;
+    text-decoration: none;
+    font-weight: 700 !important;
     color: white;
     padding-top: 10px;
     margin-left: 20px;

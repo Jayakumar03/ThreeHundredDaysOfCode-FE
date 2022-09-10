@@ -1,7 +1,6 @@
 import { Space, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import FeedLeftPanel from '../components/FeedLeftPanel';
 import styled from "styled-components";
 
 // Authentication.
@@ -55,8 +54,8 @@ const columns = [
         color = 'red';
       }
       return <Tag 
-      style={{backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0, fontWeight: 550, fontSize: 16 }}
-      color={color} key={problemComplexity}>{problemComplexity.toUpperCase()}
+        style={{backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0, fontWeight: 550, fontSize: 16 }}
+        color={color} key={problemComplexity}>{problemComplexity.toUpperCase()}
       </Tag>
     },
   },
@@ -70,59 +69,56 @@ function Problems() {
    const [problemOfTheDay, SetProblemOfTheDay] = useState({});
 
     async function getProblemsWithRequestParams(query, requestOptions) {
-        fetch(query, requestOptions)
-          .then(res => res.json())
-          .then(responseJson => {
-            SetProblemSet(responseJson.data);
-            SetTotalResults(responseJson.size);
-            SetProblemOfTheDay(responseJson);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      fetch(query, requestOptions)
+        .then(res => res.json())
+        .then(responseJson => {
+          SetProblemSet(responseJson.data);
+          SetTotalResults(responseJson.size);
+          SetProblemOfTheDay(responseJson);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
-      async function getProblemSetCognito() {
-        const currentSessionResponse = await Auth.currentSession();
-        const accessToken = currentSessionResponse.getAccessToken();
-        const jwtToken = accessToken.getJwtToken();
-        const query = process.env.REACT_APP_API_URL + '/problems';
-        const requestOptions = {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + jwtToken
-          }
-        };
-        getProblemsWithRequestParams(query, requestOptions);
-      }
-      
-      async function getProblemSetGoogleSSO() {
-        const requestOptions = { 'method': 'GET' };        
-        const query = process.env.REACT_APP_API_URL + '/google/problems';
-        getProblemsWithRequestParams(query, requestOptions);
-      }
-      
-      async function getProblemSet() {            
-          const cookies = new Cookies();
-          const loginType = cookies.get('loginType');
-          if (loginType === 'cognito') {
-            getProblemSetCognito();
-          } else {
-            getProblemSetGoogleSSO();
-          }
-          
+    async function getProblemSetCognito() {
+      const currentSessionResponse = await Auth.currentSession();
+      const accessToken = currentSessionResponse.getAccessToken();
+      const jwtToken = accessToken.getJwtToken();
+      const query = process.env.REACT_APP_API_URL + '/problems';
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + jwtToken
         }
+      };
+      getProblemsWithRequestParams(query, requestOptions);
+    }
       
+    async function getProblemSetGoogleSSO() {
+      const requestOptions = { 'method': 'GET' };        
+      const query = process.env.REACT_APP_API_URL + '/google/problems';
+      getProblemsWithRequestParams(query, requestOptions);
+    }
+      
+    async function getProblemSet() {            
+      const cookies = new Cookies();
+      const loginType = cookies.get('loginType');
+      if (loginType === 'cognito') {
+        getProblemSetCognito();
+      } else {
+        getProblemSetGoogleSSO();
+      }
+      
+    }
 
     useEffect(() => {
-        getProblemSet();        
-      }, [])
-
+      getProblemSet();        
+    }, [])
 
     return (
       <div className='problem-set-container'>
-      <FeedLeftPanel showTitle="true" />
        <div className='problemset-table'>    
         <StyledTable 
           rowClassName={(record, index) => index % 2 === 0 ? 'problem-set-table-row-light' :  'problem-set-table-row-dark'}

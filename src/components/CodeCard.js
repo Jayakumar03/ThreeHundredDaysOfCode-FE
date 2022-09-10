@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { LikeOutlined, CommentOutlined, LikeTwoTone } from '@ant-design/icons';
 import CommentBox from '../components/CommentBox';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dark, darcula, docco, sunburst, foundation } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 // Authentication.
 import { Auth } from "aws-amplify";

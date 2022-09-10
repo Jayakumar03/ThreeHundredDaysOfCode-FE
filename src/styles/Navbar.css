@@ -16,6 +16,29 @@ nav {
   align-items: center;  
 }
 
+.nav-appbar {
+  height: 50px;
+  width: 100%;
+  color: white;
+  background-color: transparent !important;
+  background-color: #191919 !important;
+  border: none !important;
+  border-bottom: 1px solid white !important;
+}
+
+.nav-appbar-landing {
+  height: 50px;
+  width: 100%;
+  color: white;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.nav-appbar-toolbar {
+  padding: 0%;
+  height: 50px;
+}
+
 .logo {
   cursor: pointer;
   width: 100px;

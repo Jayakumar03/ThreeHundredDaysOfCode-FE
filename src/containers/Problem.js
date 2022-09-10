@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
-import Editor from '../containers/Editor';
+import CodeEditor from '../containers/CodeEditor/CodeEditor';
 import { useNavigate } from 'react-router-dom';
 
 // Styles.
@@ -11,7 +11,6 @@ import '../styles/ProblemOfTheDay.css';
 // Authentication
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
-import FeedLeftPanel from '../components/FeedLeftPanel';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -291,7 +290,6 @@ useEffect(() => {
       : null;
   return (
     <div className='code-submit-form-parent'>
-      <FeedLeftPanel showTitle="true" />
       {
         false && 
       <>
@@ -353,7 +351,7 @@ useEffect(() => {
     </Form>
     </>
     }
-    <Editor problem={problem} problemId={problemId}/>
+    <CodeEditor problem={problem} problemId={problemId}/>
     </div>
   );
 };

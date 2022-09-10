@@ -73,7 +73,7 @@ function LeaderBoardTable(props) {
 
   function showMessage(success, error, warning) {
     if (success !== null) {
-        message.success({
+      message.success({
         content: success,
         className: 'display-message',
       });

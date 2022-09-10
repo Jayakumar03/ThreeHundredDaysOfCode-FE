@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 // Components.
 import CodeCard from '../components/CodeCard';
-import FeedLeftPanel from '../components/FeedLeftPanel';
 
 // Authentication.
 import { Auth } from "aws-amplify";
@@ -75,7 +74,6 @@ useEffect(() => {
 
     return (
         <div className = 'user-post-container'>
-        <FeedLeftPanel showTitle="true"/>
             {
                 post !== undefined && post.numLikes !== undefined &&
                 <CodeCard card={post}/>

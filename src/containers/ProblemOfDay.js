@@ -8,7 +8,7 @@ import { Auth } from "aws-amplify";
 import '../styles/ProblemOfDay.css'
 
 // Components
-import Editor from '../containers/Editor';
+import CodeEditor from '../containers/CodeEditor/CodeEditor';
 
 function ProblemOfDay() {
     const [problem, SetProblem] = useState({});
@@ -69,7 +69,7 @@ function ProblemOfDay() {
         </div>
           <div className="problem-desc"><p> {problem.description} </p> </div>
         </div>
-        <Editor problem={problem} problemId={problemId}/>
+        <CodeEditor problem={problem} problemId={problemId}/>
        </>
     );
 }

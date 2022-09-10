@@ -8,7 +8,6 @@ import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 
 // Components.
-import FeedLeftPanel from '../components/FeedLeftPanel';
 import NotificationCard from '../components/NotificationCard';
 
 // Styles.
@@ -70,7 +69,6 @@ async function GetNotificationsWithQuery(query, requestOptions) {
 
     return (
         <div className='notification-container'>
-          <FeedLeftPanel showTitle="true" />          
           <div className='notification-list-container'>
           <div className='notification-header-text'>Notifications</div>
           {
