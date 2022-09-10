@@ -119,6 +119,7 @@ const ProblemOfTheDay = () => {
     .then(res => res.json())
     .then(responseJson => {
         SetProblem(responseJson);
+        SetProblemId(responseJson.problemId);
         form.setFieldsValue(responseJson);
     })
     .catch((error) => {      
