@@ -2,24 +2,27 @@ import React from 'react';
 
 // Cookies.
 import Cookies from 'universal-cookie';
+import { Auth } from "aws-amplify";
 
 // Styles.
 import '../styles/EditorStyle.css';
 
 // Utility.
 import { Base64 } from "js-base64";
+const getUuid = require('uuid-by-string');
+
+
 
 function Editor(props) {    
     let problem = '';
     if (props.problem.description !== undefined && props.problem.description.length > 0) {
-        problem = Base64.decode(props.problem.description);
-        console.log(problem);
+        problem = Base64.decode(props.problem.description);        
     }
 
-    function iframe() {
-        const cookies = new Cookies();
-        let userId = cookies.get('userId', { path: '/' });
+     function iframe() {
+        const userId = props.userId;
         const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL;
+        console.log('UserId:' + userId);
         return {
             __html: '<iframe src='+ editor_url + ' width="1000" height="1000"></iframe>'
         }

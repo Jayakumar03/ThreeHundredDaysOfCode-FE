@@ -221,7 +221,7 @@ async function handleCredentialResponse(response) {
               <li> Should have a numerical value. </li>
             </ul>
           </div>
-          <div className='sign-up-already-account-sign-in-text'> Already have an account? <a href=''>sign in</a></div>
+          <div className='sign-up-already-account-sign-in-text'> Already have an account? <a href='/login'>sign in</a></div>
           <hr className="solid divContainer" />
           <div id="buttonDiv" className="googleSignupContainer"/>
         </Form>      
