@@ -21,8 +21,9 @@ function Problem(){
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState({});
   const [, SetUserStats] = useState(null);
-  const problemId = useParams().problemId;
+  const [userId, SetUserId] = useState('');  
   const navigate = useNavigate();
+  const problemId = useParams().problemId;
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -32,6 +33,21 @@ function Problem(){
     } else {
       getUserStatsGoogleSSO();
     }
+  }
+
+  async function getUserId() {  
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    let userId = '';
+    if (loginType === 'cognito') {
+        const currentSessionResponse = await Auth.currentSession();
+        const accessToken = currentSessionResponse.getAccessToken();        
+        userId = accessToken.payload.sub;        
+    } else {
+        const userAuth = await Auth.currentAuthenticatedUser();        
+        userId = getUuid(userAuth.email);      
+    }
+    SetUserId(userId);
   }
   
   async function getUserStatsCognito() {
@@ -267,6 +283,7 @@ function submitCode(query, requestOptions) {
 useEffect(() => { 
     GetProblemFromURL();
     getUserStats();
+    getUserId();
 }, []);
 
   const formItemLayout =
@@ -355,7 +372,7 @@ useEffect(() => {
        <ProblemBar headerText="The name of the problem is " problem={problem} />
        <> {renderForm()} </>
        </div>
-       <Editor problem={problem} problemId={problemId}/>
+       <Editor problem={problem} problemId={problemId} userId={userId}/>
        </div>
        </div>
   );
