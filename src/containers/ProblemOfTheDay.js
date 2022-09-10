@@ -291,15 +291,9 @@ function submitCode(query, requestOptions) {
           },
         }
       : null;
-  return (
-    <div className='problem-solve-page-container'>
-    <FeedLeftPanel showTitle="true" />   
-    <div className='code-submit-form-parent'>
-      {/* <ProblemBar 
-      headerText="The problem of the day is "
-      problem={problem}
-      /> */}
-    { false &&
+
+  function renderForm() {
+    return (
       <Form
         {...formItemLayout}
         layout={formLayout}
@@ -353,8 +347,18 @@ function submitCode(query, requestOptions) {
           </Form.Item>
         </div>
       </Form>
-    }
-    <Editor problem={problem} problemId={problemId}/>
+    );
+  }
+
+  return (
+    <div className='problem-solve-page-container'>
+    <FeedLeftPanel showTitle="true" />
+    <div className='code-submit-form-parent'>
+      <div className='problem-solve-form-container'>
+      <ProblemBar headerText="The problem of the day is " problem={problem} />
+      <> {renderForm()} </>
+    </div>
+    <Editor problem={problem} problemId={problemId} />
     </div>
     </div>
   );

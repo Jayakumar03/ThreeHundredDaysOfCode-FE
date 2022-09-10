@@ -6,6 +6,13 @@
     display: flex;
 }
 
+.problem-solve-form-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+    margin-top: 50px;
+}
+
 .code-submit-form-parent {
     background-color: black;
     width: 100%;
@@ -13,6 +20,8 @@
     min-height: 100vh;
     display: flex;
     margin-top: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .submit-btn-container {
