@@ -4,7 +4,7 @@ import { Base64 } from "js-base64";
 
 
 const ProblemDescription = (props) => {
-    let problem = {
+    let problemV1 = {
         problemIndex: '',
         problemTitle: '',
         description: '',
@@ -13,10 +13,9 @@ const ProblemDescription = (props) => {
     if (props.problem !== undefined) {
         problem = props.problem
     }
-
+    let problem = ''
     if (props.problem !== undefined && props.problem.description !== undefined && props.problem.description.length > 0) {
         problem = Base64.decode(props.problem.description);
-        console.log("PROBLEM", problem);
     }
 
     return (

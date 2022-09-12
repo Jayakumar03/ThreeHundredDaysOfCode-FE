@@ -7,11 +7,13 @@ import CodeIFrame from './IFrame';
 // Utility.
 
 const CodeEditor = (props) => {
-
     return (
         <div className='problem-editor-container'>            
             { process.env.REACT_APP_SHOW_EDITOR === "true" &&
-              <div className='editor-container' dangerouslySetInnerHTML={CodeIFrame(props)}></div>
+              <div className='editor-container' dangerouslySetInnerHTML={
+                    CodeIFrame(props)
+                }
+            ></div>
             }
         </div>
     );

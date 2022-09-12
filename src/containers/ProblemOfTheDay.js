@@ -27,6 +27,8 @@ const ProblemOfTheDay = () => {
   const [problemSet, SetProblemSet] = useState([]);    
   const [problemOfTheDay, SetProblemOfTheDay] = useState({});
   const [totalResults, SetTotalResults] = useState(0);
+  const [userId, SetUserId] = useState('');
+
   let navigate = useNavigate();
 
   async function getUserStats() {
@@ -127,9 +129,25 @@ const ProblemOfTheDay = () => {
     });
 }
 
+async function getUserId() {  
+  const cookies = new Cookies();
+  const loginType = cookies.get('loginType');
+  let userId = '';
+  if (loginType === 'cognito') {
+      const currentSessionResponse = await Auth.currentSession();
+      const accessToken = currentSessionResponse.getAccessToken();        
+      userId = accessToken.payload.sub;        
+  } else {
+      const userAuth = await Auth.currentAuthenticatedUser();        
+      userId = getUuid(userAuth.email);      
+  }
+  SetUserId(userId);
+}
+
 useEffect(() => { 
   getProblemOfTheDay(); 
   getUserStats();
+  getUserId();
 }, [logic])
 
   function showMessage(success, error, warning) {
@@ -363,7 +381,7 @@ function submitCode(query, requestOptions) {
           <>{renderForm()}</>
         </div>
           {(problemId.length > 0) && <ProblemDescription problem={problem} />}
-          {(problemId.length > 0) && <CodeEditor problem={problem} problemId={problemId} />}
+          {(problemId.length > 0) && <CodeEditor problem={problem} problemId={problemId} userId={userId} />}
       </div>
     );
 };
