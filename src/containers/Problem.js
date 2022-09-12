@@ -37,6 +37,21 @@ function Problem(){
       getUserStatsGoogleSSO();
     }
   }
+
+  async function getUserId() {  
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    let userId = '';
+    if (loginType === 'cognito') {
+        const currentSessionResponse = await Auth.currentSession();
+        const accessToken = currentSessionResponse.getAccessToken();        
+        userId = accessToken.payload.sub;        
+    } else {
+        const userAuth = await Auth.currentAuthenticatedUser();        
+        userId = getUuid(userAuth.email);      
+    }
+    SetUserId(userId);
+  }
   
   async function getUserId() {  
     const cookies = new Cookies();

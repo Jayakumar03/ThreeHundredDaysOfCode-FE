@@ -12,7 +12,6 @@ const getUuid = require('uuid-by-string');
 
 const ProblemOfTheDay = () => {
   const [logic] = useState("daily");  
-
   let navigate = useNavigate();
 
   async function getProblemOfTheDay() {
