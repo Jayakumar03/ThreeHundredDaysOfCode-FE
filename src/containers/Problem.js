@@ -288,15 +288,9 @@ useEffect(() => {
           },
         }
       : null;
-  return (
-    <div className='code-submit-form-parent'>
-      {
-        false && 
-      <>
-      <ProblemBar 
-      headerText="The name of the problem is "
-      problem={problem}
-      />
+
+  function renderForm() {
+      return (
     <Form
       {...formItemLayout}
       layout={formLayout}
@@ -349,11 +343,21 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
-    </>
-    }
-    <CodeEditor problem={problem} problemId={problemId}/>
-    </div>
   );
+}
+
+  return (
+    <div className='problem-solve-page-container'>
+      <div className='code-submit-form-parent'>
+        <ProblemBar 
+          headerText="The name of the problem is "
+          problem={problem}
+        />
+        <>{renderForm()}</>
+        <CodeEditor problem={problem} problemId={problemId}/>
+      </div>
+    </div>
+  )
 };
 
 export default Problem;

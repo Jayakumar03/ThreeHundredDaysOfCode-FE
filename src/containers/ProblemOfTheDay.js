@@ -119,6 +119,7 @@ const ProblemOfTheDay = () => {
     .then(res => res.json())
     .then(responseJson => {
         SetProblem(responseJson);
+        SetProblemId(responseJson.problemId);
         form.setFieldsValue(responseJson);
     })
     .catch((error) => {      
@@ -292,35 +293,30 @@ function submitCode(query, requestOptions) {
         }
       : null;
 
-  return (
-      <div className='code-submit-form-parent'>
-        {/* <ProblemBar 
-        headerText="The problem of the day is "
-        problem={problem}
-        /> */}
-      { false &&
-        <Form
-          {...formItemLayout}
-          layout={formLayout}
-          form={form}
-          initialValues={{
-            layout: formLayout,
-          }}
-          onFinish={onFinish}
-          autoComplete="off"
+  function renderForm() {
+    return (
+      <Form
+        {...formItemLayout}
+        layout={formLayout}
+        form={form}
+        initialValues={{
+          layout: formLayout,
+        }}
+        onFinish={onFinish}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Problem Name"
+          name="problemTitle"
+          className="problem-form-text"
+          rules={[
+            {
+              required: true,
+              message: "Please input the problem name!"
+            }
+          ]}
         >
-          <Form.Item
-            label="Problem Name"
-            name="problemTitle"
-            className="problem-form-text"
-            rules={[
-              {
-                required: true,
-                message: "Please input the problem name!"
-              }
-            ]}
-          >
-            <Input placeholder="Problem Name" disabled={false} />
+          <Input placeholder="Problem Name" disabled={false} />
           </Form.Item>
           <Form.Item 
             label="Problem Link" 
@@ -354,12 +350,22 @@ function submitCode(query, requestOptions) {
             </Form.Item>
           </div>
         </Form>
-      }
+        );
+  }
 
-      <ProblemDescription problem={problem} />
-      <CodeEditor problem={problem} problemId={problemId} />
+    return (
+      <div className='problem-solve-page-container'>
+        <div className='code-submit-form-parent'>
+          <ProblemBar
+            headerText="The problem of the day is "
+            problem={problem}
+          />
+          <>{renderForm()}</>
+        </div>
+          {(problemId.length > 0) && <ProblemDescription problem={problem} />}
+          {(problemId.length > 0) && <CodeEditor problem={problem} problemId={problemId} />}
       </div>
-  );
+    );
 };
 
 export default ProblemOfTheDay;

@@ -12,7 +12,6 @@ import { NavLink } from 'react-router-dom';
 import { Logout, Menu as MenuIcon } from '@mui/icons-material';
 
 // Auth imports
-import Cookies from 'universal-cookie';
 import { Auth } from "aws-amplify";
 import '../../styles/LandingPage.css';
 import '../../styles/LeftPanelDrawer.css';

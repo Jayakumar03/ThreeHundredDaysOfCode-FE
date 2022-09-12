@@ -1,7 +1,11 @@
 .code-submit-form-parent {
+    width: 100%;
+    /* height: 100%; */
+    /* min-height: 100vh; */
     display: flex;
-    height: 100%;
-    flex-grow: 1;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .submit-btn-container {
@@ -10,4 +14,12 @@
 
 form, label {
     color: white !important;
+}
+
+
+.problem-solve-form-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+    margin-top: 50px;
 }

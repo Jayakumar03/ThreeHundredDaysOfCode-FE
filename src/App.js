@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { onError } from './lib/errorLib';
 import Cookies from 'universal-cookie';
 
-import NavTopBar from "./components/NavBar/NavTopBar";
+import NavTopBar from "./components/Navbar/NavTopBar";
 import LeftPanelDrawer from "./components/LeftPanelDrawer";
 
 // Design Components
