@@ -1,3 +1,5 @@
+import "antd/dist/antd.css";
+
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
@@ -167,36 +169,27 @@ function handleLastWeekButtonClick() {
 
 return (
     <div className='leaderboard-table'>      
-    <div className='leaderboard-title'>{tableHeading}</div>
-    <StyledTable 
-        rowClassName= 'problem-set-table-row-light'
-        columns={columns} 
-        dataSource={leaderBoardStats} 
-        onChange={onChange}
+      <div className='leaderboard-title'>{tableHeading}</div>
+        <StyledTable 
+          rowClassName= 'problem-set-table-row-light'
+          columns={columns} 
+          dataSource={leaderBoardStats} 
+          onChange={onChange}
         />
         {
           props.showFilters !== undefined && props.showFilters === "true" && 
-          <>        
-      <Button
-          className='last-week-btn'
-          id='last-week-btn'
-          onClick={handleLastWeekButtonClick}>
-          Last Week
-          </Button>
-      <Button
-          className='weekly-btn'
-          id='weekly-btn'                  
-          onClick={handleWeeklyButtonClick}>
-          Weekly
-          </Button>
-          <Button
-          className='all-time-btn'
-          id='all-time-btn'
-          onClick={handleAllTimeButtonClick}>
-          All Time
-          </Button>
+          <>
+            <Button className='last-week-btn' id='last-week-btn' onClick={handleLastWeekButtonClick}>
+              Last Week
+            </Button>
+            <Button className='weekly-btn' id='weekly-btn' onClick={handleWeeklyButtonClick}>
+              Weekly
+            </Button>
+            <Button className='all-time-btn' id='all-time-btn' onClick={handleAllTimeButtonClick}>
+              All Time
+            </Button>
           </>
-      }          
+        }
     </div>
 );
 }

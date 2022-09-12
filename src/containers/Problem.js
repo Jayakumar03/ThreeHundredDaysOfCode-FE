@@ -1,5 +1,7 @@
+import "antd/dist/antd.css";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
 import CodeEditor from '../containers/CodeEditor/CodeEditor';
@@ -11,6 +13,8 @@ import '../styles/ProblemOfTheDay.css';
 // Authentication
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
+import ProblemDescription from './CodeEditor/ProblemDescription';
+import { joinClasses } from '../utils/ClassUtils';
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -20,8 +24,9 @@ function Problem(){
   const [formLayout] = useState('horizontal');
   const [problem, SetProblem] = useState({});
   const [, SetUserStats] = useState(null);
-  const problemId = useParams().problemId;
+  const [userId, SetUserId] = useState('');  
   const navigate = useNavigate();
+  const problemId = useParams().problemId;
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -33,6 +38,22 @@ function Problem(){
     }
   }
   
+  async function getUserId() {  
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    let userId = '';
+    if (loginType === 'cognito') {
+        const currentSessionResponse = await Auth.currentSession();
+        const accessToken = currentSessionResponse.getAccessToken();        
+        userId = accessToken.payload.sub;        
+    } else {
+        const userAuth = await Auth.currentAuthenticatedUser();        
+        userId = getUuid(userAuth.email);      
+    }
+    console.log("Getuserid")
+    SetUserId(userId);
+  }
+
   async function getUserStatsCognito() {
     const currentSessionResponse = await Auth.currentSession();
       const accessToken = currentSessionResponse.getAccessToken();
@@ -232,7 +253,8 @@ function submitCode(query, requestOptions) {
     .then(res => res.json())
     .then(responseJson => {
         SetProblem(responseJson);
-        form.setFieldsValue(responseJson);                
+        form.setFieldsValue(responseJson);   
+        console.log("GSSO", responseJson)             
     })
     .catch((error) => {      
       console.log(error);
@@ -254,6 +276,7 @@ function submitCode(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
+        console.log("URL se", responseJson)
         SetProblem(responseJson);
         form.setFieldsValue(responseJson);
     })
@@ -263,9 +286,11 @@ function submitCode(query, requestOptions) {
 }
 
   
-useEffect(() => { 
+  useEffect(() => { 
+    console.log("HERE WE ARE")
     GetProblemFromURL();
     getUserStats();
+    getUserId();
 }, []);
 
   const formItemLayout =
@@ -291,6 +316,7 @@ useEffect(() => {
 
   function renderForm() {
       return (
+        <div className='problem-submission-form'>
     <Form
       {...formItemLayout}
       layout={formLayout}
@@ -343,21 +369,27 @@ useEffect(() => {
         </Form.Item>
       </div>
     </Form>
+    </div>
   );
 }
+  const codeSubmitClass = 'code-submit-form-parent'
+  const colClass = joinClasses([codeSubmitClass, codeSubmitClass+'-col'])
+  const rowClass = joinClasses([codeSubmitClass, codeSubmitClass+'-row'])
 
   return (
     <div className='problem-solve-page-container'>
-      <div className='code-submit-form-parent'>
+      <div className={colClass}>
         <ProblemBar 
           headerText="The name of the problem is "
           problem={problem}
         />
         <>{renderForm()}</>
-        <CodeEditor problem={problem} problemId={problemId}/>
       </div>
+      <div className={rowClass}>
+        <ProblemDescription problem={problem} />
+        <CodeEditor problem={problem} problemId={problemId} userId={userId} />
     </div>
-  )
+    </div>)
 };
 
 export default Problem;

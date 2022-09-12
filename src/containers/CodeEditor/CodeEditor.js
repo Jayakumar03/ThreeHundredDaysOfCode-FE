@@ -7,12 +7,15 @@ import CodeIFrame from './IFrame';
 // Utility.
 
 const CodeEditor = (props) => {
+    const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + props.userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL;
+    const iframeClass = "code-editor-iframe"
+
     return (
         <div className='problem-editor-container'>            
             { process.env.REACT_APP_SHOW_EDITOR === "true" &&
-              <div className='editor-container' dangerouslySetInnerHTML={
-                    CodeIFrame(props)
-                }
+              <div className='editor-container' dangerouslySetInnerHTML={{
+                __html: '<iframe class=' + iframeClass + ' src='+ editor_url + '></iframe>'
+            }}
             ></div>
             }
         </div>

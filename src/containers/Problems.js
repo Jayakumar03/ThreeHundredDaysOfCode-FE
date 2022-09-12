@@ -1,3 +1,5 @@
+import "antd/dist/antd.css";
+
 import { Space, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -16,6 +18,7 @@ function getLink(text, record, index) {
 }
 
 const StyledTable = styled((props) => <Table {...props} />)`
+  width: 800px;
   && thead > tr > th {
     background-color: black;
     color: white;
@@ -128,7 +131,7 @@ function Problems() {
           pagination={{
             position: [top, bottom],          
             total: totalResults,
-            defaultPageSize: 25,
+            defaultPageSize: 10,
             className: "pagination"
           }}        
         />    

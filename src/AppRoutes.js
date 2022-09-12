@@ -109,31 +109,25 @@ function AppRoutes(props) {
             <PrivateRoute><Problems /></PrivateRoute>
           } />
           <Route path="/problem" element={ 
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
+          } />
+          <Route exact path="/problem/:problemId" element={ 
+            <PrivateRoute><Problem /></PrivateRoute>          
+          } />
+          <Route path="editor" element={
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
+          } />
+          <Route exact path="post/:postId" element={
+            <PrivateRoute><UserPost /></PrivateRoute>
+          } />
+          <Route path="feed" element={
             <PrivateRoute>
-              <ProblemEditorContainer />
+              <FeedNew />
             </PrivateRoute>
-          }>
-            <Route path=":problemId" element={
-              <PrivateRoute><Problem /></PrivateRoute>
-            } />
-          </Route>
-
-            <Route path="editor" element={
-              <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
-            } />
-
-            <Route exact path="post/:postId" element={
-              <PrivateRoute><UserPost /></PrivateRoute>
-            } />
-
-            <Route path="feed" element={
-              <PrivateRoute>
-                <FeedNew />
-              </PrivateRoute>
-            } />
-            <Route path="notifications" element={
-              <PrivateRoute><Notifications /></PrivateRoute>
-            } />
+          } />
+          <Route path="notifications" element={
+            <PrivateRoute><Notifications /></PrivateRoute>
+          } />
             {/* <Route path="faq" element={<FAQ />} /> */}
         </Routes>
       </Box>
