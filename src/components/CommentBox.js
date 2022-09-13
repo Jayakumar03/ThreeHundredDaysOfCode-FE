@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Image } from 'antd';
+import { Avatar } from 'antd';
 import '../styles/CommentBox.css';
 
 function CommentBox(props) {

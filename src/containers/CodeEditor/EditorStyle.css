@@ -1,0 +1,16 @@
+.problem-editor-container {
+    display: flex;
+    padding-left: 8px;
+    width: 100%;
+}
+
+.editor-container {
+    width: 100%;
+}
+
+.code-editor-iframe {
+    height: 100%;
+    width: 100%;
+    border: 2px solid gray;
+    padding: 8px;
+}

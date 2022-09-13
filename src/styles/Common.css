@@ -18,3 +18,11 @@
 .small {
   font-size: 11px;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.black-bg {
+  background-color: black;
+}

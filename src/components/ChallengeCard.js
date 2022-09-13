@@ -9,7 +9,7 @@ function ChallengeCard(props) {
     }
 
     return (
-        <div onClick={handleClick} className='challenge-card-container'>
+        <div className={'challenge-card-container'} onClick={handleClick}>
             <img className='challenge-card-image' src={props.img}></img>
             <div className="challenge-card-text-container">
                 <span className="challenge-card-title-text">{props.title}</span>

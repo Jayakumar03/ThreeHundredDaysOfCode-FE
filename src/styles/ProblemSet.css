@@ -1,9 +1,11 @@
 .problem-set-container {
-   background-color: #202124;
+   margin-left: 16px;
+   padding-left: 16px;
+   /* background-color: #202124;
    min-height: 100vh;
    height: 100%;
    width: 100%;
-   display: flex;
+   display: flex; */
 }
 
 .problemset-table {

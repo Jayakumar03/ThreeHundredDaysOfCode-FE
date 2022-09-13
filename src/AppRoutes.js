@@ -1,5 +1,5 @@
 // React.
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Containers for routing.
@@ -12,7 +12,7 @@ import ProblemOfTheDay from './containers/ProblemOfTheDay';
 import Profile from './containers/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import FAQ from './containers/FAQ';
-import Editor from './containers/Editor';
+import CodeEditor from './containers/CodeEditor/CodeEditor';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
 import LandingPage from './containers/LandingPage';
@@ -25,95 +25,113 @@ import Home from './containers/Home';
 import LoginRoute from './components/LoginRoute';
 import MySubmissions from "./containers/MySubmissions";
 import Notifications from "./containers/Notifications";
+import { Alert, Box, Snackbar } from "@mui/material";
+import styled, { css } from "styled-components";
+
+import './styles/Home.css';
+import { checkAuth } from "./utils/ClassUtils";
+import ProblemEditorContainer from "./containers/CodeEditor/ProblemEditor";
+
+const StyledAppContent = styled.main`
+  transition: 200ms;
+  display: flex;
+  flex-grow: 1;
+
+  margin-left: 0;
+  ${props => props.open && css`
+    margin-left: ${props.leftPanelWidth}px;
+  `}
+  ${props => props.isAuthenticated && css`
+    margin-top: 48px;
+    height: calc(100vh - 48px);
+  `}
+
+`
 
 
+/**
+ * Combines the NavTopBar, LeftPanelDrawer, AppContent
+ * @param {*} props 
+ * @returns 
+ */
 function AppRoutes(props) {
+  const isAuthenticated = checkAuth();
+
+  const [snack, setSnack] = useState(true)
+  console.log("app_routes -- ", isAuthenticated, props)
+
   return (
-    <div className="app">
-        <Routes>          
+    <StyledAppContent
+      isAuthenticated={isAuthenticated}
+      className="app-content-container"
+      open={props.isLeftPanelOpen}
+      leftPanelWidth={props.leftPanelWidth}
+    >
+      <Snackbar open={snack} autoHideDuration={6000} onClose={() => {setSnack(false)}}>
+        <Alert severity="error">This is an error message!</Alert>
+      </Snackbar>
+      {/* Show the content based on current path, on the right side of the page */}
+      {/* TODO (satyam.sundaram): Add Wrappers as earlier */}
+      <Box className={'route-container'}>
+        <Routes>
+          {/* util routes */}
+          <Route exact path="/signup" element={ <Signup /> } />
+          <Route exact path="/faq" element={ <FAQ /> } />
+          <Route exact path="/blog" element={ <Blog /> } />
+
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
-          <Route exact path="/" element={
-            <LoginRoute>
-              <LandingPage />
-            </LoginRoute>
-              } />
           <Route exact path="/login" element={
-            <LoginRoute>
-              <Login />
-            </LoginRoute>
-              } />          
-          <Route exact path="/profile" element={
-            <PrivateRoute>
-              <Profile />
-          </PrivateRoute>
+              <LoginRoute><Login /></LoginRoute>
+            } />
+          <Route exact path="/" element={
+            <LoginRoute><LandingPage /></LoginRoute>
           } />
-          <Route exact path="/mySubmissions" element={
-            <PrivateRoute>
-             <MySubmissions /> 
-            </PrivateRoute>
+          {/* routes starting with "/" */}
+          <Route exact path="/home" element={
+            <PrivateRoute><Home /></PrivateRoute>
           } />
-          <Route exact path="/leaderboard" element={
-            <PrivateRoute>
-             <LeaderBoard /> 
-            </PrivateRoute>
+          <Route path="/profile" element={
+            <PrivateRoute><Profile /></PrivateRoute>
           } />
-          <Route exact path="/problem" element={
-            <PrivateRoute>
-              <ProblemOfTheDay />
-            </PrivateRoute>
-        } />
-        <Route exact path="/submission" element={
-            <PrivateRoute>
-              <ProblemOfTheDay /> 
-            </PrivateRoute>
-        } />
-          <Route exact path="/problemOfTheDay" element={
-            <PrivateRoute>
-              <ProblemOfTheDay /> 
-            </PrivateRoute>
-        } />
-          <Route exact path="/editor" element={
-            <PrivateRoute>
-              <Editor /> 
-            </PrivateRoute>
-        } />
-          <Route exact path="/problemset/all" element={ 
-              <PrivateRoute>
-                <Problems />
-              </PrivateRoute>
+          <Route path="/mySubmissions" element={
+            <PrivateRoute><MySubmissions /></PrivateRoute>
+          } />
+          <Route path="/leaderBoard" element={ 
+            <PrivateRoute><LeaderBoard /> </PrivateRoute>
+          } />
+          <Route path="/submission" element={ 
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
+          } />
+          <Route path="/problemOfTheDay" element={ 
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
+          } />
+          <Route path="/problemset/all" element={ 
+            <PrivateRoute><Problems /></PrivateRoute>
+          } />
+          <Route path="/problem" element={ 
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
           <Route exact path="/problem/:problemId" element={ 
-          <PrivateRoute>
-            <Problem />
-          </PrivateRoute>          
+            <PrivateRoute><Problem /></PrivateRoute>          
           } />
-          <Route exact path="/post/:postId" element={ 
-          <PrivateRoute>
-            <UserPost />
-          </PrivateRoute>          
+          <Route path="editor" element={
+            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
-          <Route exact path="/feed" element={ 
+          <Route exact path="post/:postId" element={
+            <PrivateRoute><UserPost /></PrivateRoute>
+          } />
+          <Route path="feed" element={
             <PrivateRoute>
               <FeedNew />
-            </PrivateRoute>          
+            </PrivateRoute>
           } />
-          <Route exact path="/home" element={ 
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>          
+          <Route path="notifications" element={
+            <PrivateRoute><Notifications /></PrivateRoute>
           } />
-          <Route exact path="/notifications" element={ 
-            <PrivateRoute>
-              <Notifications />
-            </PrivateRoute>          
-          } />          
-          <Route exact path="/blog" element={ <Blog />} />          
-          <Route exact path="/faq" element={ <FAQ />} />
-          <Route exact path="/challenge" element={ <FAQ />} />
-          <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="*" element={<NotFound />} />
+            {/* <Route path="faq" element={<FAQ />} /> */}
         </Routes>
-      </div>
+      </Box>
+    </StyledAppContent>
   );
 }
 

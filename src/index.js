@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import App from './App';
 import { Amplify } from 'aws-amplify';
 import config from './config/config.js';
@@ -28,11 +28,11 @@ Amplify.configure({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <BrowserRouter>
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <App />            
+      <App />
     </GoogleOAuthProvider>
-    </Router>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -11,20 +11,6 @@ function handleOnJoinCommunityClick() { window.open("https://discord.gg/6duGefKt
 function NavbarLandingPage() {
 return (
     <>
-        <div className='landing-navbar-outer-container'>            
-            <div className='landing-navbar-left-panel'>
-                <a href="">
-                    <img className='landing-navbar-logo' src='https://ik.imagekit.io/wfx6bvuzj/300Code/300_CODE__4__-UaQvrImP.png'/>
-                </a>
-                <a className='landing-navbar-text' href='/blog'> Blog </a>
-                <a className='landing-navbar-text' href='/faq'> FAQ </a>
-            </div>
-            <div className='landing-filler' />
-            <div className='landing-page-button-container'>
-                <Button onClick={handleOnSignupClick} className='landing-navbar-sign-up-button'> Sign up</Button>
-                <Button onClick={handleOnLoginClick} className='landing-navbar-log-in-button'> Log in</Button>
-            </div>            
-        </div>
         <div className='landing-main-text-container'>
             <span className='landing-main-text'> Learn With A Community </span>
             <div className='landing-main-button-container'> 

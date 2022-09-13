@@ -119,7 +119,9 @@ async function handleCredentialResponse(response) {
       name: payload.name
   };
   await Auth.federatedSignIn(
-      'google', { token: idToken, expiresAt }, user);
+    'google', { token: idToken, expiresAt }, user
+  );
+
   const userId = getUuid(payload.email);
   const cookies = new Cookies();
   const expiresDate = new Date();

@@ -7,11 +7,10 @@ import '../styles/ProblemOfTheDay.css';
 // Authentication
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
-
 // Utility.
 const getUuid = require('uuid-by-string');
 
-const ProblemOfTheDay = () => {  
+const ProblemOfTheDay = () => {
   const [logic] = useState("daily");  
   let navigate = useNavigate();
 
@@ -33,7 +32,7 @@ const ProblemOfTheDay = () => {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-        navigate('/problem/' + responseJson.problemId);        
+      navigate('/problem/' + responseJson.problemId);
     })
     .catch((error) => {      
       console.log(error);
@@ -41,7 +40,7 @@ const ProblemOfTheDay = () => {
   }
 
   async function getProblemOfTheDayCognito() {
-  const currentSessionResponse = await Auth.currentSession();
+    const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
     const query = process.env.REACT_APP_API_URL + '/problem?logic=' + logic;
@@ -60,10 +59,10 @@ const ProblemOfTheDay = () => {
     .catch((error) => {      
       console.log(error);
     });
-}
+  }
 
-useEffect(() => {  getProblemOfTheDay(); }, [logic])  
-return (<></>);
+  useEffect(() => {  getProblemOfTheDay(); }, [logic])  
+  return (<></>);
 };
 
 export default ProblemOfTheDay;

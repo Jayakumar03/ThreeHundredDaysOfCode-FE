@@ -1,15 +1,15 @@
 // Styles.
 import '../styles/FeedNew.css';
 
-import Feed from './Feed';
-import FeedLeftPanel from '../components/FeedLeftPanel';
+import { Outlet } from 'react-router-dom';
 
 
 function FeedNew() {
     return (
         <div className='feed-container'>
-            <FeedLeftPanel showTitle="true" />
-            <div className='feed-parent'> <Feed /> </div>
+            <div className='feed-parent'>
+                <Outlet />
+            </div>
         </div>
     );
 }
