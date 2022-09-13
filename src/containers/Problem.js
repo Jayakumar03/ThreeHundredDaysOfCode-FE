@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
+import TimerBar from '../components/TimerBar';
 import CodeEditor from '../containers/CodeEditor/CodeEditor';
 import { useNavigate } from 'react-router-dom';
 
@@ -423,13 +424,18 @@ function submitCode(query, requestOptions) {
   const rowClass = joinClasses([codeSubmitClass, codeSubmitClass+'-row'])
   return (
     <div className='problem-solve-page-container'>
-      <div className={colClass}>
+      <div className={colClass}>        
         <ProblemBar 
           headerText="The name of the problem is "
           problem={problem}
           isProblemOfTheDay={isProblemOfTheDay} 
           timeLeft={timeLeft}
         />
+        <TimerBar         
+          problem={problem}        
+          isProblemOfTheDay={isProblemOfTheDay} 
+          timeLeft={timeLeft}
+        />        
         <>{renderForm()}</>
       </div>
       <div className={rowClass}>
