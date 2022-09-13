@@ -22,7 +22,6 @@ function Editor(props) {
      function iframe() {
         const userId = props.userId;
         const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL;
-        console.log('UserId:' + userId);
         return {
             __html: '<iframe src='+ editor_url + ' width="1000" height="1000"></iframe>'
         }

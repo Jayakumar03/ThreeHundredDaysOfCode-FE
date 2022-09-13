@@ -31,10 +31,15 @@ form, label {
     color: white !important;
 }
 
-
 .problem-solve-form-container {
     display: flex;
     flex-direction: column;
     margin-left: 200px;
     margin-top: 50px;
 }
+
+.problem-solve-timer-container {
+    color: black;
+    font-weight: 600;
+}
+

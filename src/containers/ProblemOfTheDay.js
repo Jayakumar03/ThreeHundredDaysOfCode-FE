@@ -32,7 +32,7 @@ const ProblemOfTheDay = () => {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      navigate('/problem/' + responseJson.problemId);
+        navigate('/problem/' + responseJson.problemId + "?isProblemOfTheDay=1");
     })
     .catch((error) => {      
       console.log(error);
@@ -54,7 +54,7 @@ const ProblemOfTheDay = () => {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      navigate('/problem/' + responseJson.problemId);
+      navigate('/problem/' + responseJson.problemId + "?isProblemOfTheDay=1");
     })
     .catch((error) => {      
       console.log(error);

@@ -1,7 +1,6 @@
 import "antd/dist/antd.css";
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import ProblemBar from '../components/ProblemBar';
 import CodeEditor from '../containers/CodeEditor/CodeEditor';
@@ -16,6 +15,7 @@ import Cookies from 'universal-cookie';
 import ProblemDescription from './CodeEditor/ProblemDescription';
 import { joinClasses } from '../utils/ClassUtils';
 
+
 // Utility.
 const getUuid = require('uuid-by-string');
 
@@ -27,6 +27,33 @@ function Problem(){
   const [userId, SetUserId] = useState('');  
   const navigate = useNavigate();
   const problemId = useParams().problemId;
+  const [timeLeft, setTimeLeft] = useState({});
+  const [isProblemOfTheDay, SetIsProblemOfTheDay] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+
+const calculateTimeLeft = () => {
+    const requestOptions = { 'method': 'GET' };
+    const query = process.env.REACT_APP_API_URL + '/google/timeRemaining';
+    fetch(query, requestOptions)
+    .then(res => res.json())
+    .then(responseJson => {
+      const difference = responseJson.diffInMillis;
+      const timeLeftResponse = {
+        days: Math.floor((difference/(24 * 1000 * 60 * 60))),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60)
+      };
+      setTimeLeft(timeLeftResponse);
+      console.log(difference);
+      console.log(timeLeftResponse);
+    })
+    .catch((error) => {      
+      console.log(error);
+    });
+}
+
 
   async function getUserStats() {
     const cookies = new Cookies();
@@ -306,7 +333,11 @@ function submitCode(query, requestOptions) {
     GetProblemFromURL();
     getUserStats();
     getUserId();
+    calculateTimeLeft();
+    SetIsProblemOfTheDay(searchParams.get("isProblemOfTheDay") === "1");
 }, []);
+
+
 
   const formItemLayout =
     formLayout === 'horizontal'
@@ -390,13 +421,14 @@ function submitCode(query, requestOptions) {
   const codeSubmitClass = 'code-submit-form-parent'
   const colClass = joinClasses([codeSubmitClass, codeSubmitClass+'-col'])
   const rowClass = joinClasses([codeSubmitClass, codeSubmitClass+'-row'])
-
   return (
     <div className='problem-solve-page-container'>
       <div className={colClass}>
         <ProblemBar 
           headerText="The name of the problem is "
           problem={problem}
+          isProblemOfTheDay={isProblemOfTheDay} 
+          timeLeft={timeLeft}
         />
         <>{renderForm()}</>
       </div>
@@ -404,7 +436,8 @@ function submitCode(query, requestOptions) {
         <ProblemDescription problem={problem} />
         <CodeEditor problem={problem} problemId={problemId} userId={userId} />
     </div>
-    </div>)
+    </div>
+    )
 };
 
 export default Problem;
