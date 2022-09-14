@@ -175,6 +175,7 @@ return (
           columns={columns} 
           dataSource={leaderBoardStats} 
           onChange={onChange}
+          pagination={{className: "leaderboard-pagination", defaultPageSize: 10}}
         />
         {
           props.showFilters !== undefined && props.showFilters === "true" && 

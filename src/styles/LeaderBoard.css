@@ -9,6 +9,7 @@
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 16px;
+    color: gray;
 }
 
 .last-week-btn {
@@ -47,3 +48,24 @@
     text-decoration: none!important;
     color:white;
  }
+
+ .submission-title {
+    color: rgb(196, 196, 196);
+    font-size: 24px;
+    font-weight: 600;
+ }
+
+ .submission-pagination {
+    color: gray;
+ }
+
+.leaderboard-pagination li, button {
+    background-color: rgb(27, 27, 27)!important;
+    color: white!important;    
+}
+
+ .submission-pagination li, button  {
+    background-color: rgb(27, 27, 27)!important;
+    color: white!important;    
+ }  
+ 

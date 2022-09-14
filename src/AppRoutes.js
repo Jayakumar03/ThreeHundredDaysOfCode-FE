@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Containers for routing.
-import NotFound from "./containers/NotFound";
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import ForgotPassword from './containers/ForgotPassword';
@@ -12,7 +11,6 @@ import ProblemOfTheDay from './containers/ProblemOfTheDay';
 import Profile from './containers/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import FAQ from './containers/FAQ';
-import CodeEditor from './containers/CodeEditor/CodeEditor';
 import Problems from './containers/Problems';
 import Problem from './containers/Problem';
 import LandingPage from './containers/LandingPage';
@@ -20,6 +18,8 @@ import Blog from './containers/Blog';
 import FeedNew from "./containers/FeedNew";
 import UserPost from './containers/UserPost';
 import Home from './containers/Home';
+import ProblemSubmission from './containers/ProblemSubmission';
+import AllSubmissions from './containers/AllSubmissions';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -30,7 +30,6 @@ import styled, { css } from "styled-components";
 
 import './styles/Home.css';
 import { checkAuth } from "./utils/ClassUtils";
-import ProblemEditorContainer from "./containers/CodeEditor/ProblemEditor";
 
 const StyledAppContent = styled.main`
   transition: 200ms;
@@ -47,7 +46,6 @@ const StyledAppContent = styled.main`
   `}
 
 `
-
 
 /**
  * Combines the NavTopBar, LeftPanelDrawer, AppContent
@@ -96,12 +94,12 @@ function AppRoutes(props) {
           <Route path="/mySubmissions" element={
             <PrivateRoute><MySubmissions /></PrivateRoute>
           } />
+          <Route path="/submissions" element={
+            <PrivateRoute><AllSubmissions /></PrivateRoute>
+          } />
           <Route path="/leaderBoard" element={ 
             <PrivateRoute><LeaderBoard /> </PrivateRoute>
-          } />
-          <Route path="/submission" element={ 
-            <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
-          } />
+          } />          
           <Route path="/problemOfTheDay" element={ 
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
@@ -113,6 +111,9 @@ function AppRoutes(props) {
           } />
           <Route exact path="/problem/:problemId" element={ 
             <PrivateRoute><Problem /></PrivateRoute>          
+          } />
+          <Route exact path="/submission/:submissionId" element={ 
+            <PrivateRoute><ProblemSubmission /></PrivateRoute>          
           } />
           <Route path="editor" element={
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>

@@ -1,11 +1,6 @@
 .problem-set-container {
    margin-left: 16px;
    padding-left: 16px;
-   /* background-color: #202124;
-   min-height: 100vh;
-   height: 100%;
-   width: 100%;
-   display: flex; */
 }
 
 .problemset-table {
@@ -29,4 +24,11 @@
    color: white!important;
 }
 
-.pagination {}
+.problem-set-pagination {
+   color: gray;
+}
+
+.problem-set-pagination li, button {
+   background-color: rgb(27, 27, 27)!important;
+   color: white!important;    
+}

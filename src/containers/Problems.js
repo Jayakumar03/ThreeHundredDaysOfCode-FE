@@ -132,7 +132,7 @@ function Problems() {
             position: [top, bottom],          
             total: totalResults,
             defaultPageSize: 10,
-            className: "pagination"
+            className: "problem-set-pagination"
           }}        
         />    
     </div>
