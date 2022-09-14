@@ -1,16 +1,11 @@
-
 import './ProblemDescription.css';
 import { Base64 } from "js-base64";
-
 
 const ProblemDescription = (props) => {
     let problemText = ''
     if (props.problem !== undefined && props.problem.description !== undefined && props.problem.description.length > 0) {
         problemText = Base64.decode(props.problem.description);
     }
-
-    console.log("HERE PROBLEM", props.problem)
-
     return (
         <>
             <div className='problem-description'>

@@ -2,9 +2,6 @@ import React from 'react';
 
 // Styles.
 import './EditorStyle.css';
-import CodeIFrame from './IFrame';
-
-// Utility.
 
 const CodeEditor = (props) => {
     const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + props.userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL;

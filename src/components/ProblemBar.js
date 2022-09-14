@@ -20,13 +20,7 @@ Object.keys(timeLeft).forEach((interval) => {
   return (
     <div className="problem-bar-box">
       <p className="problem-bar-text"> {props.headerText} - "{props.problem.problemTitle}". Use 
-      <a target="_blank" href={props.problem.problemLink}> this link </a> to validate your solution.
-      {
-      props.isProblemOfTheDay && 
-      <>
-          Time left to solve the problem is {timerComponents.length ? timerComponents : <span>Time's up!</span>}
-      </>
-      }
+      <a target="_blank" href={props.problem.problemLink}> this link </a> to validate your solution.      
       </p>
     </div>        
     );

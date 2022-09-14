@@ -42,4 +42,6 @@ form, label {
     color: black;
     font-weight: 600;
 }
-
+.problem-solve-page-container {
+    width: 100%;
+}
