@@ -2,15 +2,15 @@ import "antd/dist/antd.css";
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
-import ProblemBar from '../components/ProblemBar';
 import TimerBar from '../components/TimerBar';
 import CodeEditor from '../containers/CodeEditor/CodeEditor';
 import { useNavigate } from 'react-router-dom';
+import CodeSubmitForm from '../components/CodeSubmitForm';
 
 // Styles.
 import '../styles/ProblemOfTheDay.css';
 
-// Authentication
+// Authentication.
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 import ProblemDescription from './CodeEditor/ProblemDescription';
@@ -54,8 +54,6 @@ const calculateTimeLeft = () => {
       console.log(error);
     });
 }
-
-
   async function getUserStats() {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
@@ -92,8 +90,7 @@ const calculateTimeLeft = () => {
     } else {
         const userAuth = await Auth.currentAuthenticatedUser();        
         userId = getUuid(userAuth.email);      
-    }
-    console.log("Getuserid")
+    }    
     SetUserId(userId);
   }
 
@@ -223,7 +220,7 @@ function submitCode(query, requestOptions) {
     }
   
   async function handleNewProblemClick() {
-    await getProblemSet();    
+    await getProblemSet();
   }    
     
   async function onFinish(values) {
@@ -235,6 +232,21 @@ function submitCode(query, requestOptions) {
       submitCodeWithSSO(values);
     }
   }
+
+  async function submitGithubLink(link) {
+    const values = {
+      problemTitle: problem.problemTitle,
+      problemLink: problem.problemLink,
+      solutionLink: link
+    };
+    const cookies = new Cookies();
+    const loginType = cookies.get('loginType');
+    if (loginType === 'cognito') {
+      submitCodeWithCognito(values);
+    } else {
+      submitCodeWithSSO(values);
+  }
+}
 
   async function submitCodeWithSSO(values) {
     const query = process.env.REACT_APP_API_URL + '/google/submitCode';
@@ -296,8 +308,7 @@ function submitCode(query, requestOptions) {
     .then(res => res.json())
     .then(responseJson => {
         SetProblem(responseJson);
-        form.setFieldsValue(responseJson);   
-        console.log("GSSO", responseJson)             
+        form.setFieldsValue(responseJson);
     })
     .catch((error) => {      
       console.log(error);
@@ -319,7 +330,6 @@ function submitCode(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-        console.log("URL se", responseJson)
         SetProblem(responseJson);
         form.setFieldsValue(responseJson);
     })
@@ -330,7 +340,6 @@ function submitCode(query, requestOptions) {
 
   
   useEffect(() => { 
-    console.log("HERE WE ARE")
     GetProblemFromURL();
     getUserStats();
     getUserId();
@@ -377,6 +386,7 @@ function submitCode(query, requestOptions) {
       <Form.Item 
       label="Problem Name"
       name="problemTitle"
+      style={{display: 'none'}}
       rules={[
         {
           required: true,
@@ -386,7 +396,8 @@ function submitCode(query, requestOptions) {
       >
         <Input placeholder="Problem Name" disabled={false} />
       </Form.Item>
-      <Form.Item 
+      <Form.Item
+      style={{display: 'none'}} 
       label="Problem Link" 
       name='problemLink'
       rules={[
@@ -411,7 +422,9 @@ function submitCode(query, requestOptions) {
         <Form.Item {...buttonItemLayout}>
           <Button type="primary" htmlType='submit'>Submit</Button>
         </Form.Item>
-        <Form.Item {...buttonItemLayout}>
+        <Form.Item 
+          style={{display: 'none'}} 
+          {...buttonItemLayout} >
           <Button type="primary" onClick={handleNewProblemClick}>New Problem</Button>
         </Form.Item>
       </div>
@@ -425,22 +438,24 @@ function submitCode(query, requestOptions) {
   return (
     <div className='problem-solve-page-container'>
       <div className={colClass}>        
-        <ProblemBar 
+        {/* <ProblemBar 
           headerText="The name of the problem is "
           problem={problem}
           isProblemOfTheDay={isProblemOfTheDay} 
           timeLeft={timeLeft}
-        />
-        <TimerBar         
-          problem={problem}        
-          isProblemOfTheDay={isProblemOfTheDay} 
-          timeLeft={timeLeft}
-        />        
-        <>{renderForm()}</>
+        /> */}
+        <div className="problem-timer-code-submit-container">
+          <TimerBar         
+            problem={problem}        
+            isProblemOfTheDay={isProblemOfTheDay} 
+            timeLeft={timeLeft}
+          />
+          <CodeSubmitForm handleClick={submitGithubLink} />
+        </div>
       </div>
       <div className={rowClass}>
-        <ProblemDescription problem={problem} />
         <CodeEditor problem={problem} problemId={problemId} userId={userId} />
+        <ProblemDescription problem={problem} />        
     </div>
     </div>
     )

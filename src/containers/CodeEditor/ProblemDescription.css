@@ -1,5 +1,10 @@
 .problem-description-link {
-    color: white;
+    color: #58a6ff;
+}
+
+.problem-description-link:hover {
+    
+    text-decoration: underline;
 }
 
 .problem-description {

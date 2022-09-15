@@ -38,15 +38,12 @@
     color: rgb(205, 205, 205);
     font-size: 24px;
     font-weight: 600px;
-    margin-left: 30px;
 }
 
 .timer-bar-box {
     display: flex;    
     border-radius: 10px;
-    margin-bottom: 20px;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-bottom: 10px;
 }
 
 .timer-bar-timeleft-text {
