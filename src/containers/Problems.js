@@ -45,13 +45,13 @@ const columns = [
     title: 'Title',
     dataIndex: 'problemTitle',
     key: 'problemTitle',
-    render: (text, record, index) => <a className='problem-set-title-text' href={getLink(text, record, index)}>{text}</a>,
+    render: (text, record, index) => <a className='table-element-hyperlink' href={getLink(text, record, index)}>{text}</a>,
   },
   {
     title: 'Submissions',
     dataIndex: 'problemSubmissions',
     key: 'problemSubmissions',
-    render: (text, record, index) => <a className='problem-set-title-text' href={getSubmissionLink(text, record, index)}>Submissions</a>,
+    render: (text, record, index) => <a className='table-element-hyperlink' href={getSubmissionLink(text, record, index)}>Submissions</a>,
   },
   {
     title: 'Difficulty',

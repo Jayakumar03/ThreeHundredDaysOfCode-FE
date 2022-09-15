@@ -31,6 +31,10 @@ const StyledTable = styled((props) => <Table {...props} />)`
 `;
 
 function getSolutionLink(text, record) {
+    const solutionLink = record.solutionLink;    
+    if (solutionLink) {
+      return solutionLink;
+    }
     const submissionId = record.submissionId;
     return "/submission/" + submissionId + "/";
 }
@@ -45,13 +49,13 @@ const columns = [
     title: 'Problem Name',
     dataIndex: 'problemName',
     key: 'problemName',
-    render: (text, record) => <a className='problem-set-table-row-light' href={record.problemLink}>{text}</a>
+    render: (text, record) => <a className='problem-submission-name' href={record.problemLink}>{text}</a>
   },  
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
     key: 'solutionLink',
-    render: (text, record) => <a className='problem-set-table-row-light' href={getSolutionLink(text, record)}>Submission</a>
+    render: (text, record) => <a className='problem-submission-name' href={getSolutionLink(text, record)}>Submission</a>
   },
   {
     title: 'Submission Date',

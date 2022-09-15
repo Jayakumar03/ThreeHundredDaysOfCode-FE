@@ -40,13 +40,13 @@ const columns = [
     title: 'Problem Name',
     dataIndex: 'problemName',
     key: 'problemName',
-    render: (text, record) => <a className='problem-set-table-row-light' href={record.problemLink}>{text}</a>
+    render: (text, record) => <a className='table-element-hyperlink' href={record.problemLink}>{text}</a>
   },  
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
     key: 'solutionLink',
-    render: (text, record) => <a className='problem-set-table-row-light' href={record.solutionLink}>Submission</a>
+    render: (text, record) => <a className='table-element-hyperlink' href={record.solutionLink}>Submission</a>
   },
   {
     title: 'Submission Date',

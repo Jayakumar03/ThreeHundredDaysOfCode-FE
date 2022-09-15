@@ -32,3 +32,11 @@
    background-color: rgb(27, 27, 27)!important;
    color: white!important;    
 }
+
+.table-element-hyperlink {   
+   color: rgb(200, 200, 250)!important;
+}
+
+.table-element-hyperlink:hover {
+   text-decoration: underline;
+}

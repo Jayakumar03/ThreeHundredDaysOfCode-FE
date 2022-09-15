@@ -42,6 +42,15 @@
     color: white!important;
     text-decoration: none!important;
  }
+
+ .problem-submission-name {
+    background-color: rgb(40, 40, 40)!important;
+    color: rgb(200, 200, 250)!important;
+ }
+
+ .problem-submission-name:hover {
+    text-decoration: underline;
+ }
  
  .leaderboard-name {
     background-color: rgb(40, 40, 40)!important;
