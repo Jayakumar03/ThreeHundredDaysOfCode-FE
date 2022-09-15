@@ -26,6 +26,7 @@ const LeftPanelDrawer = (props) => {
     // Defines the items present in the Left Panel Drawer
     const navItems = [
         {path: '/home', title: 'Home', icon: <Home className={iconColor} />},
+        {path: '/submissions', title: 'Submissions', icon: <Book className={iconColor} />},
         {path: '/problemset/all', title: 'Problem Set', icon: <Book className={iconColor} />},
         {path: '/notifications', title: 'Notifications', icon: <NotificationImportant className={iconColor} />},
         {path: '/problemOfTheDay', title: 'Daily Challenge', icon: <ListAlt className={iconColor} />},

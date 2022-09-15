@@ -1,6 +1,7 @@
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
+import { Pagination } from 'antd';
 
 // Authentication
 import { Auth } from "aws-amplify";
@@ -61,6 +62,7 @@ const columns = [
 
 function AllSubmissions() {
   const [submissionStats, SetSubmissionStats] = useState([]);
+  const [pageNumber, SetPageNumber] = useState(1);
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -95,7 +97,7 @@ async function getSubmissionsCognito() {
   const currentSessionResponse = await Auth.currentSession();
   const accessToken = currentSessionResponse.getAccessToken();
   const jwtToken = accessToken.getJwtToken();
-  const query = process.env.REACT_APP_API_URL + '/mySubmissions';
+  const query = process.env.REACT_APP_API_URL + '/submissions?' + "&pageId=" + pageNumber;
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -109,7 +111,7 @@ async function getSubmissionsGoogleSSO() {
   const userAuth = await Auth.currentAuthenticatedUser();
   const requestOptions = { 'method': 'GET' };
   const userId = getUuid(userAuth.email);
-  const query = process.env.REACT_APP_API_URL + '/google/mySubmissions?userId=' + userId;
+  const query = process.env.REACT_APP_API_URL + '/google/submissions?userId=' + userId + "&pageId="+pageNumber;
   getSubmissionWithRequestParams(query, requestOptions);
 }
 
@@ -125,7 +127,11 @@ async function getSubmissions() {
 
 useEffect(() => {
   getSubmissions();
-}, [])
+}, [pageNumber])
+
+function handleOnChange(page, pageSize) {
+  SetPageNumber(page);  
+}
 
   return (
     <div className='leaderboard-table'>
@@ -134,7 +140,7 @@ useEffect(() => {
           rowClassName= 'problem-set-table-row-light'
           columns={columns} 
           dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10}}
+          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange, total: 100}}
         />
     </div>
   );
