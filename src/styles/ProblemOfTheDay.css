@@ -47,3 +47,8 @@ form, label {
 .problem-timer-code-submit-container {
     margin-left: 20px;    
 }
+
+.display-message {
+    z-index: 10;
+    margin-top: 50px;
+}
