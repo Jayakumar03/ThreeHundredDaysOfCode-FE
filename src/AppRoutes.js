@@ -20,6 +20,7 @@ import UserPost from './containers/UserPost';
 import Home from './containers/Home';
 import ProblemSubmission from './containers/ProblemSubmission';
 import AllSubmissions from './containers/AllSubmissions';
+import ProblemSubmissions from './containers/ProblemSubmissions';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -113,7 +114,10 @@ function AppRoutes(props) {
             <PrivateRoute><Problem /></PrivateRoute>          
           } />
           <Route exact path="/submission/:submissionId" element={ 
-            <PrivateRoute><ProblemSubmission /></PrivateRoute>          
+            <PrivateRoute><ProblemSubmission /></PrivateRoute>
+          } />
+          <Route exact path="/problemSubmissions/:problemId" element={ 
+            <PrivateRoute><ProblemSubmissions /></PrivateRoute>          
           } />
           <Route path="editor" element={
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>

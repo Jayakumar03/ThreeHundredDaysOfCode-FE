@@ -17,6 +17,11 @@ function getLink(text, record, index) {
   return "/problem/" + problemId + "/";
 }
 
+function getSubmissionLink(text, record, index) {
+  const problemId = record.problemId;
+  return "/problemSubmissions/" + problemId + "/";
+}
+
 const StyledTable = styled((props) => <Table {...props} />)`
   width: 800px;
   && thead > tr > th {
@@ -41,6 +46,12 @@ const columns = [
     dataIndex: 'problemTitle',
     key: 'problemTitle',
     render: (text, record, index) => <a className='problem-set-title-text' href={getLink(text, record, index)}>{text}</a>,
+  },
+  {
+    title: 'Submissions',
+    dataIndex: 'problemSubmissions',
+    key: 'problemSubmissions',
+    render: (text, record, index) => <a className='problem-set-title-text' href={getSubmissionLink(text, record, index)}>Submissions</a>,
   },
   {
     title: 'Difficulty',
