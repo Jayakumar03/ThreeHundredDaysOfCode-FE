@@ -32,9 +32,9 @@ const StyledTable = styled((props) => <Table {...props} />)`
 
 function getSolutionLink(text, record) {
     const solutionLink = record.solutionLink;    
-    if (solutionLink) {
-      return solutionLink;
-    }
+    if (solutionLink && solutionLink.substring(0, 5) === 'https') {
+        return solutionLink;
+    }    
     const submissionId = record.submissionId;
     return "/submission/" + submissionId + "/";
 }
