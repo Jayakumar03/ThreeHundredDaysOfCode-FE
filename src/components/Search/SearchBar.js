@@ -103,7 +103,8 @@ function SearchBar(props) {
     fetch(query, requestHeaders)
       .then(res => res.json())
       .then((data) => {
-        if (data.completions !== undefined) {
+        console.log(data);
+        if (data.completions !== undefined) {          
           setFilteredSuggestions(data.completions);
         } else {
           setFilteredSuggestions([]);
@@ -122,7 +123,7 @@ function SearchBar(props) {
       setActiveSuggestion(-1);      
       setFilteredSuggestions([]);      
       setUserInput(userInput);
-      props.getResults(userInput, 1);
+      navigate("/search?searchText=" + userInput);
     }
     // User pressed the up arrow
     else if (e.keyCode === 38) {

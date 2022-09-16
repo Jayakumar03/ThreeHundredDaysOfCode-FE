@@ -28,25 +28,20 @@ const getUuid = require('uuid-by-string');
 function Search() {
   const [searchResultList, setSearchResultList] = useState([]);
   const [show, setShow] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [showResults, setShowResults] = useState(false);  
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filterState, setFilterState] = useState('All');
   const [pageNumber, setPageNumber] = useState(1);
   const [prevFilterState, setPrevFilterState] = useState('All');
   const [timeFilter, setTimeFilter] = useState('Any time');
   const [totalResults, setTotalResults] = useState(50);
-  const searchText = searchParams.searchText;
+  const searchText = searchParams.get("searchText");
   
   React.useEffect(() => {
     displayPaginationBar(false);
     displayFilterPanelBar(false);
     displayTimeFilterPanel(false);
-  }, []); 
-
-  function onClick(e) {
-    let userInput = e.currentTarget.innerText;
-    getResults(userInput, 1);
-  }
+  }, []);
 
   function displayPaginationBar(flag) {
     if (document.getElementById('paginationDivParentId') === null) return;
@@ -96,6 +91,7 @@ function Search() {
     fetch(query, requestHeaders)
       .then(res => res.json())
       .then((data) => {
+        console.log(data);
         if (typeof(data.docs) !== 'undefined') {
           setSearchResultList(data.docs);
           setTotalResults(data.totalResults);          
@@ -113,9 +109,8 @@ function Search() {
     const res = await Auth.currentSession();
     let accessToken = res.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
-    const username = res.getAccessToken().payload.username;
-    const query = process.env.REACT_APP_API_URL + '/search?searchText=' + userInput + 
-                  "&page=" + pageNumber +"&username=" + username + "&source=" + filterState + "&timeFilter=" + timeFilter;                  
+    const userId = accessToken.payload.sub;
+    const query = process.env.REACT_APP_API_URL + '/search?searchText=' + searchText +"&userId=" + userId;                  
     const requestHeaders = {
       method: 'GET',
       headers: {
@@ -129,8 +124,8 @@ function Search() {
     const userAuth = await Auth.currentAuthenticatedUser();
     const requestHeaders = { 'method': 'GET' };
     const userId = getUuid(userAuth.email);
-    const query = process.env.REACT_APP_API_URL + '/google/search?searchText=' + userInput + 
-                  "&page=" + pageNumber + "&userId="+ userId  + "&source=" + filterState + "&timeFilter=" + timeFilter;
+    console.log(searchText);
+    const query = process.env.REACT_APP_API_URL + '/google/search?searchText=' + searchText + "&userId="+ userId;                  
     getResultsWithQuery(query, requestHeaders);
   } 
 
@@ -144,9 +139,6 @@ function Search() {
     }
   }
 
-  function hideModal() { setShow(false); }
-  function showModal() { setShow(true); }
-
   function onClickSearchButton() {
     const userInput = searchText;
     if (userInput !== '') {
@@ -154,34 +146,11 @@ function Search() {
     }
   }
 
-  function showMessage(success, error, warning) {
-    if (success !== null) {
-        message.success({
-        content: success,
-        className: 'display-message',
-      });
-    } else if (error !== null) {
-        message.error({
-        content: error,
-        className: 'display-message',
-      });
-    } else if (warning !== null) {
-      message.warning({
-      content: warning,
-      className: 'display-message',
-    });
-  }
-}
 
 function handlePaginationChange(pageNumber) {
   setPageNumber(pageNumber);
 }
 
-function handleFilterClick(source) {
-  setPrevFilterState(filterState);
-  setFilterState(source);
-  setPageNumber(1);
-}
 
 function getFilterUnderlineId(filterStateInput) {
   if (filterStateInput === 'All') return 'allUnderline';
@@ -193,9 +162,6 @@ function getFilterUnderlineId(filterStateInput) {
   return '';
 }
 
-function handleTimeFilterUpdate(key) {
-    setTimeFilter(getEventLabel(key));
-}
 
 useEffect(() => {
   onClickSearchButton();
