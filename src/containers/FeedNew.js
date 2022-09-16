@@ -1,14 +1,12 @@
 // Styles.
 import '../styles/FeedNew.css';
-
-import { Outlet } from 'react-router-dom';
-
+import Feed from './Feed';
 
 function FeedNew() {
     return (
         <div className='feed-container'>
             <div className='feed-parent'>
-                <Outlet />
+                <Feed />
             </div>
         </div>
     );

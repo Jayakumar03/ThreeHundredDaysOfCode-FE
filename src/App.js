@@ -181,7 +181,7 @@ function App() {
     setActiveSuggestion(-1);
     var elementExists = document.getElementById('searchInputContainer');
     if (elementExists) {
-      document.getElementById('searchInputContainer').style.borderRadius = '30px';
+      document.getElementById('searchInputContainer').style.borderRadius = '0px';
       document.getElementById('searchSuggestionContainerId').style.display = 'none';
     }
   }
@@ -204,6 +204,11 @@ function App() {
     // Outer most component
     <div className="App" onClick={handleClick}>
         {/* The top navigation bar component */}
+        <AppContext.Provider value={{
+          isAuthenticated, userHasAuthenticated,
+          filteredSuggestions, setFilteredSuggestions,
+          activeSuggestion, setActiveSuggestion
+        }}>
         <NavTopBar
           isAuthenticating={isAuthenticating}
           handleLogout={handleLogout}
@@ -214,12 +219,7 @@ function App() {
           handleDrawerClose={handleDrawerClose}
           handleDrawerOpen={handleDrawerOpen}
         />
-        <AppContext.Provider value={{
-          isAuthenticated, userHasAuthenticated,
-          filteredSuggestions, setFilteredSuggestions,
-          activeSuggestion, setActiveSuggestion
-        }}
-        >
+        
           {/* The LeftPanel component - used for navigation */}
           {/* TODO (satyam.sundaram): useContext instead of passing props */}
           <LeftPanelDrawer

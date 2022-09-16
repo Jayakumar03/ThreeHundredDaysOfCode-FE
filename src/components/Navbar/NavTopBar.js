@@ -16,7 +16,7 @@ import { Auth } from "aws-amplify";
 import '../../styles/LandingPage.css';
 import '../../styles/LeftPanelDrawer.css';
 import { checkAuth } from '../../utils/ClassUtils';
-
+import SearchBar from '../Search/SearchBar';
 
 // Replaces old Navbar.js
 function NavTopBar(props) {
@@ -65,7 +65,7 @@ function NavTopBar(props) {
         <Box sx={{display: 'flex'}}>
             <AppBar
                 className={appBarClass}
-                sx={{ zIndex:123123123, width: navBarWidth }}
+                sx={{ zIndex:123123123, width: navBarWidth, height: 70 }}
                 position="fixed" open={props.open}
             >
                 <Toolbar variant='dense' className={'nav-appbar-toolbar'}>
@@ -98,6 +98,11 @@ function NavTopBar(props) {
 
                     {/* Only if logged in */}
                     {isAuthenticated ? <>
+                    { process.env.REACT_APP_SHOW_SEARCH === "true" && 
+                        <SearchBar                        
+                        placeholder="Search..." />
+                    }
+                        <Box sx={{flexGrow:1}}/>
                         <NavLink to="/profile" className={'profile-container'}>
                             <Avatar src="https://joeschmoe.io/api/v1/random" />
                         </NavLink>

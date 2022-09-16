@@ -1,13 +1,15 @@
-/** Flex-Container **/
-.searchInputs {
-  background-color: white;
-  margin-top: 20px;
+.search {
   display: flex;
-  border: 1px solid rgba(217, 215, 215, 1);
-  border-radius: 30px;
-  /* box-shadow: 0 10px 10px 10px rgb(64 60 67 / 16%); */
-  z-index: 3;
-  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.search-input-box-container {
+  background-color: black;  
+  display: flex;
+  align-items: center;  
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .searchInputs:hover {
@@ -16,20 +18,21 @@
 
 /** Flex-Item **/
 .search input {
-background-color: white;
-font-size: 14px;
-padding: 15px;
-padding-left: 10px;
-margin-right: 20px;
-height: 30px;
-width: 400px;
-box-sizing: border-box;
-margin-top: 6px;
-margin-bottom: 6px;
-border: 0px;
-margin-left: 5px;
-outline: none;
-flex: 1;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  padding: 15px;
+  padding-left: 10px;
+  margin-right: 20px;
+  height: 30px;
+  width: 400px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border: 0px;
+  margin-left: 5px;
+  outline: none;
+  flex: 1;
 }
 
 /** Flex-Item **/
@@ -74,4 +77,26 @@ input:focus {
 
 .searchButtonContainer {
   display: flex;
+}
+
+.search-suggestion-list-container {
+  width: 500px;
+  background-color: white;
+  position: absolute;
+}
+
+.dataResult {
+  padding-bottom: 0.5rem;
+  width: 300px;
+  padding-inline-start: 0px;
+  width: 100%;
+  align-items: center;
+  color: white;
+  list-style: none;
+  position: absolute;
+  background-color: white!important;
+}
+
+.dataResult > li {
+  position: relative;
 }

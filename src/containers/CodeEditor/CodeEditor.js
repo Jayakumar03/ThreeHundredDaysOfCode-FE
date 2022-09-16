@@ -8,7 +8,7 @@ const CodeEditor = (props) => {
     const iframeClass = "code-editor-iframe";
 
     return (
-        <div className='problem-editor-container'>            
+        <div className='problem-editor-container'>
             { process.env.REACT_APP_SHOW_EDITOR === "true" &&
               <div className='editor-container' dangerouslySetInnerHTML={{
                 __html: '<iframe class=' + iframeClass + ' src='+ editor_url + '></iframe>'

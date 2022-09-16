@@ -437,13 +437,7 @@ function submitCode(query, requestOptions) {
   const rowClass = joinClasses([codeSubmitClass, codeSubmitClass+'-row'])
   return (
     <div className='problem-solve-page-container'>
-      <div className={colClass}>        
-        {/* <ProblemBar 
-          headerText="The name of the problem is "
-          problem={problem}
-          isProblemOfTheDay={isProblemOfTheDay} 
-          timeLeft={timeLeft}
-        /> */}
+      <div className={colClass}>
         <div className="problem-timer-code-submit-container">
           <TimerBar         
             problem={problem}        

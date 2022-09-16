@@ -16,7 +16,6 @@ import "../styles/LeftPanelDrawer.css";
 // utils
 import { checkAuth, joinClasses } from "../utils/ClassUtils";
 
-
 const LeftPanelDrawer = (props) => {
     let location = useLocation();
     const isAuthenticated = checkAuth()
@@ -31,7 +30,7 @@ const LeftPanelDrawer = (props) => {
         {path: '/notifications', title: 'Notifications', icon: <NotificationImportant className={iconColor} />},
         {path: '/problemOfTheDay', title: 'Daily Challenge', icon: <ListAlt className={iconColor} />},
         {path: '/leaderBoard', title: 'Leaderboard', icon: <Speed className={iconColor} />},
-        {path: '/feed', title:' Feed', icon: <Feed className={iconColor} />},
+        {path: '/feed', title:' Community', icon: <Feed className={iconColor} />},
         {path: '/faq', title: 'FAQ', icon: <LiveHelp className={iconColor} />}
     ]
 

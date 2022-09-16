@@ -2,29 +2,28 @@
     color: #58a6ff;
 }
 
-.problem-description-link:hover {
-    
+.problem-description-link:hover {    
     text-decoration: underline;
 }
 
 .problem-description {
     box-sizing: border-box;
-    width: 60%;
+    width: 50%;
     padding-top: 16px;
     margin-left: 16px;
     padding-left: 16px;
     padding-right: 16px;
-    color: white;
-    /* overflow: auto; */
+    color: white;    
     background-color: rgb(30, 30, 30);
     border: 2px solid gray;
-    /* background-color: #111111; */
+    
 }
 
-.problem-description ul, li, code {
+.problem-description ul, li, code, pre {
     color:white!important;
-    overflow-wrap: break-word;
-    word-wrap: break-word; /* Firefox support */
+    overflow-wrap: break-word!important;
+    word-wrap: break-word!important; /* Firefox support */
+    white-space: pre-wrap!important;
 }
 
 .problem-description-header {

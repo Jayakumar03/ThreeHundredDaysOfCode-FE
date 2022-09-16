@@ -21,6 +21,5 @@
 }
 
 .suggestion-active, .dataItem:hover {
-  background-color: lightgrey;
-  cursor: pointer;
+  background-color: lightgrey;  
 }

@@ -21,6 +21,7 @@ import Home from './containers/Home';
 import ProblemSubmission from './containers/ProblemSubmission';
 import AllSubmissions from './containers/AllSubmissions';
 import ProblemSubmissions from './containers/ProblemSubmissions';
+import Search from './containers/Search';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -31,6 +32,7 @@ import styled, { css } from "styled-components";
 
 import './styles/Home.css';
 import { checkAuth } from "./utils/ClassUtils";
+import PublicProfile from "./containers/PublicProfile";
 
 const StyledAppContent = styled.main`
   transition: 200ms;
@@ -125,13 +127,17 @@ function AppRoutes(props) {
           <Route exact path="post/:postId" element={
             <PrivateRoute><UserPost /></PrivateRoute>
           } />
+          <Route exact path="profile/:profileId" element={
+            <PrivateRoute><PublicProfile /></PrivateRoute>
+          } />
           <Route path="feed" element={
-            <PrivateRoute>
-              <FeedNew />
-            </PrivateRoute>
+            <PrivateRoute> <FeedNew /> </PrivateRoute>
           } />
           <Route path="notifications" element={
             <PrivateRoute><Notifications /></PrivateRoute>
+          } />
+          <Route path="search" element={
+            <PrivateRoute><Search /></PrivateRoute>
           } />
             {/* <Route path="faq" element={<FAQ />} /> */}
         </Routes>
