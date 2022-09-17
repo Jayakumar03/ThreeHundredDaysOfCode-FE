@@ -68,8 +68,7 @@ function AppRoutes(props) {
       open={props.isLeftPanelOpen}
       leftPanelWidth={props.leftPanelWidth}
     >
-      <Snackbar open={snack} autoHideDuration={6000} onClose={() => {setSnack(false)}}>
-        <Alert severity="error">This is an error message!</Alert>
+      <Snackbar open={snack} autoHideDuration={6000} onClose={() => {setSnack(false)}}>        
       </Snackbar>
       {/* Show the content based on current path, on the right side of the page */}
       {/* TODO (satyam.sundaram): Add Wrappers as earlier */}
