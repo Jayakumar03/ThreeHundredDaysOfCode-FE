@@ -233,12 +233,7 @@ function submitCode(query, requestOptions) {
     }
   }
 
-  async function submitGithubLink(link) {
-    const values = {
-      problemTitle: problem.problemTitle,
-      problemLink: problem.problemLink,
-      solutionLink: link
-    };
+  async function submitGithubLink(values) {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
     if (loginType === 'cognito') {
@@ -444,12 +439,12 @@ function submitCode(query, requestOptions) {
             isProblemOfTheDay={isProblemOfTheDay} 
             timeLeft={timeLeft}
           />
-          <CodeSubmitForm handleClick={submitGithubLink} />
+          <CodeSubmitForm handleClick={submitGithubLink} problem={problem} problemId={problemId}/>
         </div>
       </div>
       <div className={rowClass}>
         <CodeEditor problem={problem} problemId={problemId} userId={userId} />
-        <ProblemDescription problem={problem} />        
+        <ProblemDescription problem={problem} />
     </div>
     </div>
     )
