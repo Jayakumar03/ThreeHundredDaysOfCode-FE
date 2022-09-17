@@ -34,12 +34,17 @@ const StyledTable = styled((props) => <Table {...props} />)`
   }  
 `;
 
+function getUrl(text, record) {
+  const userId = record.userId;
+  return "/profile/" + userId;
+}
+
 const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (text) => <a className='leaderboard-name'>{text}</a>,
+    render: (text, record) => <a href={getUrl(text, record)} className='leaderboard-name'>{text}</a>,
   },
   {
     title: 'Longest Streak (Days)',

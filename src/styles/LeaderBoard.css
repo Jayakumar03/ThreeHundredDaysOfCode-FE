@@ -45,7 +45,7 @@
 
  .problem-submission-name {
     background-color: rgb(40, 40, 40)!important;
-    color: rgb(200, 200, 250)!important;
+    color: #58a6ff!important;
  }
 
  .problem-submission-name:hover {
@@ -53,9 +53,12 @@
  }
  
  .leaderboard-name {
-    background-color: rgb(40, 40, 40)!important;
-    text-decoration: none!important;
-    color:white;
+    background-color: rgb(40, 40, 40)!important;    
+    color: #58a6ff;
+ }
+
+ .leaderboard-name:hover {
+    text-decoration: underline;
  }
 
  .submission-title {

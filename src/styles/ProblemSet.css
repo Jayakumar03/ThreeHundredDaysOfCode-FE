@@ -4,8 +4,7 @@
    margin: 0 auto;
 }
 
-.problemset-table {
-   
+.problemset-table {   
    padding-top: 50px;
 }
 
@@ -35,7 +34,7 @@
 }
 
 .table-element-hyperlink {   
-   color: rgb(200, 200, 250)!important;
+   color: #58a6ff!important;
 }
 
 .table-element-hyperlink:hover {
