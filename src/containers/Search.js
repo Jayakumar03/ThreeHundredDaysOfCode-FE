@@ -182,22 +182,24 @@ useEffect(() => {
 }, [timeFilter])
 
   return (
-    <div className="page-center search-parent">
-      <SearchResultList searchResultList={searchResultList} />
-        {
-          searchResultList.length === 0 && showResults && (
-            <div className="emptySearchResultContainer">
-              <p>It looks like there aren't many great matches for your search. Try using another query.</p>
-            </div>
-          )
-        }
-        <div className="paginationDivParent" id ="paginationDivParentId">          
-          <Pagination className="paginationDiv" onChange = {handlePaginationChange} defaultCurrent={1} total={totalResults} />
-        </div>
-        {/* <div className="flex-container">
-          <button type="button" onClick={onClickSearchButton} className="btn btn-light search-btn margin-left-1-rem">Search</button>
-        <button type="button" onClick={showModal} className="btn btn-light search-btn margin-left-1-rem">Add An Application</button>
-      </div> */}
+    <div className="search-page-container">
+      <div className="search-parent">
+        <SearchResultList searchResultList={searchResultList} />
+          {
+            searchResultList.length === 0 && showResults && (
+              <div className="emptySearchResultContainer">
+                <p>It looks like there aren't many great matches for your search. Try using another query.</p>
+              </div>
+            )
+          }
+          <div className="paginationDivParent" id ="paginationDivParentId">
+            <Pagination className="paginationDiv" onChange = {handlePaginationChange} defaultCurrent={1} total={totalResults} />
+          </div>
+          {/* <div className="flex-container">
+            <button type="button" onClick={onClickSearchButton} className="btn btn-light search-btn margin-left-1-rem">Search</button>
+          <button type="button" onClick={showModal} className="btn btn-light search-btn margin-left-1-rem">Add An Application</button>
+        </div> */}
+      </div>
     </div>
   );
 }

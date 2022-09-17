@@ -5,7 +5,6 @@ import SearchSuggestionList from './SearchSuggestionList';
 
 // Styles
 import '../../styles/SearchBar.css';
-import { Input } from "antd";
 import { useNavigate } from "react-router-dom";
 
 // Icons
@@ -20,6 +19,7 @@ import Cookies from 'universal-cookie';
 
 // Libraries
 import { useAppContext } from "../../lib/contextLib";
+import { Input } from '@mui/material';
 
 // UUID Utility.
 const getUuid = require('uuid-by-string');
@@ -28,17 +28,20 @@ function SearchBar(props) {
   let navigate = useNavigate();
 
   // State for the SearchBar.
-  const { filteredSuggestions, setFilteredSuggestions, activeSuggestion, setActiveSuggestion } = useAppContext();
-  const [userInput, setUserInput] = useState("");
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [activeSuggestion, setActiveSuggestion] = useState(-1);
+  const [userInput, setUserInput] = useState('');
 
   React.useEffect(() => {
     const url = window.location.href;
     var position = url.search("searchText");
     if (position !== -1) {
       var searchText = url.substring(position + 11);
+      // CAUTION : This doesn't allow you to update the "text" in the search bar.
+      // TODO : Fix this.
       if (searchText !== 'undefined' && typeof searchText !== undefined && searchText !== "" && searchText !== userInput && userInput === '') {
         setUserInput(searchText);
-        // props.getResults(searchText);        
+        // props.getResults(searchText);
       }
     }
     if (userInput.length === 0) {
@@ -58,23 +61,24 @@ function SearchBar(props) {
     navigate("/search");
   } 
 
-  async function getCompletionsFromInput(userInput) {
+  async function getCompletionsFromInput() {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
     if (loginType === 'cognito') {
-      getCompletionsCognitoUser(userInput);
+      getCompletionsCognitoUser();
     } else {
-      getCompletionsGoogleSSO(userInput);
+      getCompletionsGoogleSSO();
     }
   }
 
   async function onChange(e) {
-    const userInput = e.currentTarget.value;
-    if ((typeof userInput === undefined) || (userInput === null)) {
+    const value = e.target.value;
+    if ((typeof value === undefined) || (value === null)) {
       clearInput();
       return;
     }
-    getCompletionsFromInput(userInput);
+    setUserInput(value);
+    getCompletionsFromInput();
   }
 
   async function getCompletionsCognitoUser(userInput) {
@@ -99,7 +103,7 @@ function SearchBar(props) {
     getCompletions(userInput, query, requestHeaders);
   }
 
-  function getCompletions(userInput, query, requestHeaders) {    
+  function getCompletions(query, requestHeaders) {
     fetch(query, requestHeaders)
       .then(res => res.json())
       .then((data) => {
@@ -113,16 +117,13 @@ function SearchBar(props) {
       .catch(console.log)
     setFilteredSuggestions([]);
     setActiveSuggestion(-1);    
-    setUserInput(userInput);
   }
 
   function onKeyDown(e) {
     // User pressed the enter key.
     if (e.keyCode === 13) {
-      const userInput = document.getElementById('searchBox').value;
-      setActiveSuggestion(-1);      
-      setFilteredSuggestions([]);      
-      setUserInput(userInput);
+      setActiveSuggestion(-1);
+      setFilteredSuggestions([]);
       navigate("/search?searchText=" + userInput);
     }
     // User pressed the up arrow
@@ -142,47 +143,46 @@ function SearchBar(props) {
   }  
 
   async function handleClick(e) {
-    const userInput = document.getElementById('searchBox').value;
-    getCompletionsFromInput(userInput);
+    getCompletionsFromInput();
   }
 
   function onClick(e) {    
     setActiveSuggestion(-1);
     setFilteredSuggestions([]);
-    const userInput = e.currentTarget.innerText;
-    setUserInput(userInput);
     navigate("/search?searchText=" + userInput);
   }
 
   return (
-    <div>
-    <div className="search">
-      <div className="search-input-box-container">
-        <div className="searchIcon"> <SearchIcon /> </div>
-        <Input
-        type="text"
-        placeholder='Search problem or user'
-        value={userInput}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        onClick={handleClick}
-        id="searchBox"
-        autoComplete="off"
-        />         
-        <div className="searchButtonContainer">
-          <div className="searchButton">
-            <ClearIcon id="clearBtn" className='clearBtn' onClick={clearInput}/>
-          </div>        
+    <div className={'search-container'}>
+      <div className="search">
+        <div className="search-input-box-container">
+          <div className="searchIcon"> <SearchIcon /> </div>
+          <Input
+            className={'search-input'}
+            disableUnderline
+            type="text"
+            placeholder='Search problem or user'
+            value={userInput}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            onClick={handleClick}
+            id="searchBox"
+            autoComplete="off"
+          />
+          <div className="searchButtonContainer">
+            <div className="searchButton">
+              <ClearIcon id="clearBtn" className='clearBtn' onClick={clearInput}/>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-        <SearchSuggestionList
+      <SearchSuggestionList
         setUserInput={setUserInput}
         activeSuggestion={activeSuggestion}
         onClick={onClick}
-        filteredData={filteredSuggestions} />       
-      </div>
-      
+        filteredData={filteredSuggestions}
+      />
+    </div>
   );
 }
 

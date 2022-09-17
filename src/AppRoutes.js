@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Containers for routing.
-import Login from './containers/Login';
+import NotFound from "./containers/NotFound";
 import Signup from './containers/Signup';
 import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
@@ -31,23 +31,21 @@ import { Alert, Box, Snackbar } from "@mui/material";
 import styled, { css } from "styled-components";
 
 import './styles/Home.css';
-import { checkAuth } from "./utils/ClassUtils";
 import PublicProfile from "./containers/PublicProfile";
+import { LoginV2 } from "./components/LoginV2/LoginV2";
+import { useSessionDispatchContext } from "./lib/session-context/session-context";
 
 const StyledAppContent = styled.main`
   transition: 200ms;
   display: flex;
   flex-grow: 1;
 
+  margin-top: 48px;
+  height: calc(100vh - 48px);
   margin-left: 0;
   ${props => props.open && css`
     margin-left: ${props.leftPanelWidth}px;
   `}
-  ${props => props.isAuthenticated && css`
-    margin-top: 48px;
-    height: calc(100vh - 48px);
-  `}
-
 `
 
 /**
@@ -56,10 +54,8 @@ const StyledAppContent = styled.main`
  * @returns 
  */
 function AppRoutes(props) {
-  const isAuthenticated = checkAuth();
-
+  const { isAuthenticated } = useSessionDispatchContext();
   const [snack, setSnack] = useState(true)
-  console.log("app_routes -- ", isAuthenticated, props)
 
   return (
     <StyledAppContent
@@ -82,7 +78,7 @@ function AppRoutes(props) {
 
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route exact path="/login" element={
-              <LoginRoute><Login /></LoginRoute>
+              <LoginRoute><LoginV2 /></LoginRoute>
             } />
           <Route exact path="/" element={
             <LoginRoute><LandingPage /></LoginRoute>
@@ -121,10 +117,10 @@ function AppRoutes(props) {
           <Route exact path="/problemSubmissions/:problemId" element={ 
             <PrivateRoute><ProblemSubmissions /></PrivateRoute>          
           } />
-          <Route path="editor" element={
+          <Route path="/editor" element={
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
-          <Route exact path="post/:postId" element={
+          <Route exact path="/post/:postId" element={
             <PrivateRoute><UserPost /></PrivateRoute>
           } />
           <Route exact path="profile/:profileId" element={
@@ -133,7 +129,7 @@ function AppRoutes(props) {
           <Route path="feed" element={
             <PrivateRoute> <FeedNew /> </PrivateRoute>
           } />
-          <Route path="notifications" element={
+          <Route path="/notifications" element={
             <PrivateRoute><Notifications /></PrivateRoute>
           } />
           <Route path="search" element={

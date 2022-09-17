@@ -14,11 +14,12 @@ import {
 import "../styles/LeftPanelDrawer.css";
 
 // utils
-import { checkAuth, joinClasses } from "../utils/ClassUtils";
+import { joinClasses } from "../utils/ClassUtils";
+import { useSessionStateContext } from '../lib/session-context/session-context';
 
 const LeftPanelDrawer = (props) => {
     let location = useLocation();
-    const isAuthenticated = checkAuth()
+    const { isAuthenticated } = useSessionStateContext();
 
     let iconColor = "left-panel-icon";
     let hideButton = "left-panel-hide-button";
@@ -46,8 +47,6 @@ const LeftPanelDrawer = (props) => {
     const paperProps = {
         className: drawerClass,
     }
-
-    console.log("LPD -- ", isAuthenticated, props)
 
     const theme = useTheme()
     return (

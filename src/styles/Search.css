@@ -1,5 +1,6 @@
 .search-input {
   border: 1px solid #999;
+  color: white;
   padding: 0.5em;  
   border-radius: 25px;
   background-size: 40px 23px;
@@ -19,8 +20,22 @@
   align-items: center;
 }
 
+.search-page-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .search-parent {
+  background-color: rgb(55, 54, 54);
+  color: white;
+  display: flex;
   width: 600px;
+  overflow: scroll;
+  border-radius: 4px;
 }
 
 .flex-container {

@@ -12,7 +12,7 @@ import Cookies from 'universal-cookie';
 import "../styles/Login.css";
 
 // Utility.
-const getUuid = require('uuid-by-string');
+export const getUuid = require('uuid-by-string');
 
 function Login(props) {
   const [searchParams, setSearchParams] = useSearchParams();

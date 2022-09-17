@@ -11,7 +11,6 @@ const append = (prefix, suffix, separator) => {
 const checkAuth = () => {
     const cookies = new Cookies();
     const value = cookies.get('isLoggedIn', { path: '/' });
-    console.log('CHECK-AUTH:', value, cookies.getAll())
     return value === "true"
 }
 
