@@ -11,7 +11,7 @@ export const LoginV2 = () => {
     const { isAuthenticated } = useSessionStateContext();
     let navigate = useNavigate();
     return (
-        isAuthenticated? navigate("/"):<BasicLogin />
+        isAuthenticated? navigate("/") : <BasicLogin />
     );
 }
 
@@ -32,10 +32,6 @@ const BasicLogin = () => {
         basicLogin(fields.username, fields.password)
     }
 
-    const handleSSOLogin = (response) => {
-      googleSSOLogin(response)
-    }
-    
     function validateForm() {
       return fields.username.length > 0 && fields.password.length > 0;
     }

@@ -2,13 +2,9 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 // material-ui imports
-import {Typography, Drawer, IconButton, List, ListItemIcon, useTheme } from '@mui/material';
+import { Typography, Drawer, List, ListItemIcon } from '@mui/material';
 import { Box } from '@mui/system';
-import { 
-    Feed, Home, NotificationImportant, Speed,
-    ChevronLeftSharp, ChevronRightSharp,
-    Book, ListAlt, LiveHelp
-} from '@mui/icons-material';
+import { Feed, Home, NotificationImportant, Speed, Book, ListAlt, LiveHelp } from '@mui/icons-material';
 
 // styles
 import "../styles/LeftPanelDrawer.css";
@@ -34,7 +30,6 @@ const LeftPanelDrawer = (props) => {
         {path: '/feed', title:' Community', icon: <Feed className={iconColor} />},
         {path: '/faq', title: 'FAQ', icon: <LiveHelp className={iconColor} />}
     ]
-
     // classNames used by different components
     let drawerClass = 'left-panel-drawer';
     let upperBoxClass = drawerClass + '-upper-box';
@@ -42,13 +37,10 @@ const LeftPanelDrawer = (props) => {
     let listClass = drawerClass + '-list';
     let commonItemClass = listClass + '-item'
     let titleClass = commonItemClass + '-title';
-
-
     const paperProps = {
         className: drawerClass,
     }
 
-    const theme = useTheme()
     return (
         <Drawer
             PaperProps={paperProps}
@@ -57,23 +49,11 @@ const LeftPanelDrawer = (props) => {
             open={props.open && isAuthenticated}
         >
             <Box className={upperBoxClass}>
-                {/* Header to hide the Drawer/Panel */}
-                <Box className={boxClass} >
-                    <IconButton
-                        className={hideButton}
-                        color="inherit"
-                        aria-label="close drawer"
-                        edge="start"
-                        onClick={props.handleDrawerClose}
-                    >
-                        {theme.direction === 'ltr' ? <ChevronLeftSharp className={iconColor} /> : <ChevronRightSharp />}
-                    </IconButton>
-                </Box>
                 {/* List of items with proper links */}
                 <List className={listClass}>
                     {
                         navItems.map((item, index) => {
-                            let itemClass = commonItemClass
+                            let itemClass = commonItemClass;
                             if (location.pathname === item.path) { 
                                 itemClass = joinClasses([itemClass, itemClass + '-active'])
                             } else {

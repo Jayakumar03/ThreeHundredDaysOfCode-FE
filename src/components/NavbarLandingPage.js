@@ -9,6 +9,7 @@ function handleOnLoginClick() { window.open("/login"); }
 function handleOnJoinCommunityClick() { window.open("https://discord.gg/6duGefKtyv"); }
 
 function NavbarLandingPage() {
+    console.log("NAVBAR-LANDING-PAGE")
 return (
     <>
         <div className='landing-main-text-container'>

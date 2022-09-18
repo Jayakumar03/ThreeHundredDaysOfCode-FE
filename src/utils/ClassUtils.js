@@ -8,14 +8,22 @@ const append = (prefix, suffix, separator) => {
     return prefix + separator + suffix
 }
 
-const checkAuth = () => {
-    const cookies = new Cookies();
-    const value = cookies.get('isLoggedIn', { path: '/' });
-    return value === "true"
+const checkValid = (item) => {
+    return !(item === undefined)
+}
+
+const checkAllValid = (items) => {
+    let isValid = true
+    items.forEach(item => {
+        if (isValid) {
+            isValid = checkValid(item);
+        }
+    });
+    return isValid;
 }
 
 export {
     joinClasses,
     append,
-    checkAuth
+    checkAllValid
 }

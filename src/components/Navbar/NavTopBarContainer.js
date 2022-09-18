@@ -1,18 +1,12 @@
 // React.
-import React, { useState } from 'react';
+import React from 'react';
 
 // Styles.
-import { Grid, message } from 'antd';
 import '../../styles/FeedNew.css';
 import '../../styles/Navbar.css';
 import '../../styles/Common.css';
-import { AppBar, Typography, IconButton, Toolbar, Avatar, Button } from '@mui/material';
-import { Box } from '@mui/system';
-import { NavLink } from 'react-router-dom';
-import { Logout, Menu as MenuIcon } from '@mui/icons-material';
 
 // Auth imports
-import { Auth } from "aws-amplify";
 import '../../styles/LandingPage.css';
 import '../../styles/LeftPanelDrawer.css';
 import NavTopBarAuth from './NavTopBarAuth';
@@ -24,10 +18,7 @@ import { useSessionStateContext } from '../../lib/session-context/session-contex
 const NavTopBarContainer = (props) => {
     const { isAuthenticated } = useSessionStateContext();
     return (
-        isAuthenticated?
-            <NavTopBarAuth {...props} />
-        :
-            <NavTopBarNoAuth {...props} />
+        isAuthenticated? <NavTopBarAuth {...props} /> : <NavTopBarNoAuth {...props} />
     );
 }
 

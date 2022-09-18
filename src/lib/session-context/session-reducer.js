@@ -68,7 +68,7 @@ export const SessionReducer = (state, action) => {
         case SessionActions.LOGIN_START:
             return {...state, isAuthenticated: false}
         case SessionActions.LOGIN_END:
-            return {...state, isAuthenticated: true}
+            return state
         case SessionActions.LOGIN_ERROR:
             return {...state, errorMessage: "Failed to login"}
 
@@ -76,7 +76,7 @@ export const SessionReducer = (state, action) => {
         case SessionActions.LOGOUT_START:
         case SessionActions.LOGOUT_END:
         case SessionActions.SESSION_RESET:
-            return {...state, isAuthenticated: false, }
+            return defaultSessionInfo
         case SessionActions.LOGOUT_ERROR:
             return {...state, errorMessage: "Failed to logout"}
         default:

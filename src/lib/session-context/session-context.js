@@ -3,21 +3,13 @@ import React, { createContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { getUuid } from '../../containers/Login';
+import { checkAllValid } from '../../utils/ClassUtils';
 import { onError } from '../errorLib';
 import { defaultSessionInfo, SessionActions, SessionReducer } from './session-reducer';
 
 
 const SessionStateContext = createContext(defaultSessionInfo)
 const SessionDispatchContext = createContext(undefined)
-
-/*
-TODO (satyam.sundaram): Add to app context
-<AppContext.Provider value={{
-          isAuthenticated, userHasAuthenticated,
-          filteredSuggestions, setFilteredSuggestions,
-          activeSuggestion, setActiveSuggestion
-        }}>
-*/
 
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
@@ -35,28 +27,41 @@ const SessionContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(SessionReducer, defaultSessionInfo)
 
     const onLoad = async() => {
+        /* checks if already logged in using cookies. */
         try {
-            dispatch({type: SessionActions.LOGIN_START})
-            dispatch({type: SessionActions.IS_LOADING})
+            dispatch({ type: SessionActions.LOGIN_START })
+            dispatch({ type: SessionActions.IS_LOADING })
             const cookies = new Cookies();
+            const jwtToken = cookies.get('jwtToken')
+            const userId = cookies.get('userId')
+            const loginType = cookies.get('loginType')
+            /* Not used currently */
+            // const sessionId = cookies.get('sessionId')
+            // const expiration = cookies.get('expiration')
+
+            const isValid = checkAllValid([jwtToken, userId, loginType])
+            /* if any of the above is undefined - return no Op. */
+            if(!isValid) {
+                dispatch({ type: SessionActions.LOGIN_END })
+                dispatch({ type: SessionActions.DONE_LOADING })
+                return;
+            }
             const state = {
-                isAuthenticated: !!cookies.get('isLoggedIn'),
-                sessionToken: cookies.get('jwtToken'),
+                /* isAuthenticate is 'true' iff jwtToken isn't invalid and isLoggedIn is 'true' */
+                isAuthenticated: !!cookies.get('isLoggedIn') && isValid,
+                sessionToken: jwtToken,
                 userId: cookies.get('userId'),
                 loginType: cookies.get('loginType'),
                 sessionId: '',  /* any todo */
                 expiration: '',
             }
-            dispatch({
-                type: SessionActions.SESSION_SET,
-                payload: state
-            })
-            dispatch({type: SessionActions.LOGIN_END})
-            dispatch({type: SessionActions.DONE_LOADING})
+            dispatch({ type: SessionActions.SESSION_SET, payload: state })
+            dispatch({ type: SessionActions.LOGIN_END })
+            dispatch({ type: SessionActions.DONE_LOADING })
         } catch (e) {
             if (e !== "No current user") {
                 onError(e);
-                dispatch({type: SessionActions.LOGIN_ERROR})
+                dispatch({ type: SessionActions.LOGIN_ERROR })
             }
         }
     }
@@ -64,26 +69,28 @@ const SessionContextProvider = ({ children }) => {
     // Logout function
     const logout = async() => {
         try {
-            dispatch({type: SessionActions.LOGOUT_START})
-            dispatch({type: SessionActions.IS_LOADING})
+            dispatch({ type: SessionActions.LOGOUT_START })
+            dispatch({ type: SessionActions.IS_LOADING })
             await Auth.signOut()
             const cookies = new Cookies();
             cookies.remove('isLoggedIn', { path: '/' });
             cookies.remove('jwtToken', { path: '/' });
-            dispatch({type: SessionActions.LOGOUT_END})
-            dispatch({type: SessionActions.DONE_LOADING})
+            cookies.remove('loginType');
+            cookies.remove('userId');
+            dispatch({ type: SessionActions.LOGOUT_END })
+            dispatch({ type: SessionActions.DONE_LOADING })
             navigate("/");
         } catch (e) {
             onError(e)
-            dispatch({type: SessionActions.LOGOUT_ERROR})
+            dispatch({ type: SessionActions.LOGOUT_ERROR })
         }
     }
 
     // user/password login
     const basicLogin = async(user, password) => {
         try {
-            dispatch({type: SessionActions.LOGIN_START})
-            dispatch({type: SessionActions.IS_LOADING})
+            dispatch({ type: SessionActions.LOGIN_START })
+            dispatch({ type: SessionActions.IS_LOADING })
             const cognitoUser = await Auth.signIn(user, password)
             const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
             const userId = cognitoUser.signInUserSession.accessToken.payload.sub;
@@ -94,11 +101,10 @@ const SessionContextProvider = ({ children }) => {
             cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
             cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
             cookies.set('userId', userId, { path: '/', expires: expiresDate });
-            dispatch({type: SessionActions.LOGIN_END})
-            dispatch({type: SessionActions.DONE_LOADING})
+            onLoad()
             navigate("/home");
         } catch (e) {
-            dispatch({type: SessionActions.LOGIN_ERROR})
+            dispatch({ type: SessionActions.LOGIN_ERROR })
             onError(e);
         }
     }
@@ -106,7 +112,7 @@ const SessionContextProvider = ({ children }) => {
     // OAuth login
     const googleSSOLogin = async(response) => {
         try {
-            dispatch({type: SessionActions.LOGIN_START})
+            dispatch({ type: SessionActions.LOGIN_START })
             const jwtToken = response.credential;
             const payload = parseJwt(jwtToken);
             const idToken = jwtToken;
@@ -126,11 +132,10 @@ const SessionContextProvider = ({ children }) => {
             cookies.set('userId', userId, { path: '/', expires: expiresDate });
             // TODO (satyam.sundaram) : Add create User account with SSO
             // createUserAccountWithSSO(payload.email, payload.name);
+            onLoad()
             navigate('/');
-            dispatch({type: SessionActions.LOGIN_END})
-            dispatch({type: SessionActions.DONE_LOADING})
         } catch (e) {
-            dispatch({type: SessionActions.LOGIN_ERROR})
+            dispatch({ type: SessionActions.LOGIN_ERROR })
             onError(e)
         }
     }
@@ -149,7 +154,8 @@ const useSessionStateContext = () => {
 }
 
 const useSessionDispatchContext = () => {
-    return React.useContext(SessionDispatchContext)
+    const ctx = React.useContext(SessionDispatchContext)
+    return ctx
 }
 
 export {

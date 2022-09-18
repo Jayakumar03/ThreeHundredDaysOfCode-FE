@@ -20,6 +20,8 @@ import { useSessionDispatchContext, useSessionStateContext } from '../../lib/ses
 
 
 // Replaces old Navbar.js
+// This is displayed ONLY if user is authenticated.
+// No need to check isAuthenticated to render components
 const NavTopBarAuth = (props) => {
     const navBarWidth = (props.open)? `calc(100% - ${props.width}px)`: '100%'
 
@@ -72,9 +74,9 @@ const NavTopBarAuth = (props) => {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={props.handleDrawerOpen}
+                        onClick={props.drawerClick}
                         edge="start"
-                        sx={{ mr: 0, ...(props.open && { display: 'none' }) }}
+                        // sx={{ mr: 0, ...(props.open && { display: 'none' }) }}
                     >
                         <MenuIcon />
                     </IconButton>

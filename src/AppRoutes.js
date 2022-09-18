@@ -22,6 +22,7 @@ import ProblemSubmission from './containers/ProblemSubmission';
 import AllSubmissions from './containers/AllSubmissions';
 import ProblemSubmissions from './containers/ProblemSubmissions';
 import Search from './containers/Search';
+import EditorPage from './containers/EditorPage';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -43,7 +44,7 @@ const StyledAppContent = styled.main`
   margin-top: 48px;
   height: calc(100vh - 48px);
   margin-left: 0;
-  ${props => props.open && css`
+  ${props => props.isAuthenticated && props.open && css`
     margin-left: ${props.leftPanelWidth}px;
   `}
 `
@@ -64,8 +65,7 @@ function AppRoutes(props) {
       open={props.isLeftPanelOpen}
       leftPanelWidth={props.leftPanelWidth}
     >
-      <Snackbar open={snack} autoHideDuration={6000} onClose={() => {setSnack(false)}}>
-        <Alert severity="error">This is an error message!</Alert>
+      <Snackbar open={snack} autoHideDuration={6000} onClose={() => {setSnack(false)}}>        
       </Snackbar>
       {/* Show the content based on current path, on the right side of the page */}
       {/* TODO (satyam.sundaram): Add Wrappers as earlier */}
@@ -135,7 +135,9 @@ function AppRoutes(props) {
           <Route path="search" element={
             <PrivateRoute><Search /></PrivateRoute>
           } />
-            {/* <Route path="faq" element={<FAQ />} /> */}
+          <Route path="createProblem" element={
+            <PrivateRoute><EditorPage/></PrivateRoute>
+          } />            
         </Routes>
       </Box>
     </StyledAppContent>
