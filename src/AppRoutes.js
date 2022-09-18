@@ -22,6 +22,7 @@ import ProblemSubmission from './containers/ProblemSubmission';
 import AllSubmissions from './containers/AllSubmissions';
 import ProblemSubmissions from './containers/ProblemSubmissions';
 import Search from './containers/Search';
+import EditorPage from './containers/EditorPage';
 
 // Components.
 import LoginRoute from './components/LoginRoute';
@@ -138,7 +139,9 @@ function AppRoutes(props) {
           <Route path="search" element={
             <PrivateRoute><Search /></PrivateRoute>
           } />
-            {/* <Route path="faq" element={<FAQ />} /> */}
+          <Route path="createProblem" element={
+            <PrivateRoute><EditorPage/></PrivateRoute>
+          } />            
         </Routes>
       </Box>
     </StyledAppContent>
