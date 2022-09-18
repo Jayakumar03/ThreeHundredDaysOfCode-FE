@@ -190,7 +190,8 @@ function App() {
   const leftPanelDefaultWidth = 220; // px
   // closed if not authenticated
   const [openDrawer, setOpenDrawer] = useState(true)
-  const handleDrawerOpen = () => { setOpenDrawer(true) }
+  const drawerClick  = () => { setOpenDrawer(!openDrawer) }
+  const handleDrawerOpen = () => { setOpenDrawer(!openDrawer) }
   const handleDrawerClose = () => { console.log("closing the drawer"); setOpenDrawer(false) }
 
   useEffect(() => {
@@ -216,6 +217,7 @@ function App() {
           handleTriggerIndexBuild={handleTriggerIndexBuild}
           // Drawer functionality
           open={openDrawer}
+          drawerClick={drawerClick}
           handleDrawerClose={handleDrawerClose}
           handleDrawerOpen={handleDrawerOpen}
         />

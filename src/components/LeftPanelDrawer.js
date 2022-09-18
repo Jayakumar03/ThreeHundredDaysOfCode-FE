@@ -33,7 +33,6 @@ const LeftPanelDrawer = (props) => {
         {path: '/feed', title:' Community', icon: <Feed className={iconColor} />},
         {path: '/faq', title: 'FAQ', icon: <LiveHelp className={iconColor} />}
     ]
-
     // classNames used by different components
     let drawerClass = 'left-panel-drawer';
     let upperBoxClass = drawerClass + '-upper-box';
@@ -41,8 +40,6 @@ const LeftPanelDrawer = (props) => {
     let listClass = drawerClass + '-list';
     let commonItemClass = listClass + '-item'
     let titleClass = commonItemClass + '-title';
-
-
     const paperProps = {
         className: drawerClass,
     }
@@ -59,6 +56,7 @@ const LeftPanelDrawer = (props) => {
         >
             <Box className={upperBoxClass}>
                 {/* Header to hide the Drawer/Panel */}
+                { false && 
                 <Box className={boxClass} >
                     <IconButton
                         className={hideButton}
@@ -66,10 +64,12 @@ const LeftPanelDrawer = (props) => {
                         aria-label="close drawer"
                         edge="start"
                         onClick={props.handleDrawerClose}
+                        open={false}                        
                     >
                         {theme.direction === 'ltr' ? <ChevronLeftSharp className={iconColor} /> : <ChevronRightSharp />}
                     </IconButton>
                 </Box>
+                }
                 {/* List of items with proper links */}
                 <List className={listClass}>
                     {

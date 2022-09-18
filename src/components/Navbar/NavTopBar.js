@@ -75,9 +75,9 @@ function NavTopBar(props) {
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
-                            onClick={props.handleDrawerOpen}
+                            onClick={props.drawerClick}
                             edge="start"
-                            sx={{ mr: 0, ...(props.open && { display: 'none' }) }}
+                            // sx={{ mr: 0, ...(props.open && { display: 'none' }) }}
                         >
                             <MenuIcon />
                         </IconButton>
