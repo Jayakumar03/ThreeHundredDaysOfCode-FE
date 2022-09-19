@@ -1,15 +1,21 @@
-.search {
+.search-container, .search {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  justify-content: center;
+  height: 100%;
+  border-radius: 5px;
+  width: 350px;
 }
 
 .search-input-box-container {
-  background-color: black;  
   display: flex;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 4px;
+  height: 80%;
+  color: white !important;
+  background-color: black !important;
   align-items: center;  
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .searchInputs:hover {
@@ -17,41 +23,37 @@
 }
 
 /** Flex-Item **/
-.search input {
+.search-input {
   background-color: black;
-  color: white;
+  color: white !important;
   font-size: 14px;
-  padding: 15px;
-  padding-left: 10px;
-  margin-right: 20px;
-  height: 30px;
+  height: 100%;
   width: 400px;
   box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 6px;
   border: 0px;
-  margin-left: 5px;
-  outline: none;
+  border-radius: 0;
+  outline: none !important;
   flex: 1;
 }
 
 /** Flex-Item **/
 .searchIcon {
   width: 20px;
-  height: 20px;    
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 15px;
+  height: 20px;
+  margin: 4px;  
+  margin-left: 8px;
   box-sizing: border-box;
   background: transparent;
   color: grey;  
 }
 
 .searchButton {
+  display: flex;
+  justify-content: center;
   height: 40px;
   width: 40px;
   background-color: white; 
-  padding-top: 10px;
+  padding-top: 8px;
   box-sizing: border-box;
   background: transparent;
   color: gray;

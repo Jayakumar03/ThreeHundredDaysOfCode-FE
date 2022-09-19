@@ -51,11 +51,10 @@
 }
 
 .googleSignupContainer {
-  margin-top: 1rem;
-  margin-left: 3rem;
-  padding-left: 5em;
-  border-radius: 30px !important;
-  margin: 0 auto;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  text-align: center;
 }
 
 .divParentContainer {

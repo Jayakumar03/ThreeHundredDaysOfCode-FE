@@ -6,6 +6,7 @@ import App from './App';
 import { Amplify } from 'aws-amplify';
 import config from './config/config.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { SessionContextProvider } from './lib/session-context/session-context';
 
 Amplify.configure({
   Auth: {
@@ -30,7 +31,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <App />
+      <SessionContextProvider>
+        <App />
+      </SessionContextProvider>
     </GoogleOAuthProvider>
     </BrowserRouter>
   </React.StrictMode>,

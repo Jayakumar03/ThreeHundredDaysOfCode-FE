@@ -17,7 +17,8 @@ nav {
 }
 
 .nav-appbar {
-  height: 50px;
+  display: flex;
+  height: 55px;
   width: 100%;
   color: white;
   background-color: transparent !important;

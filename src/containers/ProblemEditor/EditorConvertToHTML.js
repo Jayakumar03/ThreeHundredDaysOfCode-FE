@@ -122,10 +122,10 @@ async handleSubmission() {
         </div>
         <div className='demo-section-wrapper'>
             <Editor
-            editorState={editorState}
-            wrapperClassName="demo-wrapper"
-            editorClassName="demo-editor"
-            onEditorStateChange={this.onEditorStateChange}
+              editorState={editorState}
+              wrapperClassName="demo-wrapper"
+              editorClassName="demo-editor"
+              onEditorStateChange={this.onEditorStateChange}
             />
             <textarea
             disabled
