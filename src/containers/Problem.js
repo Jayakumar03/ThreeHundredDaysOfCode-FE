@@ -192,6 +192,7 @@ function submitCode(query, requestOptions) {
     const currentSessionResponse = await Auth.currentSession();
     const accessToken = currentSessionResponse.getAccessToken();
     const jwtToken = accessToken.getJwtToken();
+    
     const query = process.env.REACT_APP_API_URL + '/problems';
     const requestOptions = {
       method: 'GET',
@@ -204,8 +205,10 @@ function submitCode(query, requestOptions) {
   }
   
   async function getProblemSetGoogleSSO() {
-    const requestOptions = { 'method': 'GET' };        
-    const query = process.env.REACT_APP_API_URL + '/google/problems';
+    const requestOptions = { 'method': 'GET' };
+    const userAuth = await Auth.currentAuthenticatedUser();
+    const userId = getUuid(userAuth.email);    
+    const query = process.env.REACT_APP_API_URL + '/google/problems?userId=' + userId;
     getProblemsWithRequestParams(query, requestOptions);
   }
   

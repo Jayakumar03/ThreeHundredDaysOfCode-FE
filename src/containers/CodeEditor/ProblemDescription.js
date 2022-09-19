@@ -2,9 +2,14 @@ import './ProblemDescription.css';
 import { Base64 } from "js-base64";
 
 const ProblemDescription = (props) => {
-    let problemText = ''
+    function cleanHTML(input) {
+        let output = input.replace(new RegExp('code', 'g'), 'span');
+        return output.replace(new RegExp('ul', 'g'), 'p');
+    }
+
+    let problemText = '';
     if (props.problem !== undefined && props.problem.description !== undefined && props.problem.description.length > 0) {
-        problemText = Base64.decode(props.problem.description);
+        problemText = cleanHTML(Base64.decode(props.problem.description));
     }
     return (
         <>

@@ -12,6 +12,9 @@ import Cookies from 'universal-cookie';
 // Styles.
 import '../styles/ProblemSet.css';
 
+// Utility.
+const getUuid = require('uuid-by-string');
+
 function getLink(text, record, index) {  
   const problemId = record.problemId;
   return "/problem/" + problemId + "/";
@@ -111,8 +114,10 @@ function Problems() {
     }
       
     async function getProblemSetGoogleSSO() {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const userId = getUuid(userAuth.email);        
       const requestOptions = { 'method': 'GET' };        
-      const query = process.env.REACT_APP_API_URL + '/google/problems';
+      const query = process.env.REACT_APP_API_URL + '/google/problems?userId=' + userId;
       getProblemsWithRequestParams(query, requestOptions);
     }
       
