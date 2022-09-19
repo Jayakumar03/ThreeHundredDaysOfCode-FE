@@ -87,25 +87,25 @@ function AppRoutes(props) {
           <Route exact path="/home" element={
             <PrivateRoute><Home /></PrivateRoute>
           } />
-          <Route path="/profile" element={
+          <Route exact path="/profile" element={
             <PrivateRoute><Profile /></PrivateRoute>
           } />
-          <Route path="/mySubmissions" element={
+          <Route exact path="/mySubmissions" element={
             <PrivateRoute><MySubmissions /></PrivateRoute>
           } />
-          <Route path="/submissions" element={
+          <Route exact path="/submissions" element={
             <PrivateRoute><AllSubmissions /></PrivateRoute>
           } />
-          <Route path="/leaderBoard" element={ 
+          <Route exact path="/leaderBoard" element={ 
             <PrivateRoute><LeaderBoard /> </PrivateRoute>
           } />          
-          <Route path="/problemOfTheDay" element={ 
+          <Route exact path="/problemOfTheDay" element={ 
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
-          <Route path="/problemset/all" element={ 
+          <Route exact path="/problemset/all" element={ 
             <PrivateRoute><Problems /></PrivateRoute>
           } />
-          <Route path="/problem" element={ 
+          <Route exact path="/problem" element={ 
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
           <Route exact path="/problem/:problemId" element={ 
@@ -117,7 +117,7 @@ function AppRoutes(props) {
           <Route exact path="/problemSubmissions/:problemId" element={ 
             <PrivateRoute><ProblemSubmissions /></PrivateRoute>          
           } />
-          <Route path="/editor" element={
+          <Route exact path="/editor" element={
             <PrivateRoute><ProblemOfTheDay /></PrivateRoute>
           } />
           <Route exact path="/post/:postId" element={
@@ -126,16 +126,16 @@ function AppRoutes(props) {
           <Route exact path="profile/:profileId" element={
             <PrivateRoute><PublicProfile /></PrivateRoute>
           } />
-          <Route path="feed" element={
+          <Route exact path="feed" element={
             <PrivateRoute> <FeedNew /> </PrivateRoute>
           } />
-          <Route path="/notifications" element={
+          <Route exact path="/notifications" element={
             <PrivateRoute><Notifications /></PrivateRoute>
           } />
-          <Route path="search" element={
+          <Route exact path="search" element={
             <PrivateRoute><Search /></PrivateRoute>
           } />
-          <Route path="createProblem" element={
+          <Route exact path="createProblem" element={
             <PrivateRoute><EditorPage/></PrivateRoute>
           } />            
         </Routes>

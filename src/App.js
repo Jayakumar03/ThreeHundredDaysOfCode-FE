@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AppRoutes from './AppRoutes';
-
-import { useNavigate } from "react-router-dom";
-
 import NavTopBar from "./components/Navbar/NavTopBarContainer";
 import LeftPanelDrawer from "./components/LeftPanelDrawer";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+
 // Styling
 import './App.css';
 import { useSessionDispatchContext, useSessionStateContext } from './lib/session-context/session-context';

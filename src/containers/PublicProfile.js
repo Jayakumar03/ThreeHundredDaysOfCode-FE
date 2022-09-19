@@ -76,6 +76,8 @@ function PublicProfile() {
   const [submissionStats, SetSubmissionStats] = useState([]);
   const [pageNumber, SetPageNumber] = useState(1);
   const profileId = useParams().profileId;
+  console.log('In PublicProfile');
+  alert('In PublicProfile');
 
   function showMessage(success, error, warning) {
     if (success !== null) {

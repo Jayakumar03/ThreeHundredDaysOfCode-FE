@@ -30,7 +30,7 @@ function Problem(){
   const problemId = useParams().problemId;
   const [timeLeft, setTimeLeft] = useState({});
   const [isProblemOfTheDay, SetIsProblemOfTheDay] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   
 
 const calculateTimeLeft = () => {
@@ -368,68 +368,6 @@ function submitCode(query, requestOptions) {
         }
       : null;
 
-  function renderForm() {
-      return (
-        <div className='problem-submission-form'>
-    <Form
-      {...formItemLayout}
-      layout={formLayout}
-      form={form}
-      initialValues={{
-        layout: formLayout,
-      }}
-      onFinish={onFinish}
-      autoComplete="off"
-    >
-      <Form.Item 
-      label="Problem Name"
-      name="problemTitle"
-      style={{display: 'none'}}
-      rules={[
-        {
-          required: true,
-          message: "Please input the problem name!"
-        }
-      ]}
-      >
-        <Input placeholder="Problem Name" disabled={false} />
-      </Form.Item>
-      <Form.Item
-      style={{display: 'none'}} 
-      label="Problem Link" 
-      name='problemLink'
-      rules={[
-        {
-          required: true,
-          message: "Please input the problem link!"
-        }
-      ]}
-      >
-        <Input placeholder="Leetcode Link" disabled={false} />
-      </Form.Item>
-      <Form.Item label="Solution Link" name='solutionLink'
-      rules={[
-        {
-          required: true,
-          message: "Please input the solution link!"
-        }
-      ]}>
-        <Input placeholder="Github Link" />
-      </Form.Item>
-      <div className='submit-btn-container'>
-        <Form.Item {...buttonItemLayout}>
-          <Button type="primary" htmlType='submit'>Submit</Button>
-        </Form.Item>
-        <Form.Item 
-          style={{display: 'none'}} 
-          {...buttonItemLayout} >
-          <Button type="primary" onClick={handleNewProblemClick}>New Problem</Button>
-        </Form.Item>
-      </div>
-    </Form>
-    </div>
-  );
-}
   const codeSubmitClass = 'code-submit-form-parent'
   const colClass = joinClasses([codeSubmitClass, codeSubmitClass+'-col'])
   const rowClass = joinClasses([codeSubmitClass, codeSubmitClass+'-row'])
