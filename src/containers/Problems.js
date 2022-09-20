@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 
-import { Space, Table, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import styled from "styled-components";
@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 
 // Styles.
 import '../styles/ProblemSet.css';
+import { NavLink } from "react-router-dom";
 
 // Utility.
 const getUuid = require('uuid-by-string');
@@ -48,13 +49,13 @@ const columns = [
     title: 'Title',
     dataIndex: 'problemTitle',
     key: 'problemTitle',
-    render: (text, record, index) => <a className='table-element-hyperlink' href={getLink(text, record, index)}>{text}</a>,
+    render: (text, record, index) => <NavLink className='table-element-hyperlink' to={getLink(text, record, index)}>{text}</NavLink>,
   },
   {
     title: 'Submissions',
     dataIndex: 'problemSubmissions',
     key: 'problemSubmissions',
-    render: (text, record, index) => <a className='table-element-hyperlink' href={getSubmissionLink(text, record, index)}>Submissions</a>,
+    render: (text, record, index) => <NavLink className='table-element-hyperlink' to={getSubmissionLink(text, record, index)}>Submissions</NavLink>,
   },
   {
     title: 'Difficulty',
