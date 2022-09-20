@@ -5,7 +5,7 @@ import { useFormFields } from '../../lib/hooksLib';
 import LoaderButton from '../../components/LoaderButton';
 import Form from "react-bootstrap/Form";
 import { GoogleLogin } from "@react-oauth/google";
-
+import '../../styles/Login.css';
 
 export const LoginV2 = () => {
     const { isAuthenticated } = useSessionStateContext();

@@ -46,6 +46,10 @@
   margin-left: 3rem;
 }
 
+.signupContainer a, .forgotPasswordContainer a {
+  color: rgb(105, 150, 255)!important;
+}
+
 .divContainer {
   margin-top: 2rem;
 }

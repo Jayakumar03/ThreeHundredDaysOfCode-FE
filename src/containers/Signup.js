@@ -23,7 +23,7 @@ export default function Signup() {
   });
   let navigate = useNavigate();
   const [newUser, setNewUser] = useState(null);
-  const {userHasAuthenticated} = useAppContext();
+  const {userHasAuthenticated} = useAppContext() || false;
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {

@@ -32,6 +32,10 @@
   padding-top: 20px;
 }
 
+.sign-up-already-account-sign-in-text a {
+  color: rgb(105, 150, 255)!important;
+}
+
 .passwordContainer {
   font-size: 14px;
   margin-left: 1rem;
