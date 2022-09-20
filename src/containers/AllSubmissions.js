@@ -12,6 +12,7 @@ import { message } from 'antd';
 import '../styles/LeaderBoard.css';
 import Cookies from 'universal-cookie';
 import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
 
 const getUuid = require('uuid-by-string');
 
@@ -40,13 +41,13 @@ const columns = [
     title: 'Problem Name',
     dataIndex: 'problemName',
     key: 'problemName',
-    render: (text, record) => <a className='table-element-hyperlink' href={record.problemLink}>{text}</a>
+    render: (text, record) => <NavLink className='table-element-hyperlink' to={record.problemLink}>{text}</NavLink>
   },  
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
     key: 'solutionLink',
-    render: (text, record) => <a className='table-element-hyperlink' href={record.solutionLink}>Submission</a>
+    render: (text, record) => <NavLink className='table-element-hyperlink' to={record.solutionLink}>Submission</NavLink>
   },
   {
     title: 'Submission Date',
