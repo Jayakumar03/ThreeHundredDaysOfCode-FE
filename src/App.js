@@ -38,7 +38,7 @@ function App() {
   const [openDrawer, setOpenDrawer] = useState(false)
   const drawerClick  = () => { setOpenDrawer(!openDrawer) }
   const handleDrawerOpen = () => { setOpenDrawer(!openDrawer) }
-  const handleDrawerClose = () => { console.log("closing the drawer"); setOpenDrawer(false) }
+  const handleDrawerClose = () => { setOpenDrawer(false) }
 
   // width - to resize app-content accordingly
   let leftPanelWidth = openDrawer? leftPanelDefaultWidth : 0;

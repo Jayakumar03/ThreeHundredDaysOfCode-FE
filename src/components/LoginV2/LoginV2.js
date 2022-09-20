@@ -16,7 +16,6 @@ export const LoginV2 = () => {
 }
 
 const BasicLogin = () => {
-
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     const { basicLogin, googleSSOLogin } = useSessionDispatchContext();
     const [searchParams, setSearchParams] = useSearchParams();

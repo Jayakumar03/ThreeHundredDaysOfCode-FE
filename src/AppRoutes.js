@@ -33,7 +33,7 @@ import styled, { css } from "styled-components";
 import './styles/Home.css';
 import PublicProfile from "./containers/PublicProfile";
 import { LoginV2 } from "./components/LoginV2/LoginV2";
-import { useSessionDispatchContext } from "./lib/session-context/session-context";
+import { useSessionDispatchContext, useSessionStateContext } from "./lib/session-context/session-context";
 
 const StyledAppContent = styled.main`
   transition: 200ms;
@@ -54,7 +54,7 @@ const StyledAppContent = styled.main`
  * @returns 
  */
 function AppRoutes(props) {
-  const { isAuthenticated } = useSessionDispatchContext();
+  const { isAuthenticated } = useSessionStateContext();
   const [snack, setSnack] = useState(true);
 
   return (
