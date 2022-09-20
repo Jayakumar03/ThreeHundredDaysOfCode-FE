@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate } from "react-router-dom";
-import Cookies from 'universal-cookie';
 import { useSessionStateContext } from '../lib/session-context/session-context';
 
 function LoginRoute({ children }) {

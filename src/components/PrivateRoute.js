@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useSessionStateContext } from '../lib/session-context/session-context';
 
 function PrivateRoute({ children }) {
-  const { isAuthenticated } = useSessionStateContext();
+  const { isAuthenticated } = useSessionStateContext();  
   return isAuthenticated ? children : <Navigate to="/login" />;
 }
 

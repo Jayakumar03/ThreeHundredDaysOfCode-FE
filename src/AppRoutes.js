@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Containers for routing.
-import NotFound from "./containers/NotFound";
 import Signup from './containers/Signup';
 import ForgotPassword from './containers/ForgotPassword';
 import LeaderBoard from './containers/LeaderBoard';
@@ -28,7 +27,7 @@ import EditorPage from './containers/EditorPage';
 import LoginRoute from './components/LoginRoute';
 import MySubmissions from "./containers/MySubmissions";
 import Notifications from "./containers/Notifications";
-import { Alert, Box, Snackbar } from "@mui/material";
+import { Box, Snackbar } from "@mui/material";
 import styled, { css } from "styled-components";
 
 import './styles/Home.css';
@@ -56,7 +55,7 @@ const StyledAppContent = styled.main`
  */
 function AppRoutes(props) {
   const { isAuthenticated } = useSessionDispatchContext();
-  const [snack, setSnack] = useState(true)
+  const [snack, setSnack] = useState(true);
 
   return (
     <StyledAppContent

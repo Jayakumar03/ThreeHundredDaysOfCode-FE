@@ -7,7 +7,6 @@ import { checkAllValid } from '../../utils/ClassUtils';
 import { onError } from '../errorLib';
 import { defaultSessionInfo, SessionActions, SessionReducer } from './session-reducer';
 
-
 const SessionStateContext = createContext(defaultSessionInfo)
 const SessionDispatchContext = createContext(undefined)
 

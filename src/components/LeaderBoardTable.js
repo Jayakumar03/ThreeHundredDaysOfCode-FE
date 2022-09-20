@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
 
 // Authentication
 import { Auth } from "aws-amplify";
@@ -44,7 +45,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (text, record) => <a href={getUrl(text, record)} className='leaderboard-name'>{text}</a>,
+    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
   },
   {
     title: 'Longest Streak (Days)',

@@ -35,7 +35,7 @@ function App() {
   // Handle LeftPanelDrawer properties
   const leftPanelDefaultWidth = 220; // px
   // closed if not authenticated
-  const [openDrawer, setOpenDrawer] = useState(true)
+  const [openDrawer, setOpenDrawer] = useState(false)
   const drawerClick  = () => { setOpenDrawer(!openDrawer) }
   const handleDrawerOpen = () => { setOpenDrawer(!openDrawer) }
   const handleDrawerClose = () => { console.log("closing the drawer"); setOpenDrawer(false) }
