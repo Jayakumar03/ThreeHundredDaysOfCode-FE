@@ -1,0 +1,42 @@
+.problem-set-container {
+   margin-left: 16px;
+   padding-left: 16px;
+   margin: 0 auto;
+}
+
+.problemset-table {   
+   padding-top: 50px;
+}
+
+.problem-set-table-row-dark {
+   background-color: rgb(0, 0, 0)!important;
+   color: white!important;
+   text-decoration: none!important;
+}
+
+.problem-set-table-row-light {
+   background-color: rgb(40, 40, 40)!important;
+   color: white!important;
+   text-decoration: none!important;
+}
+
+.problem-set-title-text {
+   color: white!important;
+}
+
+.problem-set-pagination {
+   color: gray;
+}
+
+.problem-set-pagination li, button {
+   background-color: rgb(27, 27, 27)!important;
+   color: white!important;    
+}
+
+.table-element-hyperlink {   
+   color: #58a6ff!important;
+}
+
+.table-element-hyperlink:hover {
+   text-decoration: underline;
+}

@@ -1,0 +1,19 @@
+
+.timer-bar-day-text {
+    color: rgb(205, 205, 205);
+    font-size: 24px;
+    font-weight: 600px;
+}
+
+.timer-bar-box {
+    display: flex;    
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.timer-bar-timeleft-text {
+    color: gray;
+    padding-left: 10px;
+    padding-top: 10px;    
+    font-weight: 700;
+}

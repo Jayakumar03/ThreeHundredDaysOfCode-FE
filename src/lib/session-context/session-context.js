@@ -2,13 +2,14 @@ import { Auth } from 'aws-amplify';
 import React, { createContext, useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { getUuid } from '../../containers/Login';
 import { checkAllValid } from '../../utils/ClassUtils';
 import { onError } from '../errorLib';
 import { defaultSessionInfo, SessionActions, SessionReducer } from './session-reducer';
 
 const SessionStateContext = createContext(defaultSessionInfo)
 const SessionDispatchContext = createContext(undefined)
+const getUuid = require('uuid-by-string');
+
 
 function parseJwt (token) {
     var base64Url = token.split('.')[1];

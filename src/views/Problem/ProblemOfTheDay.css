@@ -1,0 +1,54 @@
+.code-submit-form-parent {
+    width: 100%; 
+    display: flex;
+    margin-top: 25px;
+    display: flex;
+}
+
+.problem-submission-form {
+    margin-left: 16px;
+    text-align: center;
+}
+
+.code-submit-form-parent-col {
+    flex-direction: column;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.code-submit-form-parent-row {
+    flex-direction: row;
+}
+
+.submit-btn-container {
+    display: flex;
+    margin-left: 10%;
+}
+
+form, label {
+    color: white !important;
+}
+
+.problem-solve-form-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+    margin-top: 50px;
+}
+
+.problem-solve-timer-container {
+    color: black;
+    font-weight: 600;
+}
+.problem-solve-page-container {
+    width: 100%;
+}
+
+.problem-timer-code-submit-container {
+    margin-left: 20px;    
+}
+
+.display-message {
+    z-index: 10;
+    margin-top: 50px;
+}

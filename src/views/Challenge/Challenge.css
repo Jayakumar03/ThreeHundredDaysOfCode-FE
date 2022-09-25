@@ -1,0 +1,13 @@
+.challenge-parent-box {
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 50%;
+    min-height: 75vh;
+    border: skyblue dotted 2px;
+    background-color: rgb(255, 255, 255);
+}
+
+.challenge-question {
+    font-weight: 700;
+}
