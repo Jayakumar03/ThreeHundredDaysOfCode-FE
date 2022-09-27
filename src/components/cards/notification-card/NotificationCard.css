@@ -1,0 +1,35 @@
+.notification-card-container {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px white solid; */
+    border-bottom: 1px white solid;
+}
+
+.notification-card-container:hover {
+    cursor: pointer;
+}
+
+.notification-card-header-container {
+    display: flex;
+    margin-top: 30px;
+}
+
+.notification-card-text {
+    color: white;
+    font-size: 16px;
+    margin-left: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.notification-card-problem-name-text {
+    color: white;
+    font-size: 16px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.notification-card-avatar {
+    margin-left: 20px!important;
+    font-size: 30px!important;
+}

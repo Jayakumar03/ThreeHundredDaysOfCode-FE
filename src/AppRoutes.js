@@ -3,37 +3,40 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Containers for routing.
-import Signup from './containers/Signup';
-import ForgotPassword from './containers/ForgotPassword';
-import LeaderBoard from './containers/LeaderBoard';
-import ProblemOfTheDay from './containers/ProblemOfTheDay';
-import Profile from './containers/Profile';
-import PrivateRoute from './components/PrivateRoute';
-import FAQ from './containers/FAQ';
-import Problems from './containers/Problems';
-import Problem from './containers/Problem';
-import LandingPage from './containers/LandingPage';
-import Blog from './containers/Blog';
-import FeedNew from "./containers/FeedNew";
-import UserPost from './containers/UserPost';
-import Home from './containers/Home';
-import ProblemSubmission from './containers/ProblemSubmission';
-import AllSubmissions from './containers/AllSubmissions';
-import ProblemSubmissions from './containers/ProblemSubmissions';
-import Search from './containers/Search';
-import EditorPage from './containers/EditorPage';
+import Signup from "./features/authentication/Signup";
+import ForgotPassword from "./features/authentication/ForgotPassword";
+
+import LeaderBoard from './views/Leaderboard/LeaderBoard';
+import ProblemOfTheDay from './views/Problem/ProblemOfTheDay';
+import Profile from './views/Profile/PrivateProfile/Profile';
+import PrivateRoute from './components/routing/PrivateRoute';
+import FAQ from './views/FAQ/FAQ';
+import Problems from './views/Problem/Problems';
+import Problem from './views/Problem/Problem';
+import LandingPage from "./components/layouts/navigation/landing-page/LandingPage";
+import Blog from './views/Blog/Blog';
+import FeedNew from "./views/Feed/FeedNew";
+import UserPost from './views/Post/UserPost';
+
+import Home from './views/Home/Home';
+import ProblemSubmission from './views/Submissions/ProblemSubmission';
+import AllSubmissions from './views/Submissions/AllSubmissions';
+import ProblemSubmissions from './views/Submissions/ProblemSubmissions';
+import Search from './views/Search/Search';
+import EditorPage from './views/Editor/EditorPage';
 
 // Components.
-import LoginRoute from './components/LoginRoute';
-import MySubmissions from "./containers/MySubmissions";
-import Notifications from "./containers/Notifications";
+import LoginRoute from './components/routing/LoginRoute';
+import MySubmissions from "./views/Submissions/MySubmissions";
+import Notifications from "./views/Notifications/Notifications";
 import { Box, Snackbar } from "@mui/material";
 import styled, { css } from "styled-components";
 
 import './styles/Home.css';
-import PublicProfile from "./containers/PublicProfile";
-import { LoginV2 } from "./components/LoginV2/LoginV2";
-import { useSessionDispatchContext, useSessionStateContext } from "./lib/session-context/session-context";
+import PublicProfile from "./views/Profile/PublicProfile/PublicProfile";
+import {LoginV2} from './features/authentication/Login/LoginV2';
+
+import { useSessionStateContext } from "./lib/session-context/session-context";
 
 const StyledAppContent = styled.main`
   transition: 200ms;

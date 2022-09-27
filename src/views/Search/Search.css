@@ -1,0 +1,160 @@
+.search-input {
+  border: 1px solid #999;
+  color: white;
+  padding: 0.5em;  
+  border-radius: 25px;
+  background-size: 40px 23px;
+}
+
+.page-center {
+  position: relative;
+  top: 10%;
+  left: 35%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+
+.content-center {
+  align-items: center;
+}
+
+.search-page-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.search-parent {
+  background-color: rgb(55, 54, 54);
+  color: white;
+  display: flex;
+  width: 600px;
+  overflow: scroll;
+  border-radius: 4px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.margin-top-4rem {
+  margin-top: 4rem;
+}
+
+.margin-left-1-rem {
+  margin-left: 1rem;
+}
+
+.padding-left-50px {
+  padding-left: 50px;
+}
+
+.project-name {
+  font-size: 1.5rem;
+  font-weight: bolder;
+  font-family: Roboto,arial,sans-sans-serif;
+}
+
+.center-vertical-only {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-btn {
+  max-width: 50%;
+  margin-top: 1.5rem;
+  font-size: 14px;
+}
+
+.search-btn:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.flex {
+  display: flex;
+}
+
+/* .searchIcon {
+  position: absolute;
+  flex: none;
+  padding: 10px;
+} */
+
+.input-with-icon {
+  /* causes absolute icon div to be positioned correctly */
+  position: relative;
+  height: 3.4rem;
+}
+
+.input-with-icon .form-control {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+
+  /* These are set relative to the height of the input box to bound the box neatly inside.
+  This is aesthetic to me but you may change the dimensions of course. */
+  left: 6rem;
+  top: 0.3rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.3rem;
+
+  /* content in the icon div is centered, without bootstrap or font-awesome you may wish to add your own text in the span */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.background-white {
+  background-color: #fff;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+.text-blue {
+  color: #0377fc;
+}
+
+.margin-top-small {
+  margin-top: 0.25rem;
+}
+
+.display-message {
+  /* position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0; */
+  z-index: 100009000 !important;
+  top: 30px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; */
+}
+
+.paginationDivParent {  
+  margin-top: 2.5em;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationDiv {
+  display: inline-block;
+}

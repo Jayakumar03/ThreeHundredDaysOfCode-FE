@@ -1,0 +1,64 @@
+@media all and (min-width: 480px) {
+  .Signup {
+    padding: 10px 0;
+  }
+
+  .Signup form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.sign-up-container {
+  background-color: rgb(16, 23, 34);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sign-up-title-text {
+  color: white;
+  font-size: 20px;
+  margin: 0 auto;  
+}
+
+.sign-up-already-account-sign-in-text {
+  color: white;
+  font-size: 16px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.sign-up-already-account-sign-in-text a {
+  color: rgb(105, 150, 255)!important;
+}
+
+.passwordContainer {
+  font-size: 14px;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  display: none;
+}
+
+.passwordContainer ul {
+  font-size: 12px;
+}
+
+.passwordContainer li {
+  font-size: 12px;
+}
+
+.googleSignupContainer {
+  margin-top: 1rem;
+  margin-left: 3rem;
+  border-radius: 30px !important;
+  margin: 0 auto;
+}
+
+.divContainer {
+  margin-top: 2rem;
+  color: white;
+}

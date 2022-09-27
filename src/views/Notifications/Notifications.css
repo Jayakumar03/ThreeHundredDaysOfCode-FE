@@ -1,0 +1,26 @@
+.notification-container {
+    background-color: black;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.notification-header-text {
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    border-bottom: 1px white solid;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.notification-list-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;    
+    border: 1px white solid;
+    margin-left: 250px;
+    padding-top: 50px;
+}
