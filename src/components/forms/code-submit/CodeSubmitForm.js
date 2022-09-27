@@ -7,19 +7,20 @@ import React, { useState, useEffect } from 'react';
 // Styles.
 import './CodeSubmitForm.css';
 
-function CodeSubmitForm(props) {
-    
+function CodeSubmitForm(props) {    
     const navigate = useNavigate();
-
-    
-
     function handleNewProblemClick() {
         document.getElementById('code-submit-form-elements').style.display = 'block';
-    }  
-
+    }
     function handleClick() {
-        const problemTitle = document.getElementById('code-submit-form-input-problem-name').value;
-        const problemLink = document.getElementById('code-submit-form-input-problem-link').value;
+        let problemTitle = document.getElementById('code-submit-form-input-problem-name').value;
+        if (problemTitle === '') { 
+            problemTitle = props.problem.problemTitle;
+        }
+        let problemLink = document.getElementById('code-submit-form-input-problem-link').value
+        if (problemLink === '') {
+            problemLink = props.problem.problemLink;
+        }
         const solutionLink = document.getElementById('code-submit-form-input-github-link').value;
         const values = {
             problemTitle: problemTitle,

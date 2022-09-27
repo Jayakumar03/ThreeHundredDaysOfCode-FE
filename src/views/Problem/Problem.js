@@ -89,7 +89,7 @@ const calculateTimeLeft = () => {
         userId = accessToken.payload.sub;        
     } else {
         const userAuth = await Auth.currentAuthenticatedUser();        
-        userId = getUuid(userAuth.email);      
+        userId = getUuid(userAuth.email);
     }    
     SetUserId(userId);
   }
@@ -204,38 +204,6 @@ function submitCode(query, requestOptions) {
     getProblemsWithRequestParams(query, requestOptions);
   }
   
-  async function getProblemSetGoogleSSO() {
-    const requestOptions = { 'method': 'GET' };
-    const userAuth = await Auth.currentAuthenticatedUser();
-    const userId = getUuid(userAuth.email);    
-    const query = process.env.REACT_APP_API_URL + '/google/problems?userId=' + userId;
-    getProblemsWithRequestParams(query, requestOptions);
-  }
-  
-  async function getProblemSet() {            
-      const cookies = new Cookies();
-      const loginType = cookies.get('loginType');
-      if (loginType === 'cognito') {
-        getProblemSetCognito();
-      } else {
-        getProblemSetGoogleSSO();
-      }      
-    }
-  
-  async function handleNewProblemClick() {
-    await getProblemSet();
-  }    
-    
-  async function onFinish(values) {
-    const cookies = new Cookies();
-    const loginType = cookies.get('loginType');
-    if (loginType === 'cognito') {
-      submitCodeWithCognito(values);
-    } else {
-      submitCodeWithSSO(values);
-    }
-  }
-
   async function submitGithubLink(values) {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
