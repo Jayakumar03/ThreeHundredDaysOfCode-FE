@@ -211,8 +211,8 @@ function submitCode(query, requestOptions) {
       submitCodeWithCognito(values);
     } else {
       submitCodeWithSSO(values);
+    }
   }
-}
 
   async function submitCodeWithSSO(values) {
     const query = process.env.REACT_APP_API_URL + '/google/submitCode';
@@ -302,8 +302,7 @@ function submitCode(query, requestOptions) {
     .catch((error) => {      
       console.log(error);
     });
-}
-
+  }
   
   useEffect(() => { 
     GetProblemFromURL();
@@ -311,30 +310,7 @@ function submitCode(query, requestOptions) {
     getUserId();
     calculateTimeLeft();
     SetIsProblemOfTheDay(searchParams.get("isProblemOfTheDay") === "1");
-}, []);
-
-
-
-  const formItemLayout =
-    formLayout === 'horizontal'
-      ? {
-          labelCol: {
-            span: 4,
-          },
-          wrapperCol: {
-            span: 4,
-          },
-        }
-      : null;
-  const buttonItemLayout =
-    formLayout === 'horizontal'
-      ? {
-          wrapperCol: {
-            span: 4,
-            offset: 4,
-          },
-        }
-      : null;
+  }, []);
 
   const codeSubmitClass = 'code-submit-form-parent'
   const colClass = joinClasses([codeSubmitClass, codeSubmitClass+'-col'])
@@ -348,7 +324,7 @@ function submitCode(query, requestOptions) {
             isProblemOfTheDay={isProblemOfTheDay} 
             timeLeft={timeLeft}
           />
-          <CodeSubmitForm handleClick={submitGithubLink} problem={problem} problemId={problemId}/>
+          <CodeSubmitForm submitSolution={submitGithubLink} problem={problem} problemId={problemId}/>
         </div>
       </div>
       <div className={rowClass}>

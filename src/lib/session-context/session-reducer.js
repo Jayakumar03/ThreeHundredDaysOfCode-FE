@@ -11,8 +11,7 @@ let token = cookies.get('jwtToken');
 let sessionId = cookies.get('sessionId');
 let expirationTime = cookies.get('expiration');
 
-
-export const defaultSessionInfo = {
+export const emptySessionInfo = {
     isAuthenticated: false,
     userId: '',
     sessionId: '',
@@ -23,7 +22,7 @@ export const defaultSessionInfo = {
     errorMessage: ''
 }
 
-export const initSessionInfo = {
+export const defaultSessionInfo = {
     isAuthenticated: false || isAuthenticated,
     userId: '' || userId,
     sessionId: '' || sessionId,
