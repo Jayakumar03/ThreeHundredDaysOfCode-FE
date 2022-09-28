@@ -18,33 +18,9 @@
     margin: 0 auto!important;
 }
 
-.code-submit-form-inputs {
-    display: flex;
-    flex-direction: column;
-}
-
-.code-submit-form-input, textarea {
-    background-color: rgb(34, 34, 34)!important;
-    color: white!important;
-    width: 700px;
-    height: 40px;
-    margin-left: 20px!important;
-}
-
-.code-submit-buttons {
-    display: flex;
-}
-
-.code-submit-form-input-name {
-    width: 200px;
-    color: white;
-}
-
-.code-submit-form-elements {
-    display: none;
-}
-
 .code-submit-form-input-wrapper {
     margin-top: 10px;
     display: flex;
+    width: 20%;
+    justify-content: space-evenly;
 }
