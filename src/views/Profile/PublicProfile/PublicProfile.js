@@ -54,9 +54,16 @@ function getProblemLink(text, record) {
 
 const columns = [
   {
-    title: 'Submitter',
-    dataIndex: 'authorName',
-    key: 'authorName'
+    title: 'Submission Date',
+    dataIndex: 'submissionDate',
+    key: 'submissionDate',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => Moment(a.submissionDate).unix() - Moment(b.submissionDate).unix(),
+    render: (text, record) => {
+        
+        
+        return(<> {Moment(text).format('DD MMM YYYY')} </>)
+    }
   },
   {
     title: 'Problem Name',
@@ -69,16 +76,6 @@ const columns = [
     dataIndex: 'solutionLink',
     key: 'solutionLink',    
     render: (text, record) => <a className='problem-submission-name' href={getSolutionLink(text, record)} >Submission</a>
-  },
-  {
-    title: 'Submission Date',
-    dataIndex: 'submissionDate',
-    key: 'submissionDate',
-    render: (text, record) => {
-        Moment.locale('en');
-        var dt = '2016-05-02T00:00:00';
-        return(<> {Moment(text).format('d MMM YYYY')} </>) 
-    }
   },
 ];
 
@@ -164,7 +161,7 @@ function handleOnChange(page, pageSize) {
           rowClassName= 'problem-set-table-row-light'
           columns={columns} 
           dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange, total: 100}}
+          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange}}
         />
     </div>
   );
