@@ -77,7 +77,8 @@ const columns = [
 
 function PublicProfile() {
   const [submissionStats, SetSubmissionStats] = useState([]);
-  const [pageNumber, SetPageNumber] = useState(1);
+  const [pageNumber, SetPageNumber] = useState(1);  
+  const [userName, SetUserName] = useState("");
   const profileId = useParams().profileId;
 
   function showMessage(success, error, warning) {
@@ -103,6 +104,9 @@ async function getSubmissionWithRequestParams(query, requestOptions) {
     .then(res => res.json())
     .then(responseJson => {
       SetSubmissionStats(responseJson.data);
+      if (responseJson.data.length > 0) {
+        SetUserName(responseJson.data[0].authorName);
+      }      
     })
     .catch((error) => {
       showMessage(null, "Error");
@@ -152,12 +156,12 @@ function handleOnChange(page, pageSize) {
 
   return (
     <div className='leaderboard-table'>
-      <div className='submission-title'> User Submissions</div>
+      <div className='submission-title'> Submissions For: {userName} </div>
       <StyledTable 
           rowClassName= 'problem-set-table-row-light'
-          columns={columns} 
+          columns={columns}
           dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange}}
+          pagination={{className: "submission-pagination", showSizeChanger: false}}
         />
     </div>
   );

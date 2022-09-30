@@ -144,12 +144,12 @@ function Problems() {
           rowClassName={(record, index) => index % 2 === 0 ? 'problem-set-table-row-light' :  'problem-set-table-row-dark'}
           columns={columns} 
           dataSource={problemSet}
-          size={25} 
+          size={25}
           pagination={{
             position: [top, bottom],          
-            total: totalResults,
-            defaultPageSize: 10,
-            className: "problem-set-pagination"
+            total: totalResults,            
+            className: "problem-set-pagination",
+            showSizeChanger: false
           }}        
         />    
     </div>

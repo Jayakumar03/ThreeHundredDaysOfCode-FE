@@ -43,19 +43,17 @@ function getSolutionLink(text, record) {
     }
     return "/submission/" + submissionId + "/";
 }
-
-const columns = [
+function getUrl(text, record) {
+  return "/profile/" + record.userId;
+}
+const columns = [  
   {
     title: 'Submitter',
     dataIndex: 'authorName',
-    key: 'authorName'
+    key: 'authorName',    
+    sorter: (a, b) => a.authorName.localeCompare(b.authorName),
+    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
   },
-  {
-    title: 'Problem Name',
-    dataIndex: 'problemName',
-    key: 'problemName',
-    render: (text, record) => <NavLink className='problem-submission-name' to={record.problemLink}>{text}</NavLink>
-  },  
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
@@ -66,11 +64,9 @@ const columns = [
     title: 'Submission Date',
     dataIndex: 'submissionDate',
     key: 'submissionDate',
-    render: (text, record) => {
-        Moment.locale('en');
-        var dt = '2016-05-02T00:00:00';
-        return(<> {Moment(text).format('d MMM YYYY')} </>) 
-    }
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => Moment(a.submissionDate).unix() - Moment(b.submissionDate).unix(),
+    render: (text) => { return(<> {Moment(text).format('DD MMM YYYY')} </>) }
   },
 ];
 
@@ -129,36 +125,27 @@ async function getSubmissionsGoogleSSO() {
   const query = process.env.REACT_APP_API_URL + '/google/submissionsProblem?userId=' + userId + "&problemId=" + problemId + "&pageId=" + pageNumber;
   getSubmissionWithRequestParams(query, requestOptions);
 }
-
 async function getSubmissions() {            
-    const cookies = new Cookies();
-    const loginType = cookies.get('loginType');
-    if (loginType === 'cognito') {
-      getSubmissionsCognito();
-    } else {
-      getSubmissionsGoogleSSO();
-    }    
-  }
-
-useEffect(() => {
-  getSubmissions();
-}, [pageNumber])
-
-function handleOnChange(page, pageSize) {
-  SetPageNumber(page);  
+  const cookies = new Cookies();
+  const loginType = cookies.get('loginType');
+  if (loginType === 'cognito') {
+    getSubmissionsCognito();
+  } else {
+    getSubmissionsGoogleSSO();
+  }    
 }
-
-  return (
-    <div className='leaderboard-table'>
-      <div className='submission-title'> User Submissions</div>
-      <StyledTable 
-          rowClassName= 'problem-set-table-row-light'
-          columns={columns} 
-          dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange, total: 100}}
-        />
-    </div>
-  );
+useEffect(() => { getSubmissions(); }, [pageNumber])
+return (
+  <div className='leaderboard-table'>
+    <div className='submission-title'> Problem Submissions </div>
+    <StyledTable 
+        rowClassName= 'problem-set-table-row-light'
+        columns={columns} 
+        dataSource={submissionStats}
+        pagination={{className: "submission-pagination", showSizeChanger: false}}
+      />
+  </div>
+);
 }
 
 export default ProblemSubmissions;

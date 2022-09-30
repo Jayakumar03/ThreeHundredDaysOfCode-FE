@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 
-import { Table } from 'antd';
+import { Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { NavLink } from 'react-router-dom';
@@ -38,6 +38,13 @@ const StyledTable = styled((props) => <Table {...props} />)`
 function getUrl(text, record) {  
   return "/profile/" + record.userId;
 }
+function titleCase(str) {
+  var splitStr = str.toLowerCase().split(' ');
+  for (var i = 0; i < splitStr.length; i++) {
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+  }  
+  return splitStr.join(' '); 
+}
 
 const columns = [
   {
@@ -45,7 +52,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     sorter: (a, b) => a.name.localeCompare(b.name),
-    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
+    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{titleCase(text)}</NavLink>,
   },
   {
     title: 'Longest Streak (Days)',
@@ -70,7 +77,7 @@ const onChange = (pagination, filters, sorter, extra) => {
 function LeaderBoardTable(props) {
   const [leaderBoardStats, SetLeaderBoardStats] = useState([]);
   const [timeFilter, SetTimeFilter] = useState(props.timeFilter);
-  const [tableHeading, SetTableHeading] = useState("LeaderBoard");
+  const [tableHeading, SetTableHeading] = useState("Leader Board - 300 Days Of Code");
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -169,27 +176,22 @@ function handleLastWeekButtonClick() {
 return (
     <div className='leaderboard-table'>      
       <div className='leaderboard-title'>{tableHeading}</div>
+      <Space 
+      style={{
+        marginBottom: 16,
+      }}
+      >
+        <Button className='last-week-btn' id='last-week-btn' onClick={handleLastWeekButtonClick}>Last Week</Button>
+        <Button className='weekly-btn' id='weekly-btn' onClick={handleWeeklyButtonClick}>Weekly</Button>
+        <Button className='all-time-btn' id='all-time-btn' onClick={handleAllTimeButtonClick}>All Time</Button>
+        </Space>
         <StyledTable 
           rowClassName= 'problem-set-table-row-light'
           columns={columns} 
-          dataSource={leaderBoardStats} 
-          onChange={onChange}
-          pagination={{className: "leaderboard-pagination", defaultPageSize: 10}}
-        />
-        {
-          props.showFilters !== undefined && props.showFilters === "true" && 
-          <>
-            <Button className='last-week-btn' id='last-week-btn' onClick={handleLastWeekButtonClick}>
-              Last Week
-            </Button>
-            <Button className='weekly-btn' id='weekly-btn' onClick={handleWeeklyButtonClick}>
-              Weekly
-            </Button>
-            <Button className='all-time-btn' id='all-time-btn' onClick={handleAllTimeButtonClick}>
-              All Time
-            </Button>
-          </>
-        }
+          dataSource={leaderBoardStats}          
+          pagination={{className: "leaderboard-pagination", showSizeChanger: false}}
+        />        
+      
     </div>
 );
 }

@@ -137,18 +137,15 @@ useEffect(() => {
   getSubmissions();
 }, [pageNumber])
 
-function handleOnChange(page, pageSize) {
-  SetPageNumber(page);  
-}
 
   return (
     <div className='leaderboard-table'>
-      <div className='submission-title'> User Submissions</div>
+      <div className='submission-title'> All Submissions</div>
       <StyledTable 
           rowClassName= 'problem-set-table-row-light'
           columns={columns} 
           dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange}}
+          pagination={{className: "submission-pagination", showSizeChanger: false}}
         />
     </div>
   );
