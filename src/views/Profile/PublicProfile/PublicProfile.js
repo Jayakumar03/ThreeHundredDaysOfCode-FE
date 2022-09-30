@@ -33,7 +33,7 @@ const StyledTable = styled((props) => <Table {...props} />)`
 `;
 
 function getSolutionLink(text, record) {
-    let solutionLink = record.solutionLink;    
+    let solutionLink = record.solutionLink;
     let submissionId = record.submissionId;
     if (solutionLink) {
       if (solutionLink.substring(0, 5) === 'https') {
@@ -42,6 +42,14 @@ function getSolutionLink(text, record) {
       submissionId = solutionLink;
     }
     return "/submission/" + submissionId + "/";
+}
+
+function getProblemLink(text, record) {
+  let problemId = record.problemId;
+  if (problemId && problemId.length > 0) {
+    return "/problem/" + problemId;
+  }
+  return record.problemLink;
 }
 
 const columns = [
@@ -54,13 +62,13 @@ const columns = [
     title: 'Problem Name',
     dataIndex: 'problemName',
     key: 'problemName',
-    render: (text, record) => <NavLink className='problem-submission-name' to={record.problemLink}>{text}</NavLink>
+    render: (text, record) =>  <a className='problem-submission-name' href={getProblemLink(text, record)} >{text}</a> 
   },  
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
-    key: 'solutionLink',
-    render: (text, record) => <NavLink className='problem-submission-name' to={getSolutionLink(text, record)}>Submission</NavLink>
+    key: 'solutionLink',    
+    render: (text, record) => <a className='problem-submission-name' href={getSolutionLink(text, record)} >Submission</a>
   },
   {
     title: 'Submission Date',
