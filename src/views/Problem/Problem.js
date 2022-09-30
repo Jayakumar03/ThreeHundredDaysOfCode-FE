@@ -6,6 +6,7 @@ import TimerBar from '../../components/banners/timer-bar/TimerBar';
 import CodeEditor from "../Editor/CodeEditor/CodeEditor";
 import { useNavigate } from 'react-router-dom';
 import CodeSubmitForm from '../../components/forms/code-submit/CodeSubmitForm';
+import { v4 as uuidv4 } from 'uuid';
 
 // Styles.
 import './ProblemOfTheDay.css';
@@ -31,7 +32,7 @@ function Problem(){
   const [isProblemOfTheDay, SetIsProblemOfTheDay] = useState(false);
   const [searchParams] = useSearchParams();
   const problemId = useParams().problemId;
-  const sessionId = useParams().sessionId;  
+  let sessionId = useParams().sessionId || '';
 
 const calculateTimeLeft = () => {
     const requestOptions = { 'method': 'GET' };
@@ -253,9 +254,9 @@ function submitCode(query, requestOptions) {
       })
     };
     submitCode(query, requestOptions);
-  };
+  }
 
-  async function GetProblemFromURL() {
+  async function getProblemFromURL() {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
     if (loginType === 'cognito') {
@@ -265,7 +266,7 @@ function submitCode(query, requestOptions) {
     }
   }
 
-  async function GetProblemFromURLGoogleSSO() {    
+  async function GetProblemFromURLGoogleSSO() {
     const userAuth = await Auth.currentAuthenticatedUser();
     const requestOptions = { 'method': 'GET' };
     const userId = getUuid(userAuth.email);
@@ -273,6 +274,12 @@ function submitCode(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
+        if (sessionId === '') {
+          if (responseJson.hasOwnProperty('sessionId')) sessionId = responseJson.sessionId;
+          else sessionId = uuidv4();         
+          // TODO(Ravi): Can we update the URL without reloading the page?
+          navigate('/problem/' + problemId + "/" + sessionId);
+        }
         SetProblem(responseJson);
         form.setFieldsValue(responseJson);
     })
@@ -296,16 +303,22 @@ function submitCode(query, requestOptions) {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-        SetProblem(responseJson);
-        form.setFieldsValue(responseJson);
+      if (sessionId === '') {
+        if (responseJson.hasOwnProperty('sessionId')) sessionId = responseJson.sessionId;
+        else sessionId = uuidv4();         
+        // TODO(Ravi): Can we update the URL without reloading the page?
+        navigate('/problem/' + problemId + "/" + sessionId);
+      }
+      SetProblem(responseJson);
+      form.setFieldsValue(responseJson);
     })
     .catch((error) => {      
       console.log(error);
     });
   }
-  
-  useEffect(() => { 
-    GetProblemFromURL();
+
+  useEffect(() => {
+    getProblemFromURL();
     getUserStats();
     getUserId();
     calculateTimeLeft();
