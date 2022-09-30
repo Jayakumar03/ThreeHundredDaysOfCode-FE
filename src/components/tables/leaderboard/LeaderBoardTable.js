@@ -35,9 +35,8 @@ const StyledTable = styled((props) => <Table {...props} />)`
   }  
 `;
 
-function getUrl(text, record) {
-  const userId = record.userId;
-  return "/profile/" + userId;
+function getUrl(text, record) {  
+  return "/profile/" + record.userId;
 }
 
 const columns = [
@@ -45,6 +44,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    sorter: (a, b) => a.name.localeCompare(b.name),
     render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
   },
   {
@@ -60,13 +60,6 @@ const columns = [
     key: 'numberOfSubmissions',
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.numberOfSubmissions - b.numberOfSubmissions,    
-  },
-  {
-    title: '# Unique Days',
-    dataIndex: 'numberUniqueDays',
-    key: 'numberUniqueDays',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => a.numberUniqueDays - b.numberUniqueDays,    
   },  
 ];
 

@@ -59,11 +59,7 @@ const columns = [
     key: 'submissionDate',
     defaultSortOrder: 'descend',
     sorter: (a, b) => Moment(a.submissionDate).unix() - Moment(b.submissionDate).unix(),
-    render: (text, record) => {
-        
-        
-        return(<> {Moment(text).format('DD MMM YYYY')} </>)
-    }
+    render: (text, record) => { return(<> {Moment(text).format('DD MMM YYYY')} </>) }
   },
   {
     title: 'Problem Name',

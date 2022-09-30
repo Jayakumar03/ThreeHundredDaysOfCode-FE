@@ -30,17 +30,30 @@ const StyledTable = styled((props) => <Table {...props} />)`
     background-color: rgb(40, 40, 40)!important;
   }  
 `;
-
+function getUrl(text, record) {
+  return "/profile/" + record.userId;
+}
 const columns = [
   {
     title: 'Submitter',
     dataIndex: 'authorName',
-    key: 'authorName'
+    key: 'authorName',    
+    sorter: (a, b) => a.authorName.localeCompare(b.authorName),
+    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
+  },
+  {
+    title: 'Submission Date',
+    dataIndex: 'submissionDate',
+    key: 'submissionDate',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => Moment(a.submissionDate).unix() - Moment(b.submissionDate).unix(),
+    render: (text) => { return(<> {Moment(text).format('DD MMM YYYY')} </>) }
   },
   {
     title: 'Problem Name',
     dataIndex: 'problemName',
     key: 'problemName',
+    sorter: (a, b) => a.problemName.localeCompare(b.problemName),
     render: (text, record) => <NavLink className='table-element-hyperlink' to={record.problemLink}>{text}</NavLink>
   },  
   {
@@ -48,17 +61,7 @@ const columns = [
     dataIndex: 'solutionLink',
     key: 'solutionLink',
     render: (text, record) => <NavLink className='table-element-hyperlink' to={record.solutionLink}>Submission</NavLink>
-  },
-  {
-    title: 'Submission Date',
-    dataIndex: 'submissionDate',
-    key: 'submissionDate',
-    render: (text, record) => {
-        Moment.locale('en');
-        var dt = '2016-05-02T00:00:00';
-        return(<> {Moment(text).format('d MMM YYYY')} </>) 
-    }
-  },
+  },    
 ];
 
 function AllSubmissions() {
@@ -87,7 +90,11 @@ async function getSubmissionWithRequestParams(query, requestOptions) {
   fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      SetSubmissionStats(responseJson.data);
+      SetSubmissionStats(
+        responseJson.data
+        .filter(row => row.problemName.length > 0)
+        .filter(row => row.authorName.length > 0)
+        );      
     })
     .catch((error) => {
       showMessage(null, "Error");
@@ -141,7 +148,7 @@ function handleOnChange(page, pageSize) {
           rowClassName= 'problem-set-table-row-light'
           columns={columns} 
           dataSource={submissionStats}
-          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange, total: 100}}
+          pagination={{className: "submission-pagination", defaultPageSize: 10, onChange: handleOnChange}}
         />
     </div>
   );
