@@ -113,6 +113,9 @@ function AppRoutes(props) {
           <Route exact path="/problem/:problemId" element={ 
             <PrivateRoute><Problem /></PrivateRoute>          
           } />
+          <Route exact path="/problem/:problemId/:sessionId" element={ 
+            <PrivateRoute><Problem /></PrivateRoute>          
+          } />
           <Route exact path="/submission/:submissionId" element={ 
             <PrivateRoute><ProblemSubmission /></PrivateRoute>
           } />

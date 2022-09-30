@@ -26,12 +26,12 @@ function Problem(){
   const [problem, SetProblem] = useState({});
   const [, SetUserStats] = useState(null);
   const [userId, SetUserId] = useState('');  
-  const navigate = useNavigate();
-  const problemId = useParams().problemId;
+  const navigate = useNavigate();  
   const [timeLeft, setTimeLeft] = useState({});
   const [isProblemOfTheDay, SetIsProblemOfTheDay] = useState(false);
   const [searchParams] = useSearchParams();
-  
+  const problemId = useParams().problemId;
+  const sessionId = useParams().sessionId;  
 
 const calculateTimeLeft = () => {
     const requestOptions = { 'method': 'GET' };
@@ -328,7 +328,13 @@ function submitCode(query, requestOptions) {
         </div>
       </div>
       <div className={rowClass}>
-        <CodeEditor problem={problem} problemId={problemId} userId={userId} />
+        <CodeEditor 
+        problem={problem}
+        // TODO(Ravi): Move the problemId within the problem object.
+        problemId={problemId} 
+        userId={userId} 
+        sessionId={sessionId}
+        />
         <ProblemDescription problem={problem} />
     </div>
     </div>

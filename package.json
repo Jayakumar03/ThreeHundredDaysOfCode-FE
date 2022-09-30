@@ -47,6 +47,7 @@
     "stream": "0.0.2",
     "universal-cookie": "^4.0.4",
     "url": "^0.11.0",
+    "uuid": "^9.0.0",
     "uuid-by-string": "^3.0.7",
     "web-vitals": "^2.1.4"
   },

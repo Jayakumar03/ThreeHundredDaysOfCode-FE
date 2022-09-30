@@ -33,13 +33,38 @@ const StyledTable = styled((props) => <Table {...props} />)`
 function getUrl(text, record) {
   return "/profile/" + record.userId;
 }
+function getSolutionLink(text, record) {
+  let solutionLink = record.solutionLink;    
+  let submissionId = record.submissionId;
+  if (solutionLink) {
+    if (solutionLink.substring(0, 5) === 'https') {
+      return solutionLink;
+    }
+    submissionId = solutionLink;
+  }
+  return "/submission/" + submissionId + "/";
+}
+function getProblemLink(text, record) {
+  let problemId = record.problemId;
+  if (problemId && problemId.length > 0) {
+    return "/problem/" + problemId;
+  }
+  return record.problemLink;
+}
+function titleCase(str) {
+  var splitStr = str.toLowerCase().split(' ');
+  for (var i = 0; i < splitStr.length; i++) {
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+  }  
+  return splitStr.join(' '); 
+}
 const columns = [
   {
     title: 'Submitter',
     dataIndex: 'authorName',
-    key: 'authorName',    
+    key: 'authorName',
     sorter: (a, b) => a.authorName.localeCompare(b.authorName),
-    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{text}</NavLink>,
+    render: (text, record) => <NavLink to={getUrl(text, record)} className='leaderboard-name'>{titleCase(text)}</NavLink>,
   },
   {
     title: 'Submission Date',
@@ -54,14 +79,14 @@ const columns = [
     dataIndex: 'problemName',
     key: 'problemName',
     sorter: (a, b) => a.problemName.localeCompare(b.problemName),
-    render: (text, record) => <NavLink className='table-element-hyperlink' to={record.problemLink}>{text}</NavLink>
-  },  
+    render: (text, record) => <a className='table-element-hyperlink' href={getProblemLink(text, record)}>{text}</a>
+  },
   {
     title: 'Solution Link',
     dataIndex: 'solutionLink',
     key: 'solutionLink',
-    render: (text, record) => <NavLink className='table-element-hyperlink' to={record.solutionLink}>Submission</NavLink>
-  },    
+    render: (text, record) => <a className='problem-submission-name' href={getSolutionLink(text, record)}>Submission</a>
+  },
 ];
 
 function AllSubmissions() {

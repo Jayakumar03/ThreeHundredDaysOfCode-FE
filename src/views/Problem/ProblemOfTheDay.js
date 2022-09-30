@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 // Styles.
 import './ProblemOfTheDay.css';
@@ -32,7 +33,12 @@ const ProblemOfTheDay = () => {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-        navigate('/problem/' + responseJson.problemId + "?isProblemOfTheDay=1");
+      // Checking if the user has already created a session for the problem.
+      // If yes, we load the latest session.
+      let sessionId = responseJson.sessionId;
+      // If no, we create a new seesion.
+      if (!sessionId) sessionId = uuidv4();
+      navigate('/problem/' + responseJson.problemId + "/" + sessionId + "?isProblemOfTheDay=1");
     })
     .catch((error) => {      
       console.log(error);
@@ -54,7 +60,12 @@ const ProblemOfTheDay = () => {
     fetch(query, requestOptions)
     .then(res => res.json())
     .then(responseJson => {
-      navigate('/problem/' + responseJson.problemId + "?isProblemOfTheDay=1");
+      // Checking if the user has already created a session for the problem.
+      // If yes, we load the latest session.
+      let sessionId = responseJson.sessionId;
+      // If no, we create a new seesion.
+      if (!sessionId) sessionId = uuidv4();
+      navigate('/problem/' + responseJson.problemId + "/" + sessionId + "?isProblemOfTheDay=1");
     })
     .catch((error) => {      
       console.log(error);

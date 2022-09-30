@@ -4,7 +4,9 @@ import React from 'react';
 import './EditorStyle.css';
 
 const CodeEditor = (props) => {
-    const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + props.userId + "&problemId=" + props.problemId + "&apiUrl=" + process.env.REACT_APP_API_URL + "&submissionId=" + props.submissionId;
+    const editor_url  = process.env.REACT_APP_EDITOR_URL + '?userId=' + 
+    props.userId + "&problemId=" + props.problemId + "&apiUrl=" + 
+    process.env.REACT_APP_API_URL + "&sessionId=" + props.sessionId;
     const iframeClass = "code-editor-iframe";
 
     return (
