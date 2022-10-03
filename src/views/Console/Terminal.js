@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import SockJsClient from 'react-stomp';
 
 // Constants.
-const WEB_SOCKET_PROTOCOL = "echo-protocol";
 const TERMINAL_PROMPT = '>';
-const COMMAND_RUN_TRIGGER = 'ENTER';
+const COMMAND_RUN_TRIGGER = 'Enter';
 const METHOD_NAME = 'command';
 const COMMAND_PLACEHOLDER = "Enter Command";
-
-const webSocket = new W3CWebSocket(process.env.REACT_APP_CONSOLE_SOCKET_PATH, WEB_SOCKET_PROTOCOL);
 
 // Style Components.
 const TerminalOuterContainer = styled.main`
@@ -17,53 +15,86 @@ const TerminalOuterContainer = styled.main`
 `
 
 const TerminalInnerContainer = styled.main`
-margin-top: 10px;
+margin-top: 50px;
+color: white;
 `
 
 const CommandView = styled.main`
 text-align: left;
+color: white;
 `
+
+const InputContainer = styled.main``
 
 const Terminal = () => {
     const [command, setCommand] = useState('');
     const [commandList, setCommandList] = useState([]);
-    
-    // Clearing the command list when the page is loaded.
-    useEffect(()=>{
-        ws.onmessage = msg => {
-            setCommandList((currentCommandList)=> ([...currentCommandList, JSON.parse(msg.data)]));
-        };
-    },[]);
+    const [connected, setConnected] = useState(false); 
+    const [client, setClient] = useState(null);
+    const wsSourceUrl = process.env.REACT_APP_CONSOLE_END_POINT;
 
+    const onConnect = () => {
+        setConnected(true);
+        console.log('Connected');
+    }
+    const onMessage = (msg) => {
+        console.log('message received')
+        const command = {
+            command: msg.command,
+            response: msg.response
+        }
+        setCommandList((currentCommandList) => ([...currentCommandList, command]));
+    }
+    const onDisconnect = () => {        
+        setConnected(false);
+        console.log("Disconnected");
+    }
+    
     // Handler for sending the command.
-    const handleSendCommand = () => {
+    const handleSendCommand = (command) => {
         const data = { method: METHOD_NAME, command: command };
-        ws.send(JSON.stringify(data));
-        setCommand('');
+        try {
+            client.sendMessage("/app/all", JSON.stringify(data));
+            setCommand('');
+            console.log('message sent successfully')
+        } catch (e) {
+            console.log('failed to send message')
+            console.log(e)
+        }
     }
     const handleInputChange = (e) => {
         setCommand(e.target.value);
     }
     const handleKeyPress = (e) => {
         if (e.key === COMMAND_RUN_TRIGGER) {
-            handleSendCommand();
+            handleSendCommand(e.target.value);
         }
     }
 
     return (
         <TerminalOuterContainer>
+            <h1>Output</h1> 
             <TerminalInnerContainer>
-            {commandList.map((commands, index) => {
-                return <CommandView key={index}>{commands.data}</CommandView>
+            {commandList.map((pair, index) => {
+                return <CommandView key={index}>{pair.command}<br/>{pair.response}</CommandView>
             })}
             <InputContainer>
-                <span>&nbspc;{TERMINAL_PROMPT}&nbspc;</span>
+                <span>{TERMINAL_PROMPT}</span>
                 <input
                 value = {command}
                 placeholder = {COMMAND_PLACEHOLDER}
                 onChange = {handleInputChange}
                 onKeyPress = {handleKeyPress}                                
-                />                    
+                />
+                <SockJsClient 
+                url={wsSourceUrl}
+                topics={["/topic/all"]}
+                onMessage={onMessage}
+                ref={ (client) => {setClient(client)}}
+                onConnect={onConnect}
+                onDisconnect={onDisconnect}
+                debug={false}
+                />
             </InputContainer>
             </TerminalInnerContainer>
         </TerminalOuterContainer>
