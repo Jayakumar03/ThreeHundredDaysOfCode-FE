@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import * as codeConstants from './Constants.js';
 
 // Div Components.
 const SiteHeader = styled.main``
@@ -9,6 +10,12 @@ const LanguageChoiceContainer = styled.main``
 const LanguageChoiceDropdown = styled.main``
 const RunButton = styled.main``
 const SubmitButton = styled.main``
+
+// Handles.
+var dataSourceHandle = 'data_source';
+var languageHandle = 'language_id';
+var stdInHandle = 'stdin';
+var stdoutHandle = 'stdout';
 
 // Constants.
 var wait = localStorageGetItem("wait") || true;
@@ -91,6 +98,12 @@ const EditorCore = (props) => {
    const [runTime, setRunTime] = useState('');
    const [memoryUsed, setMemoryUsed] = useState('');
    const [editorText, setEditorText] = useState('');
+   const [languageInt, setLanguageInt] = useState(0);
+   const [stdInText, setStdInText] = useState('');
+   const [stdOutText, setStdOutText] = useState('');
+   const [compilerOptions, setCompilerOptions] = useState('');
+   const [commandLineArguments, setCommandLineArguments] = useState('');
+
 
    // .....
    const handleCodeSubmission = (data) => {    
@@ -123,11 +136,59 @@ const EditorCore = (props) => {
     // Is there a better way to do this?
     runBtn.removeClass("loading");
    }
-
    // TODO(Ravi): Should we get this directly from the props?
    const getIdFromURI = () => {
     return window.location.search.substring(1).trim().split('&')[0];
    }
+   const downloadSource = () => {
+    download(sourceEditor.getValue(), codeConstants.fileNames[languageInt], "text/plain");
+   }
+   // The Backend and Frontend should communicate language using the ID.
+   const loadSavedSource = () => {
+        $.ajax({
+            url: apiUrl + "/submissions/" + snippet_id + "?fields=source_code,language_id,stdin,stdout,stderr,compile_output,message,time,memory,status,compiler_options,command_line_arguments&base64_encoded=true",
+            type: "GET",
+            success: function(data, _textStatus) {                
+                setEditorText(data[dataSourceHandle]);
+                setLanguageInt(data[languageHandle]);
+                setStdInText(decode(data[stdInHandle]));
+                setStdOutText(decode(data[stdoutHandle]));
+                setRunTime(data.time === null ? "-" : data.time + "s");
+                setMemoryUsed(data.memory === null ? "-" : data.memory + "KB");
+                changeEditorLanguage();
+            },
+            error: handleRunError
+        });
+    }
+    const run = () {
+        if (editorText.trim() === "") {
+            setError('Error - Source Code cannot be empty!');
+            return;
+        } else {
+            runBtn.addClass("loading");
+        }
+        // TODO(Ravi): Remove getElementById from the codebase.
+        document.getElementById('stdout-dot').hidden = true;
+        setStdOutText('');
+        // Check what does this do? Does it bring focus to stdout?
+        var x = layout.root.getItemsById('stdout')[0];
+        x.parent.header.parent.setActiveContentItem(x);
+
+        var sourceValue = encode(editorText);
+        var stdinValue = encode(stdInText);
+        var languageId = languageInt;
+        
+        var data = {
+            source_code: sourceValue,
+            language_id: languageId,
+            stdin: stdinValue,
+            compiler_options: compilerOptions,
+            command_line_arguments: commandLineArguments,
+            redirect_stderr_to_stdout: true,
+            user_id: userId,
+            problem_id: problemId
+        };
+    }
    // ...
 
 

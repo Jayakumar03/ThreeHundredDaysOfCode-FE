@@ -3,10 +3,9 @@
  * 
  * Sample Usage: To import bash source, do the following:
  * 
- * import * as codeTemplates from 'Editor/CodeEditor/Template.js';
+ * import * as codeTemplates from 'Editor/CodeEditor/Templates.js';
  * const bashSource = codeTemplates.bashSource;
  * */ 
-
 
 export const assemblySource = "\
 section	.text\n\
