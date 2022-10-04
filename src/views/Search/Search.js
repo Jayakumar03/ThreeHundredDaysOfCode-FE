@@ -15,7 +15,7 @@ import SearchResultList from '../../components/search-bar/SearchResultList';
 import { Auth } from "aws-amplify";
 
 // Design Components
-import { message, Pagination } from 'antd';
+import { Pagination } from 'antd';
 
 // Cookies
 import Cookies from 'universal-cookie';
@@ -25,13 +25,13 @@ const getUuid = require('uuid-by-string');
 
 function Search() {
   const [searchResultList, setSearchResultList] = useState([]);
-  const [show, setShow] = useState(false);
+  const [] = useState(false);
   const [showResults, setShowResults] = useState(false);  
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [filterState, setFilterState] = useState('All');
+  const [searchParams] = useSearchParams();
+  const [filterState] = useState('All');
   const [pageNumber, setPageNumber] = useState(1);
-  const [prevFilterState, setPrevFilterState] = useState('All');
-  const [timeFilter, setTimeFilter] = useState('Any time');
+  const [prevFilterState] = useState('All');
+  const [timeFilter] = useState('Any time');
   const [totalResults, setTotalResults] = useState(50);
   const searchText = searchParams.get("searchText");
   
@@ -64,15 +64,6 @@ function Search() {
     }
   }
 
-  function getEventLabel(label) {
-    if (label === '1') return 'Any time';
-    if (label === '2') return 'Past hour';
-    if (label === '3') return 'Past 24 hours';
-    if (label === '4') return 'Past week';
-    if (label === '5') return 'Past month';
-    if (label === '6') return 'Past year';
-    return '';
-  }
   
   function displayTimeFilterPanel(flag) {
     if (document.getElementById('time-filter-dropdown-panel-id') === null) return;

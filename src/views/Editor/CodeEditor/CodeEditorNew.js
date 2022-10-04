@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as codeConstants from './Constants.js';
+import Editor from '@monaco-editor/react';
 
 // Div Components.
 const SiteHeader = styled.main``
@@ -25,6 +26,7 @@ var editorMode = localStorageGetItem("editorMode") || "normal";
 var editorModeObject = null;
 var fontSize = 14;
 var timeOutIntervalSec = 30;
+var saveSessionIntervalSeconds = 10000;
 var MonacoVim;
 var MonacoEmacs;
 var layout;
@@ -42,6 +44,7 @@ var statusMsg;
 var timeStart;
 var timeEnd;
 var messageData;
+
 
 
 // Helper Methods. 
@@ -85,10 +88,6 @@ const getQueryParams = (qs) => {
 const showMessages = () => {}
 const loadMessages = () => {}
 const showError = () => {}
-
-
-
-
 // End of methods.
 
 const EditorCore = (props) => {
@@ -103,7 +102,8 @@ const EditorCore = (props) => {
    const [stdOutText, setStdOutText] = useState('');
    const [compilerOptions, setCompilerOptions] = useState('');
    const [commandLineArguments, setCommandLineArguments] = useState('');
-
+   const [fileName, setFileName] = useState('');
+   const [languageMode, setLanguageMode] = useState('');
 
    // .....
    const handleCodeSubmission = (data) => {    
@@ -160,7 +160,7 @@ const EditorCore = (props) => {
             error: handleRunError
         });
     }
-    const run = () {
+    const handleRun = () => {
         if (editorText.trim() === "") {
             setError('Error - Source Code cannot be empty!');
             return;
@@ -188,7 +188,110 @@ const EditorCore = (props) => {
             user_id: userId,
             problem_id: problemId
         };
+
+        const sendRequest = (data) => {
+            timeStart = performance.now();            
+            const query = apiUrl + '/google/sumbmissions';            
+            const requestOptions = {
+                method: 'POST',
+                data: JSON.stringify(data),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            };
+            fetch(query, requestOptions)            
+            .then(res => res.json())
+            .then(responseJson => {
+              const data = JSON.parse(responseJson).data;
+              handleResult(data);
+            })
+            .catch((error) => {
+              setError(error);
+              console.log(error);
+            });
+        }
     }
+    const handleSubmit = () => {
+        if (editorText.trim() === "") {
+            setError('Source cannot be empty');
+            return;
+        }
+        // submitBtn.addClass('loading'); - Do we need this class ?
+        document.getElementById('stdout-dot').hidden = true;
+        setStdOutText('');        
+        const sourceValue = encode(editorText);
+        const stdinValue = encode(stdInText);
+        const data = {
+            source_code: sourceValue,
+            language_id: languageId,
+            stdin: stdinValue,
+            compiler_options: compilerOptions,
+            command_line_arguments: commandLineArguments,
+            redirect_stderr_to_stdout: true,
+            user_id: userId,
+            problem_id: problemId
+        };
+
+        var sendRequest = function(data) {
+            timeStart = performance.now();
+            const query = apiUrl + '/google/sumbmitCodeSolution';
+            const requestOptions = {
+                method: 'POST',
+                data: JSON.stringify(data),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            };
+            fetch(query, requestOptions)
+            .then(res => res.json())
+            .then(responseJson => {                
+                handleCodeSubmission(JSON.parse(responseJson));
+                handleResult(data);
+              })
+              .catch((error) => {
+                setError(error);
+                console.log(error);
+              });                                            
+        }
+    }
+    const changeEditorLanguage = (languageInt, languageMode) => {
+        monaco.editor.setModelLanguage(sourceEditor.getModel(), languageMode);
+        setLanguageInt(languageInt);
+        setFileName(fileNames[languageInt]);
+        apiUrl = resolveApiUrl(languageInt);
+    }
+    const getProblemTemplateAndDefaultInput = () => {
+        const url = apiUrl + '/google/problemBaseCode?languageId=' + languageInt + '&problemId=' + problemId;
+        const requestOptions = {
+            method: 'GET'
+        };
+        fetch(url, requestOptions)
+        .then(res => res.json())
+        .then(responseJson => {
+            const data = JSON.parse(responseJson);
+            setEditorText(decode(data.base_code));
+        })
+        .catch((error) => {
+            setError(error)
+        });
+    }
+    const saveSession = () => {}
+    const getSession = () => {}
+    const insertTemplate = () => {}
+    const loadRandomLanguage = () => {}
+    const resizeEditor = () => {}
+    const disposeEditorModeObject = () => {}
+    const resolveLanguageId = (id) => {
+        id = parseInt(id);
+        return codeConstants.languageApiUrlTable[id] || id;
+    }
+    const updateFontSize = (fontSize) => {}
+    useEffect(() => {
+        // Step-I: Check if the session exists. Load old code from it.
+        // Step-II: If no, insert the base code for the language.
+        // Step-III: 
+    }, []);
+    setInterval(saveSession, saveSessionIntervalSeconds);
    // ...
 
 
@@ -209,8 +312,12 @@ const EditorCore = (props) => {
             <LanguageChoiceContainer> 
                 <LanguageChoiceDropdown />
             </LanguageChoiceContainer>
-            <RunButton />
-            <SubmitButton />
+            <RunButton 
+              onClick={handleRun}
+            />
+            <SubmitButton 
+              onClick={handleSubmit}
+            />
         </LeftMenu>
         </>
     );

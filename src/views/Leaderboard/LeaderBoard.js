@@ -128,12 +128,12 @@ async function getLeaderBoardCognito() {
 
 async function getLeaderBoard() {
   const cookies = new Cookies();
-    const loginType = cookies.get('loginType');
-    if (loginType === 'cognito') {
-      getLeaderBoardCognito();
-    } else {
-      getLeaderBoardGoogleSSO();
-    }
+  const loginType = cookies.get('loginType');
+  if (loginType === 'cognito') {
+    getLeaderBoardCognito();
+  } else {
+    getLeaderBoardGoogleSSO();
+  }
 }
 
 useEffect(() => {

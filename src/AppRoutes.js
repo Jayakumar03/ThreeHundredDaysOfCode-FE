@@ -24,6 +24,7 @@ import AllSubmissions from './views/Submissions/AllSubmissions';
 import ProblemSubmissions from './views/Submissions/ProblemSubmissions';
 import Search from './views/Search/Search';
 import EditorPage from './views/Editor/EditorPage';
+import Landing from './views/Editor/CodeEditor/components/Landing';
 
 // Components.
 import LoginRoute from './components/routing/LoginRoute';
@@ -142,7 +143,10 @@ function AppRoutes(props) {
           } />
           <Route exact path="createProblem" element={
             <PrivateRoute><EditorPage/></PrivateRoute>
-          } />            
+          } />
+          <Route exact path="/internalEditor" element={
+            <Landing />
+          } />          
         </Routes>
       </Box>
     </StyledAppContent>

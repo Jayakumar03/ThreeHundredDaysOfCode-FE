@@ -72,9 +72,10 @@ const columns = [
 
 function ProblemSubmissions() {
   const [submissionStats, SetSubmissionStats] = useState([]);
-  const [pageNumber, SetPageNumber] = useState(1);
+  const [pageNumber] = useState(1);
   const problemId = useParams().problemId;
 
+  // TODO(Ravi): Move this to common.
   function showMessage(success, error, warning) {
     if (success !== null) {
         message.success({

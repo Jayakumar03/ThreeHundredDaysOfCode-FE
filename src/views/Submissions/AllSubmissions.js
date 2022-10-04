@@ -1,7 +1,6 @@
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
-import { Pagination } from 'antd';
 
 // Authentication
 import { Auth } from "aws-amplify";
@@ -91,7 +90,7 @@ const columns = [
 
 function AllSubmissions() {
   const [submissionStats, SetSubmissionStats] = useState([]);
-  const [pageNumber, SetPageNumber] = useState(1);
+  const [pageNumber] = useState(1);
 
   function showMessage(success, error, warning) {
     if (success !== null) {
@@ -130,7 +129,7 @@ async function getSubmissionsCognito() {
   const currentSessionResponse = await Auth.currentSession();
   const accessToken = currentSessionResponse.getAccessToken();
   const jwtToken = accessToken.getJwtToken();
-  const query = process.env.REACT_APP_API_URL + '/submissions?' + "&pageId=" + pageNumber;
+  const query = process.env.REACT_APP_API_URL + '/submissions';
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -144,7 +143,7 @@ async function getSubmissionsGoogleSSO() {
   const userAuth = await Auth.currentAuthenticatedUser();
   const requestOptions = { 'method': 'GET' };
   const userId = getUuid(userAuth.email);
-  const query = process.env.REACT_APP_API_URL + '/google/submissions?userId=' + userId + "&pageId="+pageNumber;
+  const query = process.env.REACT_APP_API_URL + '/google/submissions?userId=' + userId;
   getSubmissionWithRequestParams(query, requestOptions);
 }
 
