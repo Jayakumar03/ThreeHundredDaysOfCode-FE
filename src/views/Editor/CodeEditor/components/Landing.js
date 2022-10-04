@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useKeyPress from "../hooks/useKeyPress";
 import LanguagesDropdown from "./LanguagesDropdown";
-import ResultTab from './ResultTab';
+import ResultTab from "./ResultTab";
+import Editor from "@monaco-editor/react";
 
 // Style Components.
 import { Avatar, Button, Card, Input, message } from 'antd';
@@ -86,24 +87,30 @@ const CodeEditorWindowInnerContainer = styled.main`
 const StyledRunButton = styled((props) => <Button {...props} />)`  
   background-color: #1890ff!important;
   margin-left: 20px;
-  height: 44px;
-  border-radius: 0.5rem;
+  height: 35px;
+  border-radius: 0.375rem;  
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;  
+  
 `
 const StyledSubmitButton = styled((props) => <Button {...props} />)`
   background-color: #1890ff!important;
   margin-left: 20px;
-  height: 44px;
-  border-radius: 0.5rem;
+  height: 35px;
+  border-radius: 0.375rem;  
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;
 `
 const ButtonContainer = styled.main`
-  padding-top: 0.5rem!important;
-  padding-bottom: 0.5rem!important;
+  padding-top: 1.0rem!important;
+  padding-bottom: 0.25rem!important;
   padding-right: 1.5rem!important;
   padding-left: 1.5rem!important;
   display: flex;
   flex-direction: row;
 `
-
 // Common Library Methods.
 const encode = (str) => {
   return btoa(unescape(encodeURIComponent(str || "")));
@@ -138,8 +145,6 @@ const showMessage = (success, error, warning) => {
 }
 }
 // .........................
-
-
 const Landing = (props) => {
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
@@ -195,12 +200,12 @@ const Landing = (props) => {
   useEffect(() => {
     if (enterPress && ctrlPress) {
       console.log("enterPress", enterPress);
-      console.log("ctrlPress", ctrlPress);
-      handleCompile();
+      console.log("ctrlPress", ctrlPress);      
     }
     getUserDetails();
   }, [ctrlPress, enterPress]);
-
+  
+  // Handler for action when the user changes the code in the Editor.
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -212,52 +217,6 @@ const Landing = (props) => {
       }
     }
   };
-  const handleCompile = () => {
-    setProcessing(true);
-    const formData = {
-      language_id: language.id,
-      // encode source code in base64
-      source_code: btoa(code),
-      stdin: btoa(customInput),
-    };
-    const options = {
-      method: "POST",
-      url: process.env.REACT_APP_RAPID_API_URL,
-      params: { base64_encoded: "true", fields: "*" },
-      headers: {
-        "content-type": "application/json",
-        "Content-Type": "application/json",
-        "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
-        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-      },
-      data: formData,
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("res.data", response.data);
-        const token = response.data.token;
-        checkStatus(token);
-      })
-      .catch((err) => {
-        let error = err.response ? err.response.data : err;
-        // get error status
-        let status = err.response.status;
-        console.log("status", status);
-        if (status === 429) {
-          console.log("too many requests", status);
-
-          showErrorToast(
-            `Quota of 100 requests exceeded for the Day! Please read the blog on freeCodeCamp to learn how to setup your own RAPID API Judge0!`,
-            10000
-          );
-        }
-        setProcessing(false);
-        console.log("catch block...", error);
-      });
-  };
-
   const checkStatus = async (token) => {
     const options = {
       method: "GET",
@@ -314,7 +273,9 @@ const Landing = (props) => {
       progress: undefined,
     });
   };
-  const handleCodeRun = () => {  
+
+  // Handles the code run button.
+  const handleCodeRun = () => {
     if (code.trim() === "") {        
         console.log('Source code cannot be empty.');
         return;
@@ -336,7 +297,7 @@ const Landing = (props) => {
         problem_id: problemId
     };
     const handleCodeSubmission = (data) => {    
-      var status = data.status;
+      const status = data.status;
       setStatusLine(status.description);
       setStatusMsg(status.description);      
       setRunButtonLoading(false);
@@ -345,7 +306,12 @@ const Landing = (props) => {
       const options = {
         method: "POST",
         url: process.env.REACT_APP_API_URL + "/submissions",
-        params: { base64_encoded: "true", fields: "*" },        
+        params: { base64_encoded: "true", fields: "*" },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // TODO(Ravi): Should the data be string or JSON?
+        data: JSON.stringify(data),
       };
       axios
       .request(options)
@@ -356,7 +322,68 @@ const Landing = (props) => {
         console.log(error)
       });
     }
-  }
+    sendRequest(data);
+  };
+  const handleSubmitCode = () => {};
+
+  // Handles the action when the user saves the code.
+  // const handleSubmitCode = () => {
+  //   if (code.trim() === "") {
+  //     showMessage("", "Source code can't be empty!");
+  //     return;
+  //   } else {        
+  //     setSubmitButtonLoading(true);
+  //   }
+  //   setOutputText('');
+  //   const sourceValue = encode(sourceEditor.getValue());
+  //   const stdinValue = encode(stdinEditor.getValue());
+  //   const languageId = language.id;
+  //   const data = {
+  //       source_code: sourceValue,
+  //       language_id: languageId,
+  //       stdin: stdinValue,
+  //       compiler_options: '',
+  //       command_line_arguments: '',
+  //       redirect_stderr_to_stdout: true,
+  //       user_id: userId,
+  //       problem_id: problemId
+  //   };
+  //   const sendRequest = function(data) {
+  //       axios
+  //       .request(options)
+  //       .then(function (response) {
+  //         handleCodeSubmission(JSON.parse(response));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //       });
+  //     }
+  //     sendRequest(data);
+  //   }
+        
+  //           url: apiUrl + `/google/submitCodeSolution`,
+  //           type: "POST",
+  //           async: true,
+  //           contentType: "application/json",
+  //           data: JSON.stringify(data),
+  //           xhrFields: {
+  //               withCredentials: apiUrl.indexOf("/secure") != -1 ? true : false
+  //           },
+  //           success: function (dataStr, textStatus, jqXHR) {
+  //               if (wait == true) {
+  //                   const data = JSON.parse(dataStr);
+  //                   handleCodeSubmission(data);
+  //               } else {
+  //                   setTimeout(fetchSubmission.bind(null, data.token), check_timeout);
+  //               }
+  //           },
+  //           error: handleRunError
+  //       });
+  //   }
+  //   sendRequest(data);
+  // }
+
+  
   return (
     <LandingContainer>
       <div className="flex flex-row">
@@ -368,13 +395,16 @@ const Landing = (props) => {
             onClick={handleCodeRun}
             loading={runButtonLoading}
             >
-            Run Code 
+            Run Code
           </StyledRunButton>
           <StyledSubmitButton 
             type="primary" 
             icon={<PlayArrowIcon />} 
             loading={submitButtonLoading}
-            > Evaluate Code </StyledSubmitButton>          
+            onClick={handleSubmitCode}
+            > 
+            Submit Code 
+            </StyledSubmitButton>          
           </ButtonContainer>  
       </div>
       <CodeEditorOuterContainer>        
@@ -384,11 +414,12 @@ const Landing = (props) => {
             onChange={onChange}
             language={language?.value}
             theme={theme.value}
-            
           />
         </CodeEditorWindowInnerContainer>
-        <ResultTab />
+        {/* <ResultTab /> */}
+        <TestTab  />
       </CodeEditorOuterContainer>
+      
     </LandingContainer>
   );
 };
