@@ -295,7 +295,7 @@ export const prologSource = "\
 main :- write('hello, world\\n').\n\
 ";
 
-export const pythonSource =  "print(\"This line will be printed.\")"; 
+export const pythonSource =  "print(\"Hello World.\")"; 
 
 export const rSource = "cat(\"hello, world\\n\")";
 

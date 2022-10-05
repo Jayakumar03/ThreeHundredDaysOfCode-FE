@@ -26,11 +26,12 @@ const getUuid = require('uuid-by-string');
 const LandingContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 48px;
-  height: calc(100vh - 48px);
+  margin-top: 5px;
+  height: calc(100vh - 100px);
   margin-left: 0;
   width: 100%;
-  border: 2px white solid;
+  border: 2px white white;
+  border-radius: 5px;
 `
 const CodeEditorOuterContainer = styled.main`
   display: flex;
@@ -112,6 +113,7 @@ const Landing = (props) => {
   const [runButtonLoading, setRunButtonLoading] = useState(false);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
   const [loginType, setLoginType] = useState('');
+  const [activeKey, setActiveKey] = useState('1');
 
   const problemId = props.problemId || '';
 
@@ -181,7 +183,7 @@ const Landing = (props) => {
       headers['Authorization'] = 'Bearer ' + jwtToken;
     }
     return headers;
-  };
+  }; 
   // Handles the code run button.
   const handleCodeRun = () => {
     if (code.trim() === "") {
@@ -210,13 +212,14 @@ const Landing = (props) => {
       const compile_output = decode(data.compile_output);
       const output = [compile_output, stdout].join("\n").trim();
       setOutputText(output);
+      setActiveKey('2');
       setStatusLine(status.description);
-      setStatusMsg(status.description);      
+      setStatusMsg(status.description);
       setRunButtonLoading(false);
     }
     const sendRequest = function(data) {
       const baseUrl = process.env.REACT_APP_API_URL;
-      const apiUrl = isCognito() ? baseUrl + "/submissions" : baseUrl + "/submissions";
+      const apiUrl = isCognito() ? baseUrl + "/submissions" : baseUrl + "/google/submissions";
       const options = {
         method: "POST",
         url: apiUrl,
@@ -227,7 +230,8 @@ const Landing = (props) => {
       axios
       .request(options)
       .then(function (response) {
-        handleResult(JSON.parse(response));
+        console.log(response);
+        handleResult(response.data);
       })
       .catch((error) => {
         console.log(error)
@@ -316,7 +320,12 @@ const Landing = (props) => {
             theme={theme.value}
           />
         </CodeEditorWindowInnerContainer>
-        <ResultTab />
+        <ResultTab 
+         input={inputText}
+         output={outputText}
+         activeKey={activeKey}
+         setActiveKey={setActiveKey}
+        />
       </CodeEditorOuterContainer>      
     </LandingContainer>
   );
