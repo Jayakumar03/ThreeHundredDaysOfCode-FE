@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import CodeEditorWindow from "./CodeEditorWindow";
 import axios from "axios";
 import { languageOptions } from "../constants/languageOptions";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useKeyPress from "../hooks/useKeyPress";
 import LanguagesDropdown from "./LanguagesDropdown";
@@ -10,7 +9,7 @@ import ResultTab from "./ResultTab";
 import * as codeConstants from '../Constants';
 
 // Style Components.
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import styled from "styled-components";
 
@@ -23,24 +22,25 @@ import { Auth } from "aws-amplify";
 // Utility.
 const getUuid = require('uuid-by-string');
 
+// Styled Components.
 const LandingContainer = styled.main`
   display: flex;
   flex-direction: column;
   margin-top: 5px;
-  height: calc(100vh - 100px);
+  height: 80vh;
   margin-left: 0;
-  width: 100%;
+  width: 60%;
   border: 2px white white;
   border-radius: 5px;
 `
 const CodeEditorOuterContainer = styled.main`
   display: flex;
+  flex-direction: column;
   padding-bottom: 1rem;
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  align-items: flex-start;
-  flex-direction: row;
+  align-items: flex-start;  
 `
 const CodeEditorWindowInnerContainer = styled.main`
   display: flex;
@@ -48,7 +48,7 @@ const CodeEditorWindowInnerContainer = styled.main`
   align-items: flex-end;
   flex-direction: column;
   width: 100%;
-  height: 100%;  
+  height: 60vh;  
 `
 const StyledRunButton = styled((props) => <Button {...props} />)`  
   background-color: #1890ff!important;
@@ -77,6 +77,8 @@ const ButtonContainer = styled.main`
   display: flex;
   flex-direction: row;
 `
+// ....... Styled Components ..........
+
 // Common Library Methods.
 const encode = (str) => {
   return btoa(unescape(encodeURIComponent(str || "")));
@@ -92,24 +94,41 @@ const decode = (bytes) => {
 // ....... Library Methods.
 
 // Common Methods for showing errors.
+const showMessage = (success, error, warning) => {
+  if (success !== null) {
+      message.success({
+      content: success,
+      className: 'display-message',
+    });
+  } else if (error !== null) {
+      message.error({
+      content: error,
+      className: 'display-message',
+    });
+  } else if (warning !== null) {
+    message.warning({
+    content: warning,
+    className: 'display-message',
+    });
+  }
+}
 const getCode = (languageId) => {
   return codeConstants.sources[languageId];
 };
-
 // .........................
 const Landing = (props) => {
   const [code, setCode] = useState(getCode(languageOptions[0].id));
-  const [customInput, setCustomInput] = useState("");
-  const [outputDetails, setOutputDetails] = useState(null);
-  const [processing, setProcessing] = useState(null);
-  const [theme, setTheme] = useState("vs-dark");
+  const [] = useState("");
+  const [] = useState(null);
+  const [] = useState(null);
+  const [theme] = useState("vs-dark");
   const [language, setLanguage] = useState(languageOptions[0]);
   const [userId, setUserId] = useState('');
   const [jwtToken, setJwtToken] = useState('');
   const [outputText, setOutputText] = useState('');
-  const [inputText, setInputText] = useState('');
-  const [statusLine, setStatusLine] = useState('');
-  const [statusMsg, setStatusMsg] = useState('');
+  const [inputText] = useState('');
+  const [, setStatusLine] = useState('');
+  const [, setStatusMsg] = useState('');
   const [runButtonLoading, setRunButtonLoading] = useState(false);
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
   const [loginType, setLoginType] = useState('');
@@ -216,6 +235,7 @@ const Landing = (props) => {
       setStatusLine(status.description);
       setStatusMsg(status.description);
       setRunButtonLoading(false);
+      showMessage(status.description);
     }
     const sendRequest = function(data) {
       const baseUrl = process.env.REACT_APP_API_URL;
@@ -262,14 +282,14 @@ const Landing = (props) => {
           user_id: userId,
           problem_id: problemId
       };
-    const handleCodeSubmissionResult = (data) => {    
-      const status = data.status;      
-      setStatusMsg(status.description);      
+    const handleCodeSubmissionResult = (data) => {
       setSubmitButtonLoading(false);
+      setStatusMsg(data.status.description); 
+      showMessage(data.status.description);
     };
     const sendRequest = function(data) {      
       const baseUrl = process.env.REACT_APP_API_URL;
-      const apiUrl = isCognito() ? baseUrl + "/submitCodeSolution" : baseUrl + "/submitCodeSolution";      
+      const apiUrl = isCognito() ? baseUrl + "/submitCodeSolution" : baseUrl + "/google/submitCodeSolution";      
       const options = {
         method: "POST",
         url: apiUrl,
@@ -279,8 +299,8 @@ const Landing = (props) => {
       };
       axios
       .request(options)
-      .then(function (response) {
-        handleCodeSubmissionResult(JSON.parse(response));
+      .then(function (response) {        
+        handleCodeSubmissionResult(response.data);
       })
       .catch((error) => {
         console.log(error)

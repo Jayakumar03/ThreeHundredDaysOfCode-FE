@@ -1,8 +1,7 @@
 .code-submit-form-parent {
     width: 100%; 
     display: flex;
-    margin-top: 25px;
-    display: flex;
+    margin-top: 10px;
 }
 
 .problem-submission-form {
@@ -45,7 +44,9 @@ form, label {
 }
 
 .problem-timer-code-submit-container {
-    margin-left: 20px;    
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .display-message {

@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import Editor from "@monaco-editor/react";
 
 const ResultTabContainer = styled.main`
-    width: 50%;
+    width: 100%;
     background-color: #202124;
     margin-left: 20px;
     padding-top: 10px;
-    height: 80vh;
+    height: 20vh;
     .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
         color: light-blue;
         font-weight: 700;

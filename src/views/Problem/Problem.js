@@ -3,23 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Form, message } from 'antd';
 import TimerBar from '../../components/banners/timer-bar/TimerBar';
-import CodeEditor from "../Editor/CodeEditor/CodeEditor";
 import { useNavigate } from 'react-router-dom';
 import CodeSubmitForm from '../../components/forms/code-submit/CodeSubmitForm';
 import { v4 as uuidv4 } from 'uuid';
 
 // Styles.
+// TODO(Ravi): Deprecate ProblemOfTheDay.css.
 import './ProblemOfTheDay.css';
+import styled, { css } from "styled-components";
 
 // Authentication.
 import { Auth } from "aws-amplify";
 import Cookies from 'universal-cookie';
 import ProblemDescription from "./Description/ProblemDescription";
 import { joinClasses } from "../../utils/ClassUtils";
-
+import Landing from "../Editor/CodeEditor/components/Landing";
 
 // Utility.
 const getUuid = require('uuid-by-string');
+
+const ProblemContainer = styled.main`
+  display: flex;
+  flex-direction: row;
+`
 
 function Problem(){
   const [form] = Form.useForm();
@@ -332,7 +338,7 @@ function submitCode(query, requestOptions) {
     <div className='problem-solve-page-container'>
       <div className={colClass}>
         <div className="problem-timer-code-submit-container">
-          <TimerBar         
+          <TimerBar
             problem={problem}        
             isProblemOfTheDay={isProblemOfTheDay} 
             timeLeft={timeLeft}
@@ -340,16 +346,16 @@ function submitCode(query, requestOptions) {
           <CodeSubmitForm submitSolution={submitGithubLink} problem={problem} problemId={problemId}/>
         </div>
       </div>
-      <div className={rowClass}>
-        <CodeEditor 
-        problem={problem}
-        // TODO(Ravi): Move the problemId within the problem object.
-        problemId={problemId} 
-        userId={userId} 
-        sessionId={sessionId}
+      <ProblemContainer>
+        <Landing
+          problem={problem}
+          // TODO(Ravi): Move the problemId within the problem object.
+          problemId={problemId} 
+          userId={userId} 
+          sessionId={sessionId}
         />
         <ProblemDescription problem={problem} />
-    </div>
+    </ProblemContainer>
     </div>
     )
 };

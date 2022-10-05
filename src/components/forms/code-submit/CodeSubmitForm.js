@@ -15,8 +15,6 @@ function CodeSubmitForm(props) {
       });
     }
 
-    const getProblemSubmissions = () => {}
-
     return (
         <div className='code-submit-form-container'>
             <div className='code-submit-form-inputs'>
@@ -25,11 +23,9 @@ function CodeSubmitForm(props) {
                     onClose={toggleCodeModal}
                     problem={props.problem}
                     handleSubmit={props.submitSolution}
-                >
-                </CodeSubmitModal>
+                />
                 <div className='code-submit-buttons'>
-                    <Button onClick={toggleCodeModal}> Submit Github Link </Button>
-                    <Button onClick={getProblemSubmissions}> Submissions </Button>
+                    <Button onClick={toggleCodeModal}> Submit Github Link </Button>                    
                 </div>
             </div>
         </div>
