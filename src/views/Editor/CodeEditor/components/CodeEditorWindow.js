@@ -10,19 +10,18 @@ const CodeEditorContainer = styled.main`
 `
 const CodeEditorWindow = ({ onChange, language, code, theme }) => {
   const [value, setValue] = useState(code || "");
-
   const handleEditorChange = (value) => {
-    setValue(value);
-    onChange("code", value);
+    // setValue(value);
+    // onChange("code", value);
   };
-
+  
   return (
     <CodeEditorContainer> 
       <Editor
         height="85vh"
         width={`100%`}
         language={language || "javascript"}
-        value={value}
+        value={code}
         theme={theme}
         defaultValue="// some comment"
         onChange={handleEditorChange}

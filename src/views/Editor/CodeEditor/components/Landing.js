@@ -7,10 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import useKeyPress from "../hooks/useKeyPress";
 import LanguagesDropdown from "./LanguagesDropdown";
 import ResultTab from "./ResultTab";
-import Editor from "@monaco-editor/react";
+import * as codeConstants from '../Constants';
 
 // Style Components.
-import { Avatar, Button, Card, Input, message } from 'antd';
+import { Button } from 'antd';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import styled from "styled-components";
 
@@ -22,41 +22,6 @@ import { Auth } from "aws-amplify";
 
 // Utility.
 const getUuid = require('uuid-by-string');
-
-/**
- * For documentation on the Code-Editor use the following blog as a reference:
- * https://www.freecodecamp.org/news/how-to-build-react-based-code-editor/
- */
-
-const javascriptDefault = `/**
-* Problem: Binary Search: Search a sorted array for a target value.
-*/
-
-// Time: O(log n)
-const binarySearch = (arr, target) => {
- return binarySearchHelper(arr, target, 0, arr.length - 1);
-};
-
-const binarySearchHelper = (arr, target, start, end) => {
- if (start > end) {
-   return false;
- }
- let mid = Math.floor((start + end) / 2);
- if (arr[mid] === target) {
-   return mid;
- }
- if (arr[mid] < target) {
-   return binarySearchHelper(arr, target, mid + 1, end);
- }
- if (arr[mid] > target) {
-   return binarySearchHelper(arr, target, start, mid - 1);
- }
-};
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const target = 5;
-console.log(binarySearch(arr, target));
-`;
 
 const LandingContainer = styled.main`
   display: flex;
@@ -115,38 +80,16 @@ const ButtonContainer = styled.main`
 const encode = (str) => {
   return btoa(unescape(encodeURIComponent(str || "")));
 };
-const decode = (bytes) => {
-  var escaped = escape(atob(bytes || ""));
-  try {
-      return decodeURIComponent(escaped);
-  } catch {
-      return unescape(escaped);
-  }
-};
 // ....... Library Methods.
 
 // Common Methods for showing errors.
-const showMessage = (success, error, warning) => {
-  if (success !== null) {
-      message.success({
-      content: success,
-      className: 'display-message',
-    });
-  } else if (error !== null) {
-      message.error({
-      content: error,
-      className: 'display-message',
-    });
-  } else if (warning !== null) {
-    message.warning({
-    content: warning,
-    className: 'display-message',
-  });
-}
-}
+const getCode = (languageId) => {
+  return codeConstants.sources[languageId];
+};
+
 // .........................
 const Landing = (props) => {
-  const [code, setCode] = useState(javascriptDefault);
+  const [code, setCode] = useState(getCode(languageOptions[0].id));
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
@@ -159,17 +102,16 @@ const Landing = (props) => {
   const [statusLine, setStatusLine] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
   const [runButtonLoading, setRunButtonLoading] = useState(false);
-  const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
+  const [submitButtonLoading, setSubmitButtonLoading] = useState(false); 
 
   const problemId = props.problemId || '';
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
 
   const onSelectChange = (sl) => {
-    console.log("selected Option...", sl);
     setLanguage(sl);
+    setCode(getCode(sl.id));
   };
   
   // Setting user properties when the user lands on the page.
@@ -182,7 +124,6 @@ const Landing = (props) => {
   }
   async function getUserDetailsGoogleSSO(){
     const userAuth = await Auth.currentAuthenticatedUser();
-    const requestOptions = { 'method': 'GET' };
     const userId = getUuid(userAuth.email);
     setUserId(userId);
   }
@@ -276,7 +217,7 @@ const Landing = (props) => {
 
   // Handles the code run button.
   const handleCodeRun = () => {
-    if (code.trim() === "") {        
+    if (code.trim() === "") {
         console.log('Source code cannot be empty.');
         return;
     } else {
@@ -409,17 +350,15 @@ const Landing = (props) => {
       </div>
       <CodeEditorOuterContainer>        
         <CodeEditorWindowInnerContainer>
-          <CodeEditorWindow
-            code={code}
+          <CodeEditorWindow            
             onChange={onChange}
             language={language?.value}
+            code={code}
             theme={theme.value}
           />
         </CodeEditorWindowInnerContainer>
-        {/* <ResultTab /> */}
-        <TestTab  />
-      </CodeEditorOuterContainer>
-      
+        <ResultTab />
+      </CodeEditorOuterContainer>      
     </LandingContainer>
   );
 };

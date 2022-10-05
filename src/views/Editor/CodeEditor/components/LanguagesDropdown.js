@@ -25,12 +25,13 @@ const StyledSelect = styled((props) => <Select {...props} />)`
     padding: 0.78em 0.78em 0.78em 0.78em!important;
   }
 `
-const LanguagesDropdown = ({ onSelectChange }) => {
-  
-  const handleSelect = (value) => {
-    onSelectChange(value)
-  }
+var dict = {};
+languageOptions.forEach((opts, index) => dict[opts.value] = opts);
 
+const LanguagesDropdown = ({ onSelectChange }) => {  
+  const handleSelect = (value) => {
+    onSelectChange(dict[value])
+  }
   return (
     <StyledSelect
       components={{Option: option}}
