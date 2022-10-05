@@ -16,12 +16,6 @@ export const languageOptions = [
     name: "JavaScript (Node.js 12.14.0)",
     label: "JavaScript",
     value: "javascript",      
-  },    
-  {
-    id: 68,
-    name: "PHP (7.4.1)",
-    label: "PHP",
-    value: "php",    
   },
   {
     id: 71,

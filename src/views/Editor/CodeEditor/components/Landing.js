@@ -80,6 +80,14 @@ const ButtonContainer = styled.main`
 const encode = (str) => {
   return btoa(unescape(encodeURIComponent(str || "")));
 };
+const decode = (bytes) => {
+  const escaped = escape(atob(bytes || ""));
+  try {
+      return decodeURIComponent(escaped);
+  } catch {
+      return unescape(escaped);
+  }
+};
 // ....... Library Methods.
 
 // Common Methods for showing errors.
@@ -102,12 +110,17 @@ const Landing = (props) => {
   const [statusLine, setStatusLine] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
   const [runButtonLoading, setRunButtonLoading] = useState(false);
-  const [submitButtonLoading, setSubmitButtonLoading] = useState(false); 
+  const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
+  const [loginType, setLoginType] = useState('');
 
   const problemId = props.problemId || '';
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
+
+  const isCognito = () => {
+    return loginType === 'cognito';
+  }
 
   const onSelectChange = (sl) => {
     setLanguage(sl);
@@ -130,7 +143,8 @@ const Landing = (props) => {
   const getUserDetails = () => {
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
-    if (loginType === 'cognito') {
+    setLoginType(loginType);
+    if (isCognito()) {
       getUserDetailsCognito();
     } else {
       getUserDetailsGoogleSSO();
@@ -147,6 +161,7 @@ const Landing = (props) => {
   }, [ctrlPress, enterPress]);
   
   // Handler for action when the user changes the code in the Editor.
+  // Currently, this runs the code in the backend using the input from the frontend.
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -158,63 +173,15 @@ const Landing = (props) => {
       }
     }
   };
-  const checkStatus = async (token) => {
-    const options = {
-      method: "GET",
-      url: process.env.REACT_APP_RAPID_API_URL + "/" + token,
-      params: { base64_encoded: "true", fields: "*" },
-      headers: {
-        "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
-        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-      },
+  const getHeaders = () => {
+    var headers = {
+      'Content-Type': 'application/json',
     };
-    try {
-      let response = await axios.request(options);
-      let statusId = response.data.status?.id;
-
-      // Processed - we have a result
-      if (statusId === 1 || statusId === 2) {
-        // still processing
-        setTimeout(() => {
-          checkStatus(token);
-        }, 2000);
-        return;
-      } else {
-        setProcessing(false);
-        setOutputDetails(response.data);
-        showSuccessToast(`Compiled Successfully!`);
-        console.log("response.data", response.data);
-        return;
-      }
-    } catch (err) {
-      console.log("err", err);
-      setProcessing(false);
-      showErrorToast();
+    if (isCognito()) {
+      headers['Authorization'] = 'Bearer ' + jwtToken;
     }
+    return headers;
   };
-  const showSuccessToast = (msg) => {
-    toast.success(msg || `Compiled Successfully!`, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-  const showErrorToast = (msg, timer) => {
-    toast.error(msg || `Something went wrong! Please try again.`, {
-      position: "top-right",
-      autoClose: timer ? timer : 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
   // Handles the code run button.
   const handleCodeRun = () => {
     if (code.trim() === "") {
@@ -237,27 +204,30 @@ const Landing = (props) => {
         user_id: userId,
         problem_id: problemId
     };
-    const handleCodeSubmission = (data) => {    
+    const handleResult = (data) => {    
       const status = data.status;
+      const stdout = decode(data.stdout);
+      const compile_output = decode(data.compile_output);
+      const output = [compile_output, stdout].join("\n").trim();
+      setOutputText(output);
       setStatusLine(status.description);
       setStatusMsg(status.description);      
       setRunButtonLoading(false);
     }
     const sendRequest = function(data) {
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const apiUrl = isCognito() ? baseUrl + "/submissions" : baseUrl + "/submissions";
       const options = {
         method: "POST",
-        url: process.env.REACT_APP_API_URL + "/submissions",
+        url: apiUrl,
         params: { base64_encoded: "true", fields: "*" },
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // TODO(Ravi): Should the data be string or JSON?
+        headers: getHeaders(),        
         data: JSON.stringify(data),
       };
       axios
       .request(options)
       .then(function (response) {
-        handleCodeSubmission(JSON.parse(response));
+        handleResult(JSON.parse(response));
       })
       .catch((error) => {
         console.log(error)
@@ -265,66 +235,55 @@ const Landing = (props) => {
     }
     sendRequest(data);
   };
-  const handleSubmitCode = () => {};
-
-  // Handles the action when the user saves the code.
-  // const handleSubmitCode = () => {
-  //   if (code.trim() === "") {
-  //     showMessage("", "Source code can't be empty!");
-  //     return;
-  //   } else {        
-  //     setSubmitButtonLoading(true);
-  //   }
-  //   setOutputText('');
-  //   const sourceValue = encode(sourceEditor.getValue());
-  //   const stdinValue = encode(stdinEditor.getValue());
-  //   const languageId = language.id;
-  //   const data = {
-  //       source_code: sourceValue,
-  //       language_id: languageId,
-  //       stdin: stdinValue,
-  //       compiler_options: '',
-  //       command_line_arguments: '',
-  //       redirect_stderr_to_stdout: true,
-  //       user_id: userId,
-  //       problem_id: problemId
-  //   };
-  //   const sendRequest = function(data) {
-  //       axios
-  //       .request(options)
-  //       .then(function (response) {
-  //         handleCodeSubmission(JSON.parse(response));
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //       });
-  //     }
-  //     sendRequest(data);
-  //   }
-        
-  //           url: apiUrl + `/google/submitCodeSolution`,
-  //           type: "POST",
-  //           async: true,
-  //           contentType: "application/json",
-  //           data: JSON.stringify(data),
-  //           xhrFields: {
-  //               withCredentials: apiUrl.indexOf("/secure") != -1 ? true : false
-  //           },
-  //           success: function (dataStr, textStatus, jqXHR) {
-  //               if (wait == true) {
-  //                   const data = JSON.parse(dataStr);
-  //                   handleCodeSubmission(data);
-  //               } else {
-  //                   setTimeout(fetchSubmission.bind(null, data.token), check_timeout);
-  //               }
-  //           },
-  //           error: handleRunError
-  //       });
-  //   }
-  //   sendRequest(data);
-  // }
-
-  
+  // Handles the submission click.
+  // Currently, this action saves the code in the backend.
+  // Eventually this action will evaluate the code.
+  const handleSubmitCode = () => {
+    if (code.trim() === "") {
+        console.log('Source code cannot be empty.');
+        return;
+    } else {
+        setSubmitButtonLoading(true);
+    }    
+    const sourceValue = encode(code);
+    const stdinValue = encode(inputText);
+    const languageId = language.id;
+    const data = {
+          source_code: sourceValue,
+          language_id: languageId,
+          stdin: stdinValue,
+          compiler_options: '',
+          command_line_arguments: '',
+          redirect_stderr_to_stdout: true,
+          user_id: userId,
+          problem_id: problemId
+      };
+    const handleCodeSubmissionResult = (data) => {    
+      const status = data.status;      
+      setStatusMsg(status.description);      
+      setSubmitButtonLoading(false);
+    };
+    const sendRequest = function(data) {      
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const apiUrl = isCognito() ? baseUrl + "/submitCodeSolution" : baseUrl + "/submitCodeSolution";      
+      const options = {
+        method: "POST",
+        url: apiUrl,
+        params: { base64_encoded: "true", fields: "*" },
+        headers: getHeaders(),
+        data: JSON.stringify(data),
+      };
+      axios
+      .request(options)
+      .then(function (response) {
+        handleCodeSubmissionResult(JSON.parse(response));
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    }
+    sendRequest(data);    
+  }; 
   return (
     <LandingContainer>
       <div className="flex flex-row">

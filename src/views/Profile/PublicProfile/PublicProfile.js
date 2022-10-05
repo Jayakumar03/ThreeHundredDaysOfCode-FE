@@ -9,13 +9,12 @@ import { Auth } from "aws-amplify";
 // Design Components
 import { message } from 'antd';
 
+// Cookies.
 import Cookies from 'universal-cookie';
-import styled from "styled-components";
-import { NavLink } from 'react-router-dom';
 
+// Styles.
 import '../../Leaderboard/LeaderBoard.css';
-
-const getUuid = require('uuid-by-string');
+import styled from "styled-components";
 
 const StyledTable = styled((props) => <Table {...props} />)`
   && thead > tr > th {
@@ -129,13 +128,10 @@ async function getSubmissionsCognito() {
   getSubmissionWithRequestParams(query, requestOptions);
 }
 async function getSubmissionsGoogleSSO() {
-  const userAuth = await Auth.currentAuthenticatedUser();
-  const requestOptions = { 'method': 'GET' };
-  const userId = getUuid(userAuth.email);
+  const requestOptions = { 'method': 'GET' };  
   const query = process.env.REACT_APP_API_URL + '/google/mySubmissions?userId=' + profileId;
   getSubmissionWithRequestParams(query, requestOptions);
 }
-
 async function getSubmissions() {            
     const cookies = new Cookies();
     const loginType = cookies.get('loginType');
@@ -145,15 +141,9 @@ async function getSubmissions() {
       getSubmissionsGoogleSSO();
     }    
   }
-
-useEffect(() => {
-  getSubmissions();
-}, [pageNumber])
-
-function handleOnChange(page, pageSize) {
-  SetPageNumber(page);  
-}
-
+  useEffect(() => {
+    getSubmissions();
+  }, [pageNumber]);
   return (
     <div className='leaderboard-table'>
       <div className='submission-title'> Submissions For: {userName} </div>

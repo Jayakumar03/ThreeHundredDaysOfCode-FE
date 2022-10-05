@@ -54,13 +54,10 @@ public class Hello {\n\
 
 export const cppSource = "\
 #include <iostream>\n\
+using namespace std;\n\
 \n\
 int main() {\n\
-    // Insert Your Code Here. Here are the steps to get started: \n\
-    // Step-I: Define the input format using the examples from the problem description. \n\
-    // Step-II: Parse input from standard in. \n\
-    // Step-III: Write your algorithm to generate the required output. \n\
-    // Note: In case of any issues use #feedback channel on Discord. \n\
+    cout << \"Hello World.\";\n\
     return 0;\n\
 }\n\
 ";
@@ -226,11 +223,7 @@ package main\n\
 import \"fmt\"\n\
 \n\
 func main() {\n\
-    // Insert Your Code Here. Here are the steps to get started: \n\
-    // Step-I: Define the input format using the examples from the problem description. \n\
-    // Step-II: Parse input from standard in. \n\
-    // Step-III: Write your algorithm to generate the required output. \n\
-    // Note: In case of any issues use #feedback channel on Discord. \n\
+    fmt.Println(\"Hello World\") \n\
 }\n\
 ";
 
@@ -241,21 +234,11 @@ export const haskellSource = "main = putStrLn \"hello, world\"";
 export const javaSource = "\
 public class Main {\n\
     public static void main(String[] args) {\n\
-        // Insert Your Code Here. Here are the steps to get started: \n\
-        // Step-I: Define the input format using the examples from the problem description. \n\
-        // Step-II: Parse input from standard in. \n\
-        // Step-III: Write your algorithm to generate the required output. \n\
-        // Note: In case of any issues use #feedback channel on Discord. \n\
+        System.out.println(\"Hello World.\");\n\
     }\n\
-}\n\
-";
+}";
 
-export const javaScriptSource = "// Insert Your Code Here. \n\
-// Step-I: Define the input format using the examples from the problem description. \n\
-// Step-II: Parse input from standard in. \n\
-// Step-III: Write your algorithm to generate the required output. \n\
-// Note: In case of any issues use #feedback channel on Discord. \n\
-";
+export const javaScriptSource = "console.log('Hello World.')";
 
 export const kotlinSource = "\
 fun main() {\n\
@@ -312,12 +295,7 @@ export const prologSource = "\
 main :- write('hello, world\\n').\n\
 ";
 
-export const pythonSource =  "# Insert Your Code Here. Here are the steps to get started: \n\
-# Step-I: Define the input format using the examples from the problem description. \n\
-# Step-II: Parse input from standard in. \n\
-# Step-III: Write your algorithm to generate the required output. \n\
-# Note: In case of any issues use #feedback channel on Discord. \n\
-";
+export const pythonSource =  "print(\"This line will be printed.\")"; 
 
 export const rSource = "cat(\"hello, world\\n\")";
 
