@@ -13,11 +13,6 @@ import { useSessionDispatchContext, useSessionStateContext } from './lib/session
 import { handleTriggerIndexBuild } from './lib/api/triggers';
 import { handleDeleteAllData } from './lib/api/deletes';
 
-// Session
-import { Auth } from "aws-amplify";
-import Cookies from 'universal-cookie';
-const getUuid = require('uuid-by-string');
-
 function App() {
   const { onLoad, isAuthenticated } = useSessionDispatchContext();
   const { loading } = useSessionStateContext();  
@@ -86,12 +81,15 @@ function App() {
     </div>
   );
 }
-console.log(process.env.REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID)
+
+/**  
+ * LDProvider is the context provider for LaunchDarkly.
+ * To understand how to add feature-flags using LaunchDarkly use the following document:
+ * https://docs.launchdarkly.com/home/getting-started
+ * Note: Support for identifying users (for doing segmentation is still) not done as yet.
+ * 
+ * To add new feature-flags, check-in with Ravi.     
+*/
 export default withLDProvider({ 
-  clientSideID: process.env.REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID,
-  user: {
-    'key': 'example_user',
-    'name': 'Example User',
-    'email': 'user@example.com'
-  }
+  clientSideID: process.env.REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID,  
 })(App);

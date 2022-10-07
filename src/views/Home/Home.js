@@ -17,18 +17,13 @@ const Home = ({ flags }) => {
             </Typography>
             </Box>
             <Grid container alignItems={"center"}>
-              <Box sx={{my: 2,  mx: 1}} >
-                {
-                 flags.testIntegrationFlag &&
-                                
+              <Box sx={{my: 2,  mx: 1}} >                                
                   <ChallengeCard
                     title="Daily Code" 
                     description="Solve one problem a day and win exciting weekly prizes. Build a regular habit."
                     url="/problemOfTheDay" 
                     img="https://ik.imagekit.io/wfx6bvuzj/300Code/300_yEts4SeVC.png"
                   />
-                }
-
               </Box>
               <Box sx={{my: 2,  mx: 1}} >
                 <ChallengeCard
@@ -40,21 +35,11 @@ const Home = ({ flags }) => {
               </Box>
             </Grid>
           </Grid>
-
-        {/* <div className='home-challenges'>
-        
-        <div className='home-challenges-container'>
-            
+          {flags.showLeaderboardHomePage &&
+            <div className='home-recent-submissions'>
+              <LeaderBoardTable timeFilter="ALL_TIME" />
             </div>
-        </div> */}
-
-        {/* <div className='home-my-submissions'>
-            <span className='home-title-text'> My Submissions </span>
-        </div> */}
-
-        <div className='home-recent-submissions'>
-         <LeaderBoardTable timeFilter="ALL_TIME" />
-        </div>
+          }
       </Box>
    );
 }
