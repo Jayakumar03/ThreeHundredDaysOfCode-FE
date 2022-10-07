@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Auth } from "aws-amplify";
 
 // Design Components
-import { Button, message } from 'antd';
+import { message } from 'antd';
 
 // Cookies
 import Cookies from 'universal-cookie';

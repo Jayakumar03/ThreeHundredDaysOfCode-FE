@@ -76,7 +76,7 @@ const columns = [
 
 function PublicProfile() {
   const [submissionStats, SetSubmissionStats] = useState([]);
-  const [pageNumber, SetPageNumber] = useState(1);  
+  const [pageNumber] = useState(1);  
   const [userName, SetUserName] = useState("");
   const profileId = useParams().profileId;
 
@@ -105,7 +105,7 @@ async function getSubmissionWithRequestParams(query, requestOptions) {
       SetSubmissionStats(responseJson.data);
       if (responseJson.data.length > 0) {
         SetUserName(responseJson.data[0].authorName);
-      }      
+      }
     })
     .catch((error) => {
       showMessage(null, "Error");

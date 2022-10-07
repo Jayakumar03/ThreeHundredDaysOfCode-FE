@@ -82,16 +82,16 @@ export default function Signup() {
 
   async function createNewUser() {
     userHasAuthenticated(true);
-      var cognitoUser = await Auth.signIn(fields.email, fields.password);
-      const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
-      const cookies = new Cookies();
-      const expiresDate = new Date();
-      expiresDate.setFullYear(new Date().getFullYear() + 1);
-      cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
-      cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
-      cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
-      createUserAccount();
-      navigate("/home");
+    var cognitoUser = await Auth.signIn(fields.email, fields.password);
+    const jwtToken = cognitoUser.signInUserSession.accessToken.jwtToken;
+    const cookies = new Cookies();
+    const expiresDate = new Date();
+    expiresDate.setFullYear(new Date().getFullYear() + 1);
+    cookies.set('isLoggedIn', 'true', { path: '/', expires: expiresDate });
+    cookies.set('jwtToken', jwtToken, { path: '/', expires: expiresDate });
+    cookies.set('loginType', 'cognito', { path: '/', expires: expiresDate });
+    createUserAccount();
+    navigate("/home");
   }
 
   async function triggerCreateUserAccount(query, requestOptions) {
@@ -162,9 +162,9 @@ async function handleCredentialResponse(response) {
   function parseJwt (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-   var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-   }).join(''));
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
  
    return JSON.parse(jsonPayload);
  };

@@ -4,6 +4,8 @@ import NavTopBar from "./components/layouts/navigation/navbar/top-bar/NavTopBarC
 import LeftPanelDrawer from './components/layouts/navigation/sidebar/LeftPanelDrawer';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { withLDProvider } from 'launchdarkly-react-client-sdk';
+import ReactGA from 'react-ga';
 
 // Styling
 import './App.css';
@@ -11,18 +13,20 @@ import { useSessionDispatchContext, useSessionStateContext } from './lib/session
 import { handleTriggerIndexBuild } from './lib/api/triggers';
 import { handleDeleteAllData } from './lib/api/deletes';
 
+// Session
+import { Auth } from "aws-amplify";
+import Cookies from 'universal-cookie';
+const getUuid = require('uuid-by-string');
+
 function App() {
-  const { onLoad } = useSessionDispatchContext();
-  const { loading } = useSessionStateContext();
-
+  const { onLoad, isAuthenticated } = useSessionDispatchContext();
+  const { loading } = useSessionStateContext();  
   useEffect(() => {
-    onLoad()
-  }, []);
-  // console.log("GET CONTEXT", onLoad())
-  // if (process.env.REACT_APP_GA_CODE) {
-    // ReactGA.initialize(process.env.REACT_APP_GA_CODE);
-  // }
-
+    onLoad();
+  }, []);  
+   if (process.env.REACT_APP_GA_CODE) {
+     ReactGA.initialize(process.env.REACT_APP_GA_CODE);
+   }
   function handleClick() {
     // setFilteredSuggestions([]);
     var elementExists = document.getElementById('searchInputContainer');
@@ -82,5 +86,12 @@ function App() {
     </div>
   );
 }
-
-export default App;
+console.log(process.env.REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID)
+export default withLDProvider({ 
+  clientSideID: process.env.REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID,
+  user: {
+    'key': 'example_user',
+    'name': 'Example User',
+    'email': 'user@example.com'
+  }
+})(App);

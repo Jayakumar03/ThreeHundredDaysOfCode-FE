@@ -1,12 +1,13 @@
 import React from 'react';
 import ChallengeCard from '../../components/cards/challenge-card/ChallengeCard';
 import LeaderBoardTable from '../../components/tables/leaderboard/LeaderBoardTable';
+import { withLDConsumer } from 'launchdarkly-react-client-sdk';
 
 import './Home.css';
 import { Box, Grid, Typography } from '@mui/material';
 
 
-const Home = (props) => {
+const Home = ({ flags }) => {
   return (
       <Box className='home-my-profile'>
         <Grid>
@@ -17,12 +18,17 @@ const Home = (props) => {
             </Box>
             <Grid container alignItems={"center"}>
               <Box sx={{my: 2,  mx: 1}} >
-                <ChallengeCard
-                  title="Daily Code" 
-                  description="Solve one problem a day and win exciting weekly prizes. Build a regular habit."
-                  url="/problemOfTheDay" 
-                  img="https://ik.imagekit.io/wfx6bvuzj/300Code/300_yEts4SeVC.png"
-                />
+                {
+                 flags.testIntegrationFlag &&
+                                
+                  <ChallengeCard
+                    title="Daily Code" 
+                    description="Solve one problem a day and win exciting weekly prizes. Build a regular habit."
+                    url="/problemOfTheDay" 
+                    img="https://ik.imagekit.io/wfx6bvuzj/300Code/300_yEts4SeVC.png"
+                  />
+                }
+
               </Box>
               <Box sx={{my: 2,  mx: 1}} >
                 <ChallengeCard
@@ -53,4 +59,4 @@ const Home = (props) => {
    );
 }
 
-export default Home;
+export default withLDConsumer()(Home);

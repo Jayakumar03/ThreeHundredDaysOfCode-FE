@@ -27,6 +27,7 @@
     "draftjs-to-markdown": "^0.6.0",
     "html-to-draftjs": "^1.5.0",
     "js-base64": "2.4.9",
+    "launchdarkly-react-client-sdk": "^2.28.0",
     "moment": "^2.29.4",
     "monaco-themes": "^0.4.2",
     "ncp": "^2.0.0",
